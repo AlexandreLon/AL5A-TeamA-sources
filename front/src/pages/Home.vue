@@ -10,9 +10,9 @@
 		>
 		<ul>
 			<li>
-				<router-link to="/">
+				<router-link to="/hello">
 					<div class="btn btn-primary">
-						Department
+						Hello
 					</div>
 				</router-link>
 			</li>
