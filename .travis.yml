@@ -1,15 +1,21 @@
-language: node_js
-node_js:
-  - 14
-
-jobs:
-  include:
-    - stage: front
-      script:
-        - cd front
-        - npm install
-        - npm run lint
-        - npm run build
+matrix:
+    include:
+      - language: java
+        java: 11
+        before_script:
+          - cd back/webservices
+        script:
+          - mvn clean install
+  
+      - language: node_js
+        node_js: 14
+        before_script:
+          - cd front
+        script:
+          - npm install
+          - npm run lint
+          - npm run build
+  
 
 notifications:
   slack: informatiquep-kyw7477:drzHOWQ9ow9kLfoGYeCvpsVN
