@@ -1,0 +1,15 @@
+language: node_js
+node_js:
+  - 14
+
+jobs:
+  include:
+    - stage: front
+      script:
+        - cd front
+        - npm install
+        - npm run lint
+        - npm run build
+
+notifications:
+  slack: informatiquep-kyw7477:drzHOWQ9ow9kLfoGYeCvpsVN
