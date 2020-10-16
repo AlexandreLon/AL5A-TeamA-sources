@@ -1,3 +1,9 @@
+> Modèle de risques :
+>
+> Probabilité : <basse, moyenne, haute>
+>
+> Impact : <Elevé, moyen, Fort>
+
 ## Semaine 42
 
 ### Flag : Green
@@ -7,6 +13,8 @@ Cette semaine nous avons déroulé des scénarios ce qui nous a permis de préci
 Le risque actuel est le choix de la technologie qui pourrait être difficile à prendre en main et entrainerait du retard.
 
 Pour la suite nous allons inititaliser le front et le back avec les technologies définies et commencer à faire communiquer les deux. Une fois cette étape terminée nous commencerons à implémenter le MVP.
+
+
 
 ## Semaine 41
 
