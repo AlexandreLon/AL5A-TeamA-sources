@@ -17,7 +17,7 @@
 				</router-link>
 			</li>
 			<li>
-				<router-link to="/">
+				<router-link to="/department">
 					<div class="btn btn-primary">
 						Department
 					</div>
@@ -26,14 +26,14 @@
 			<li>
 				<router-link to="/">
 					<div class="btn btn-primary">
-						Department
+						...
 					</div>
 				</router-link>
 			</li>
 			<li>
 				<router-link to="/">
 					<div class="btn btn-primary">
-						Department
+						...
 					</div>
 				</router-link>
 			</li>
