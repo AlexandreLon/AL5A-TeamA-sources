@@ -13,6 +13,12 @@
 					Type : {{ task.type }}<br>
 					Status : {{ task.status }}
 				</p>
+				<div
+					@click="taskDone"
+					class="btn btn-danger"
+				>
+					Done
+				</div>
 			</div>
 		</div>
 	</div>
@@ -36,7 +42,16 @@ export default {
 				console.error(error);
 			});
 		});
-		return {task};
+        
+		const taskDone = () => {
+			taskWSAPI.putTask().then(res => {
+				task.value = res;
+			}).catch(error => {
+				console.error(error);
+			});
+		};
+
+		return {task, taskDone};
 	}
 
 };
