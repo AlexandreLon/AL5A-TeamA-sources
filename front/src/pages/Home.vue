@@ -24,9 +24,9 @@
 				</router-link>
 			</li>
 			<li>
-				<router-link to="/">
+				<router-link to="/maintenance">
 					<div class="btn btn-primary">
-						...
+						Maintenance
 					</div>
 				</router-link>
 			</li>
