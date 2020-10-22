@@ -1,4 +1,4 @@
-package fr.polytech.al.trainmanagement.models;
+package fr.polytech.webservices.models;
 
 public class MaintenanceBody {
     

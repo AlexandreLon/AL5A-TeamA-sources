@@ -1,5 +1,6 @@
-package fr.polytech.al.trainmanagement.models;
+package fr.polytech.webservices.models;
 
+@Deprecated
 public class Maintenance {
     
     private int id;
