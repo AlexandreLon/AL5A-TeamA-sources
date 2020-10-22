@@ -1,4 +1,4 @@
-package fr.polytech.al.trainmanagement.controllers;
+package fr.polytech.webservices.controllers;
 
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.http.ResponseEntity;
@@ -7,14 +7,16 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import fr.polytech.al.trainmanagement.models.Task;
+import fr.polytech.task.models.Task;
+import fr.polytech.task.models.TaskStatus;
+
 import static org.springframework.http.ResponseEntity.ok;
 
 @RestController
 @SpringBootApplication
 public class TaskService {
 
-    Task task = new Task("Changer les rails", "Changer", "In Progress");
+    Task task = new Task("Changer les rails", "Changer", TaskStatus.PENDING);
 
     @CrossOrigin
 	@GetMapping("/task")
@@ -25,7 +27,7 @@ public class TaskService {
     @CrossOrigin
 	@PutMapping("/task")
 	public ResponseEntity<Task> putTask() {
-        this.task.setStatus("Done");
+        this.task.setStatus(TaskStatus.FINISHED);
 		return ok().body(this.task);
     }
     

@@ -1,13 +1,11 @@
-package fr.polytech.al.trainmanagement.models;
+package fr.polytech.task.models;
 
-//Todo Removing when Task exist on Task Component
-@Deprecated
 public class Task {
     
     private int id;
     private String name;
     private String type;
-    private String status;
+    private TaskStatus status;
     
     public int getId() {
         return this.id;
@@ -17,7 +15,7 @@ public class Task {
         this.id = id;
     }
 
-    public Task(String name, String type, String status) {
+    public Task(String name, String type, TaskStatus status) {
         this.id = 0;
         this.name = name;
         this.type = type;
@@ -40,11 +38,11 @@ public class Task {
         this.type = type;
     }
 
-    public String getStatus() {
+    public TaskStatus getStatus() {
         return this.status;
     }
 
-    public void setStatus(String status) {
+    public void setStatus(TaskStatus status) {
         this.status = status;
     }
 

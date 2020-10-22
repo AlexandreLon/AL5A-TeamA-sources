@@ -1,4 +1,4 @@
-package fr.polytech.al.trainmanagement;
+package fr.polytech.task;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
