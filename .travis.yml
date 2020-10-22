@@ -3,7 +3,7 @@ matrix:
       - language: java
         java: 11
         before_script:
-          - cd back/webservices
+          - cd back
         script:
           - mvn clean install
   
