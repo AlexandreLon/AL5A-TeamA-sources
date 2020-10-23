@@ -1,0 +1,6 @@
+VPP
+**/.DS_Store
+.vscode
+.idea
+**/*.http
+**/.env

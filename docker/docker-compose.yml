@@ -1,0 +1,23 @@
+version: "2.1"
+
+services:
+  tm-system:
+    image: train-management/back-end
+    container_name: tm-system
+    build: 
+      context: ..
+      dockerfile: ./docker/back/Dockerfile
+    expose:
+      - "3000"
+    ports:
+      - "3000:8080"
+  front:
+    image: train-management/front-end
+    container_name: front
+    build: 
+      context: ./front
+      dockerfile: ./Dockerfile
+    expose:
+      - "8080"
+    ports:
+      - "8080:80"

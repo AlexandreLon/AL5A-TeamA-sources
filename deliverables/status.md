@@ -1,3 +1,19 @@
+> Modèle de risques :
+>
+> Probabilité : <basse, moyenne, haute>
+>
+> Impact : <Elevé, moyen, Fort>
+
+## Semaine 43
+
+### Flag : Green
+Lors de cette semaine nous avons commencé à mettre en place nos stack technologiques et les brancher entre elles, et nous avons prévu et réparti entre nous les tâches que nous allons faire.
+Le risque, cette fois, est que si nous nous rendons compte d'un problème dans notre architecture au moment de passer à la pratique, il faudra à la fois revoir la partie de l'architecture qui pose problème, mais aussi changer le code en fonction, ce qui nous ferait prendre du retard dès le début du projet.
+Probabilité : Moyen
+Impact : Moyen
+Pour la suite nous allons faire les tâches que nous avons défini dans notre roadmap, pour la première SNAPSHOT
+
+
 ## Semaine 42
 
 ### Flag : Green
@@ -7,6 +23,8 @@ Cette semaine nous avons déroulé des scénarios ce qui nous a permis de préci
 Le risque actuel est le choix de la technologie qui pourrait être difficile à prendre en main et entrainerait du retard.
 
 Pour la suite nous allons inititaliser le front et le back avec les technologies définies et commencer à faire communiquer les deux. Une fois cette étape terminée nous commencerons à implémenter le MVP.
+
+
 
 ## Semaine 41
 
