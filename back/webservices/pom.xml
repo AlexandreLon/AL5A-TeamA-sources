@@ -33,7 +33,7 @@
 		 </dependency>
 	</dependencies>
 	<build>
-		<finalName>tain-management-backend</finalName>
+		<finalName>train-management-backend</finalName>
         <defaultGoal>package</defaultGoal>
 		<plugins>
 			<plugin>

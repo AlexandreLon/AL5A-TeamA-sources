@@ -2,9 +2,8 @@ FROM tomcat:latest
 
 WORKDIR /usr/local/tomcat
 
-COPY ./tain-management-backend.war ./webapps/.
+COPY ./docker/back/train-management-backend.war ./webapps/ROOT.war
 
-EXPOSE 8080
-EXPOSE 8000
+EXPOSE 3000
 
 CMD ["catalina.sh", "run"]

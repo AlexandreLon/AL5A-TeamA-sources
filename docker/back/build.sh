@@ -5,10 +5,11 @@ cd ../../back
 mvn clean package -DskipTests
 cd $path
 
-cp ../../back/webservices/target/tain-management-backend.war .
+cp ../../back/webservices/target/train-management-backend.war .
+cd ../..
 
 echo "Compiling the Train Management system"
-docker build -t train-management/back-end .
+docker build -t train-management/back-end ./docker/back
 echo "Done"
 
-rm -rf tain-management-backend.war
+rm -rf train-management-backend.war
