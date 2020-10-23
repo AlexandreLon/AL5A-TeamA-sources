@@ -13,11 +13,11 @@ services:
       - "3000:8080"
   front:
     image: train-management/front-end
-    container_name: tm-system
+    container_name: front
     build: 
-      context: ..
-      dockerfile: ./docker/front/Dockerfile
+      context: ./front
+      dockerfile: ./Dockerfile
     expose:
-      - "8000"
+      - "8080"
     ports:
-      - "8000:8000"
+      - "8080:80"
