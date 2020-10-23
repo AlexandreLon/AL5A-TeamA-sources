@@ -16,11 +16,11 @@ public class MaintenanceService {
 
 
     @CrossOrigin
-	@PostMapping("/maintenance")
-	public ResponseEntity<MaintenanceBody> createMaintenance(@RequestBody MaintenanceBody maintenance) {
+    @PostMapping("/maintenance")
+    public ResponseEntity<MaintenanceBody> createMaintenance(@RequestBody MaintenanceBody maintenance) {
         // Here call the interface
         return ok().body(maintenance);
     }
-    
+
 
 }

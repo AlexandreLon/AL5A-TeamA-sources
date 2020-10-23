@@ -2,10 +2,10 @@ package fr.polytech.task.models;
 
 public class Task {
     
-    private int id;
-    private String name;
-    private String type;
-    private TaskStatus status;
+    protected int id;
+    protected String name;
+    protected String type; // TODO make enum
+    protected TaskStatus status;
     
     public int getId() {
         return this.id;
@@ -15,11 +15,17 @@ public class Task {
         this.id = id;
     }
 
-    public Task(String name, String type, TaskStatus status) {
+    public Task(String name, String type, TaskStatus status) { // TODO delete this constructor
         this.id = 0;
         this.name = name;
         this.type = type;
         this.status = status;
+    }
+
+    public Task(String name, String type) { // TODO make it protected
+        this.id = 0;
+        this.name = name;
+        this.type = type;
     }
 
     public String getName() {
