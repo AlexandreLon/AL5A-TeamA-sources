@@ -4,7 +4,7 @@ public class Task {
     
     protected int id;
     protected String name;
-    protected String type; // TODO make enum
+    protected String type;
     protected TaskStatus status;
     
     public int getId() {
@@ -15,17 +15,11 @@ public class Task {
         this.id = id;
     }
 
-    public Task(String name, String type, TaskStatus status) { // TODO delete this constructor
+    protected Task(String name, String type) {
         this.id = 0;
         this.name = name;
         this.type = type;
-        this.status = status;
-    }
-
-    public Task(String name, String type) { // TODO make it protected
-        this.id = 0;
-        this.name = name;
-        this.type = type;
+        this.status = TaskStatus.PENDING;
     }
 
     public String getName() {

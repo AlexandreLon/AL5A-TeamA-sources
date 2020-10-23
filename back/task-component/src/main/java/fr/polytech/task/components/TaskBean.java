@@ -4,7 +4,7 @@ import org.springframework.stereotype.Component;
 import fr.polytech.task.models.TaskStatus;
 import fr.polytech.task.models.Task;
 
-@Component
+@Component("taskBean")
 public class TaskBean implements TaskCreator, TaskAction {
 
     private Task task;

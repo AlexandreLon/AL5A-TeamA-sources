@@ -1,4 +1,4 @@
-package fr.polytech.al.trainmanagement.maintenance.models;
+package fr.polytech.maintenance.models;
 
 import fr.polytech.task.models.Task;
 
