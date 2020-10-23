@@ -5,10 +5,10 @@ FROM node:14
 WORKDIR /usr/src/app/front
 
 # Installing dependencies
-COPY ./front/package*.json /usr/src/app/front/
+COPY ../../front/package*.json /usr/src/app/front/
 
 # Copying source files
-COPY ./front /usr/src/app/front
+COPY ../../front /usr/src/app/front
 
 RUN rm -rf node_modules
 RUN npm install
