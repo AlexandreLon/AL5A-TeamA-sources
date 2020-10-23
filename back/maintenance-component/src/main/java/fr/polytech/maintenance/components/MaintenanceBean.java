@@ -11,19 +11,13 @@ import fr.polytech.task.components.TaskCreator;
 @ComponentScan({ "fr.polytech.task" })
 public class MaintenanceBean implements MaintenanceManager {
 
-    private Maintenance maintenance;
-
     @Autowired
     TaskCreator taskCreator;
 
     @Override
-    public void scheduleMaintenance() {
-        this.maintenance = new Maintenance("New maintenance", "type");
-        taskCreator.createTask(this.maintenance);
-    }
-
-    @Override
-    public Maintenance getMaintenance() {
-        return this.maintenance;
+    public Maintenance createMaintenance(String name, String type) {
+        Maintenance maintenance = new Maintenance(name, type);
+        taskCreator.createTask(maintenance);
+        return maintenance;
     }
 }

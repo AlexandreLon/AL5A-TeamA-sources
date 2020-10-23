@@ -1,4 +1,5 @@
 path=$(cd "$(dirname "${BASH_SOURCE[0]}")"; pwd -P)
+cd $path
 
 # Create a .war file and store it in back/ directory
 cd ../back

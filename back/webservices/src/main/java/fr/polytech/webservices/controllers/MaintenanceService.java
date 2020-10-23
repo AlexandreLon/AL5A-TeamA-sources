@@ -16,8 +16,6 @@ import static org.springframework.http.ResponseEntity.ok;
 
 import org.springframework.beans.factory.annotation.Autowired;
 
-
-
 @RestController
 @SpringBootApplication
 @ComponentScan({ "fr.polytech.maintenance" })
@@ -29,9 +27,8 @@ public class MaintenanceService {
     @CrossOrigin
     @PostMapping("/maintenance")
     public ResponseEntity<Maintenance> createMaintenance(@RequestBody MaintenanceBody maintenance) {
-        // Here call the interface
-        maintenanceManager.scheduleMaintenance();
-        return ok().body(maintenanceManager.getMaintenance());
+        Maintenance maintenanceCreated = maintenanceManager.createMaintenance(maintenance.name, maintenance.type);
+        return ok().body(maintenanceCreated);
     }
 
 

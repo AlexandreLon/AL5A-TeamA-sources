@@ -2,11 +2,6 @@ import Maintenance from '../models/maintenance-management/Maintenance';
 import API from './API';
 
 class MaintenanceWSAPI extends API {
-
-	constructor() {
-		super("localhost", "8000");
-	}
-    
     
 	postMaintenance(maintenance) {
 		return new Promise((resolve, reject) => {

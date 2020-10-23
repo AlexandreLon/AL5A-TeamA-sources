@@ -2,10 +2,6 @@ import Task from '../models/department/Task';
 import API from './API';
 
 class TaskWSAPI extends API {
-
-	constructor() {
-		super("localhost", "8000");
-	}
     
 	getTask() {
 		return new Promise((resolve, reject) => {

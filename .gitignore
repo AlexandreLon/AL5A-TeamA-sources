@@ -3,3 +3,4 @@ VPP
 .vscode
 .idea
 **/*.http
+**/.env

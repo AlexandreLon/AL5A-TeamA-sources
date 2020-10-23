@@ -27,21 +27,6 @@
 				<option>Something else</option>
 			</select>
 		</div>
-
-		<div>
-			<select 
-				class="form-control mb-3"
-				v-model="maintenance.status"
-			>
-				<option
-					disabled
-					value=""
-				>
-					Please select a status
-				</option>
-				<option>Todo</option>
-			</select>
-		</div>
 		<button
 			class="btn btn-success"
 			@click="createMaintenance"
@@ -59,7 +44,7 @@ const maintenanceWSAPI = new MaintenanceWSAPI();
 
 export default {
 	setup() {
-		const maintenance = ref({name:'',type:'',status:''});
+		const maintenance = ref({name:'',type:''});
 		const result = ref(false);
 
 		onMounted(() => {});
@@ -67,8 +52,7 @@ export default {
 		const createMaintenance = () => {
 			if (
 				maintenance.value.type !== "" &&
-                maintenance.value.name !== "" &&
-                maintenance.value.status !== ""
+                maintenance.value.name !== ""
 			)
 				maintenanceWSAPI
 					.postMaintenance(maintenance.value)

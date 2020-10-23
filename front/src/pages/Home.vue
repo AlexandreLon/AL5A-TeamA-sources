@@ -10,13 +10,6 @@
 		>
 		<ul>
 			<li>
-				<router-link to="/hello">
-					<div class="btn btn-primary">
-						Hello
-					</div>
-				</router-link>
-			</li>
-			<li>
 				<router-link to="/department">
 					<div class="btn btn-primary">
 						Department
@@ -27,13 +20,6 @@
 				<router-link to="/maintenance">
 					<div class="btn btn-primary">
 						Maintenance
-					</div>
-				</router-link>
-			</li>
-			<li>
-				<router-link to="/">
-					<div class="btn btn-primary">
-						...
 					</div>
 				</router-link>
 			</li>
