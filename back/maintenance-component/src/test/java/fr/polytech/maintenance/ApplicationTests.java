@@ -1,4 +1,4 @@
-package fr.polytech.al.trainmanagement.maintenance;
+package fr.polytech.maintenance;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
