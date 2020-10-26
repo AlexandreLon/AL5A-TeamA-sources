@@ -5,28 +5,30 @@ import org.springframework.context.annotation.ComponentScan;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
-
-import fr.polytech.task.components.TaskAction;
-import fr.polytech.task.models.Task;
 
 import static org.springframework.http.ResponseEntity.ok;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
+
+import fr.polytech.task.components.ScheduleVisualizer;
+import fr.polytech.task.models.Task;
 
 @RestController
 @SpringBootApplication
-@ComponentScan({ "fr.polytech.task" })
-public class TaskService {
+@ComponentScan({ "fr.polytech.schedule" })
+public class ScheduleService {
 
     @Autowired
-    TaskAction taskAction;
-    
+    ScheduleVisualizer scheduleVisualizer;
+
     @CrossOrigin
-	@PutMapping("/task")
-	public ResponseEntity<Task> endTask() {
-		return ok().body(taskAction.endTask());
+    @GetMapping("/schedule")
+    public ResponseEntity<List<Task>> getPlanning() {
+        return ok().body(scheduleVisualizer.getPlanning());
     }
-    
 }
