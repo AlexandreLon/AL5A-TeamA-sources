@@ -1,57 +1,48 @@
 <template>
-	<div>
-		<div
-			class="card"
-			style="width: 18rem;"
-			v-if="task !== undefined"
-		>
-			<div class="card-body">
-				<h5 class="card-title">
-					{{ task.name }}
-				</h5>
-				<p class="card-text">
-					Type : {{ task.type }}<br>
-					Status : {{ task.status }}
-				</p>
-				<div
-					@click="taskDone"
-					class="btn btn-danger"
-				>
-					Done
-				</div>
+	<tr v-if="task !== null">
+		<th scope="row">
+			2
+		</th>
+		<td>{{ task.name }}</td>
+		<td>{{ task.type }}</td>
+		<td>{{ task.status }}</td>
+		<td>{{ task.creationDate }}</td>
+		<td>
+			<div
+				@click="taskDone"
+				class="btn btn-danger"
+			>
+				Done
 			</div>
-		</div>
-	</div>
+		</td>
+	</tr>
 </template>
 
 <script>
-import {ref, onMounted} from 'vue';
 import TaskWSAPI from '../../API/TaskWSAPI';
+import Task from '../../models/department/Task';
 
 const taskWSAPI = new TaskWSAPI();
 
 export default {
-
-	setup() {
-		const task = ref(undefined);
-        
-		onMounted(() => {
-			taskWSAPI.getTask().then(res => {
-				task.value = res;
-			}).catch(error => {
-				console.error(error);
-			});
-		});
-        
+	props:{
+		task: {
+			type: Task,
+			default: null
+		}
+	},
+	emits: ['task-updated'],
+	setup(props,{emit}) {
+		
 		const taskDone = () => {
 			taskWSAPI.putTask().then(res => {
-				task.value = res;
+				emit('task-updated',res);
 			}).catch(error => {
 				console.error(error);
 			});
 		};
 
-		return {task, taskDone};
+		return {taskDone};
 	}
 
 };
