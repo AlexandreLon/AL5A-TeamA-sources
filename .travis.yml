@@ -9,9 +9,7 @@ matrix:
           - echo "USE mysql;\nUPDATE user SET authentication_string=PASSWORD('password') WHERE user='root';\nFLUSH PRIVILEGES;\n" | mysql -u root
         before_script:
           - cd back
-          - cp webservices/src/main/resources/application.properties.travis webservices/src/main/resources/application.properties
-          - cp task-component/src/main/resources/application.properties.travis task-component/src/main/resources/application.properties
-          - cp maintenance-component/src/main/resources/application.properties.travis maintenance-component/src/main/resources/application.properties
+          - cp resources/application.properties.travis resources/application.properties
         script:
           - cat webservices/src/main/resources/application.properties
           - mvn clean install

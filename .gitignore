@@ -4,4 +4,4 @@ VPP
 .idea
 **/*.http
 **/.env
-**/application.properties
+back/resources/application.properties
