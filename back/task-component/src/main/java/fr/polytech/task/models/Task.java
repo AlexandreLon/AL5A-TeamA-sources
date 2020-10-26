@@ -3,31 +3,40 @@ package fr.polytech.task.models;
 import java.util.Date;
 import java.util.Random;
 
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.Inheritance;
+import javax.persistence.InheritanceType;
+import javax.persistence.Table;
+
+@Entity
+@Table(name = "Task")
+@Inheritance(strategy = InheritanceType.TABLE_PER_CLASS)
 public class Task {
     
-    protected int id;
+    @Id
+    @GeneratedValue(strategy = GenerationType.AUTO)
+    protected Long id;
+
+    @Column(name = "name", length = 30, nullable = false)
     protected String name;
+
+    @Column(name = "type", length = 30, nullable = false)
     protected String type;
+
+    @Column(name = "status", length = 30, nullable = false)
     protected TaskStatus status;
     protected Date creationDate;
-
-	
-
     
-    public int getId() {
+    public Long getId() {
         return this.id;
     }
 
-    public void setId(int id) {
+    public void setId(Long id) {
         this.id = id;
-    }
-
-    protected Task(String name, String type) {
-        this.id = new Random().nextInt((int)Math.pow(2, 15));
-        this.name = name;
-        this.type = type;
-        this.status = TaskStatus.PENDING;
-        this.creationDate = new Date();
     }
 
     public String getName() {
