@@ -1,0 +1,20 @@
+server.port={port}
+
+# ===============================
+# DATABASE
+# ===============================
+
+#Copy application.properties.example to .application.properties and replace fields between {}
+
+spring.datasource.url=jdbc:mysql://{host}:{port}/{database}?serverTimezone=Europe/Paris
+spring.datasource.username={username}
+spring.datasource.password={password}
+spring.datasource.driver-class-name=com.mysql.jdbc.Driver
+ 
+# ===============================
+# JPA / HIBERNATE
+# ===============================
+
+spring.jpa.database-platform = org.hibernate.dialect.MySQL5Dialect
+spring.jpa.generate-ddl=true
+spring.jpa.hibernate.ddl-auto = update
