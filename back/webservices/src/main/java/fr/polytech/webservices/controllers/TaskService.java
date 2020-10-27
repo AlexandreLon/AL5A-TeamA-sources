@@ -4,7 +4,7 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
-import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -24,9 +24,9 @@ public class TaskService {
     TaskAction taskAction;
     
     @CrossOrigin
-	@PutMapping("/task")
-	public ResponseEntity<Task> endTask() {
-		return ok().body(taskAction.endTask());
+	@PutMapping("/task/{id}")
+	public ResponseEntity<Task> endTask(@PathVariable(value="id") Long id) {
+		return ok().body(taskAction.endTask(id));
     }
     
 }

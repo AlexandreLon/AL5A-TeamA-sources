@@ -4,6 +4,6 @@ import fr.polytech.task.models.Task;
 
 public interface TaskAction {
 
-    Task endTask();
+    Task endTask(Long id);
     
 }

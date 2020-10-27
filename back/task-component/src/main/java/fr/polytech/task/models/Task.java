@@ -1,6 +1,7 @@
 package fr.polytech.task.models;
 
 import java.util.Date;
+import java.util.Random;
 
 public class Task {
     
@@ -22,7 +23,7 @@ public class Task {
     }
 
     protected Task(String name, String type) {
-        this.id = 0;
+        this.id = new Random().nextInt((int)Math.pow(2, 15));
         this.name = name;
         this.type = type;
         this.status = TaskStatus.PENDING;

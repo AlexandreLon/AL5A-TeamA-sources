@@ -1,7 +1,7 @@
 <template>
 	<tr v-if="task !== null">
 		<th scope="row">
-			2
+			{{ task.id }}
 		</th>
 		<td>{{ task.name }}</td>
 		<td>{{ task.type }}</td>
@@ -35,7 +35,7 @@ export default {
 	setup(props,{emit}) {
 		
 		const taskDone = () => {
-			taskWSAPI.putTask().then(res => {
+			taskWSAPI.putTask(props.task.id).then(res => {
 				emit('task-updated',res);
 			}).catch(error => {
 				console.error(error);
