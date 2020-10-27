@@ -1,27 +1,46 @@
 package fr.polytech.api;
 
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
+
+import org.springframework.web.client.RestTemplate;
+
 import fr.polytech.models.Task;
 import fr.polytech.models.TaskStatus;
 
 public class DepartmentManager {
 
-    Task[] tasks = new Task[2];
+	//TODO REMOVE THIS AFTER ADDING MISHAP SYSTEM
+	private TaskStatus statusMocked = TaskStatus.PENDING;
+	//END REMOVE
 
-    public DepartmentManager() {
-        tasks[0] = new Task();
-        tasks[0].setName("rail replacement");
-        tasks[0].setStatus(TaskStatus.PENDING);
-        tasks[1] = new Task();
-        tasks[1].setName("wagon breakdown");
-        tasks[1].setStatus(TaskStatus.PENDING);
-    }
+	public List<Task> getTasks() {
+		RestTemplate restTemplate = new RestTemplate();
+ 
+        // Send request with GET method and default Headers.
+        Task[] array = restTemplate.getForObject(String.format("http://%s:%s/schedule", Api.HOST, Api.PORT), Task[].class);
+		List<Task> tasks = new ArrayList<>(Arrays.asList(array));
 
-	public Task[] getTasks() {
-		return tasks;
+		//TODO REMOVE THIS AFTER ADDING MISHAP SYSTEM
+		Task taskMocked = new Task();
+		taskMocked.setName("wagon breakdown");
+		taskMocked.setStatus(statusMocked);
+		tasks.add(taskMocked);
+		//END REMOVE
+
+        return tasks;
 	}
 
 	public void done(Long id) {
-        tasks[1].setStatus(TaskStatus.FINISHED);
+		//TODO REMOVE THIS AFTER ADDING MISHAP SYSTEM
+		if(id == null) {
+			this.statusMocked = TaskStatus.FINISHED;
+			return;
+		}
+		//END REMOVE
+		RestTemplate restTemplate = new RestTemplate();
+		restTemplate.put(String.format("http://%s:%s/task/%d", Api.HOST, Api.PORT, id), new Object[] {});
 	}
     
 }
