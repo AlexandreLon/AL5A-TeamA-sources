@@ -77,7 +77,11 @@
 		<profile>
 			<id>test</id>
 			<properties>
-				<database>traintest</database>
+				<port>3000</port>
+				<database_host>localhost</database_host>
+				<database_user>root</database_user>
+				<database_password>root</database_password>
+				<database_name>traintest</database_name>
 				<ddlauto>create</ddlauto>
 			</properties>
 			<activation>
@@ -87,7 +91,11 @@
 		<profile>
 			<id>prod</id>
 			<properties>
-				<database>trainmanagement</database>
+				<port>3000</port>
+				<database_host>localhost</database_host>
+				<database_user>root</database_user>
+				<database_password>root</database_password>
+				<database_name>trainmanagement</database_name>
 				<ddlauto>update</ddlauto>
 			</properties>
 		</profile>
