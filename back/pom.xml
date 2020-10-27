@@ -73,4 +73,19 @@
 		</plugins>
 	</build>
 
+	<profiles>
+		<profile>
+			<id>test</id>
+			<properties>
+				<database>traintest</database>
+			</properties>
+		</profile>
+		<profile>
+			<id>prod</id>
+			<properties>
+				<database>trainmanagement</database>
+			</properties>
+		</profile>
+	</profiles>
+
 </project>
