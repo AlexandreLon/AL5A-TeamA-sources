@@ -1,7 +1,6 @@
 package fr.polytech.task.models;
 
 import java.util.Date;
-import java.util.Random;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -29,6 +28,8 @@ public class Task {
 
     @Column(name = "status", length = 30, nullable = false)
     protected TaskStatus status;
+
+    @Column(name = "creationDate")
     protected Date creationDate;
     
     public Long getId() {

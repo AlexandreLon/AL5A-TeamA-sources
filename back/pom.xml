@@ -78,12 +78,17 @@
 			<id>test</id>
 			<properties>
 				<database>traintest</database>
+				<ddlauto>create</ddlauto>
 			</properties>
+			<activation>
+				<activeByDefault>true</activeByDefault>
+			</activation>
 		</profile>
 		<profile>
 			<id>prod</id>
 			<properties>
 				<database>trainmanagement</database>
+				<ddlauto>update</ddlauto>
 			</properties>
 		</profile>
 	</profiles>
