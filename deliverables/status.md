@@ -4,6 +4,16 @@
 >
 > Impact : <Elevé, moyen, Fort>
 
+## Semaine 44
+
+### Flag : Green
+
+Premièrement, nous avons oublié de faire le status pour ce Mardi, et nous en sommes sincèrement désolés !
+
+Durant cette semaine, nous avons défini toutes les tâches à faire jusqu'au rendu du MVP du 06 Novembre. Nous avons mis en place la persistence avec une base de données (avec phases de TEST et PROD), des tests d'intégration avec les scénarios couvrant le MVP, en utilisant Cucumber. Il nous reste encore quelques fonctionnalités du MVP à implémenter pour étendre le système.
+
+Nous avons prévu d'avoir un MVP fonctionnel cette semaine afin d'éviter des erreurs de dernières minutes et consacrer le temps restant à la robustesse de l'application ainsi qu'au rendu.
+
 ## Semaine 43
 
 ### Flag : Green
