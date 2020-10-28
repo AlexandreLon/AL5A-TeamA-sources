@@ -5,23 +5,20 @@ matrix:
         services:
           - mysql
         before_install:
-          - mysql -e 'CREATE DATABASE trainmanagement;'
-          - echo "USE mysql;\nUPDATE user SET authentication_string=PASSWORD('password') WHERE user='root';\nFLUSH PRIVILEGES;\n" | mysql -u root
+          - mysql -e 'CREATE DATABASE tmtravis;'
         before_script:
           - cd back
-          - cp resources/application.properties.travis resources/application.properties
         script:
-          - cat webservices/src/main/resources/application.properties
-          - mvn clean install
+          - mvn clean install -Ptravis
   
-      # - language: node_js
-      #   node_js: 14
-      #   before_script:
-      #     - cd front
-      #   script:
-      #     - npm install
-      #     - npm run lint
-      #     - npm run build
+      - language: node_js
+        node_js: 14
+        before_script:
+          - cd front
+        script:
+          - npm install
+          - npm run lint
+          - npm run build
   
 
 notifications:

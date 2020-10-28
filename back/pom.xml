@@ -84,6 +84,18 @@
                 <database_name>tmtests</database_name>
                 <ddlauto>create</ddlauto>
             </properties>
+		</profile>
+		<profile>
+            <id>travis</id>
+            <properties>
+                <port>3000</port>
+                <database_host>localhost</database_host>
+                <database_port>3306</database_port>
+                <database_user>root</database_user>
+                <database_password></database_password>
+                <database_name>tmtravis</database_name>
+                <ddlauto>create</ddlauto>
+            </properties>
         </profile>
     </profiles>
 </project>
