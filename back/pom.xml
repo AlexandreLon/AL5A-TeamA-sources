@@ -112,9 +112,6 @@
 				<database_name>tmtests</database_name>
 				<ddlauto>create</ddlauto>
 			</properties>
-			<activation>
-				<activeByDefault>true</activeByDefault>
-			</activation>
 		</profile>
 	</profiles>
 
