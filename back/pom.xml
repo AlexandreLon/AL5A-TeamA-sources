@@ -72,47 +72,18 @@
 			</plugin>
 		</plugins>
 	</build>
-
 	<profiles>
-		<profile>
-			<id>test</id>
-			<properties>
-				<port>3000</port>
-				<database_host>localhost</database_host>
-				<database_port>3306</database_port>
-				<database_user>root</database_user>
-				<database_password>root</database_password>
-				<database_name>traintest</database_name>
-				<ddlauto>create</ddlauto>
-			</properties>
-			<activation>
-				<activeByDefault>true</activeByDefault>
-			</activation>
-		</profile>
-		<profile>
-			<id>prod</id>
-			<properties>
-				<port>3000</port>
-				<database_host>localhost</database_host>
-				<database_port>3306</database_port>
-				<database_user>root</database_user>
-				<database_password>root</database_password>
-				<database_name>trainmanagement</database_name>
-				<ddlauto>update</ddlauto>
-			</properties>
-		</profile>
-		<profile>
-			<id>docker</id>
-			<properties>
-				<port>3000</port>
-				<database_host>database</database_host>
-				<database_port>3307</database_port>
-				<database_user>user</database_user>
-				<database_password>password</database_password>
-				<database_name>tmtests</database_name>
-				<ddlauto>create</ddlauto>
-			</properties>
-		</profile>
-	</profiles>
-
+        <profile>
+            <id>docker</id>
+            <properties>
+                <port>3000</port>
+                <database_host>database</database_host>
+                <database_port>3307</database_port>
+                <database_user>user</database_user>
+                <database_password>password</database_password>
+                <database_name>tmtests</database_name>
+                <ddlauto>create</ddlauto>
+            </properties>
+        </profile>
+    </profiles>
 </project>
