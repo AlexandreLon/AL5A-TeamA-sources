@@ -1,6 +1,20 @@
 version: "2.1"
 
 services:
+  database:
+    container_name: database
+    image: mysql:5.7
+    restart: always
+    environment:
+      MYSQL_DATABASE: 'tmtests'
+      MYSQL_USER: 'user'
+      MYSQL_PASSWORD: 'password'
+      MYSQL_ROOT_PASSWORD: 'root'
+    ports:
+    expose:
+      - "3307"
+    ports: 
+      - "3307:3306"
   tm-system:
     image: train-management/back-end
     container_name: tm-system
@@ -11,6 +25,8 @@ services:
       - "3000"
     ports:
       - "3000:8080"
+    depends_on: 
+      - database
   front:
     image: train-management/front-end
     container_name: front

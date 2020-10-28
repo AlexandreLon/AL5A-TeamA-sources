@@ -44,6 +44,15 @@
 			<artifactId>maven-war-plugin</artifactId>
 			<version>3.2.3</version>
 		</dependency>
+		<dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-data-jpa</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>mysql</groupId>
+			<artifactId>mysql-connector-java</artifactId>
+			<scope>runtime</scope>
+		</dependency>
 	</dependencies>
 	<build>
 		<plugins>
@@ -63,5 +72,30 @@
 			</plugin>
 		</plugins>
 	</build>
-
+	<profiles>
+        <profile>
+            <id>docker</id>
+            <properties>
+                <port>3000</port>
+                <database_host>database</database_host>
+                <database_port>3307</database_port>
+                <database_user>user</database_user>
+                <database_password>password</database_password>
+                <database_name>tmtests</database_name>
+                <ddlauto>create</ddlauto>
+            </properties>
+		</profile>
+		<profile>
+            <id>travis</id>
+            <properties>
+                <port>3000</port>
+                <database_host>localhost</database_host>
+                <database_port>3306</database_port>
+                <database_user>root</database_user>
+                <database_password></database_password>
+                <database_name>tmtravis</database_name>
+                <ddlauto>create</ddlauto>
+            </properties>
+        </profile>
+    </profiles>
 </project>

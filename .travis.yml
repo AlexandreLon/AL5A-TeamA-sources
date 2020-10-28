@@ -2,10 +2,14 @@ matrix:
     include:
       - language: java
         java: 11
+        services:
+          - mysql
+        before_install:
+          - mysql -e 'CREATE DATABASE tmtravis;'
         before_script:
           - cd back
         script:
-          - mvn clean install
+          - mvn clean install -Ptravis
   
       - language: node_js
         node_js: 14

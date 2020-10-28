@@ -1,5 +1,6 @@
 package fr.polytech.models;
 
+import java.util.Date;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 @JsonIgnoreProperties(ignoreUnknown = true)
@@ -9,6 +10,15 @@ public class Task {
     private String name;
     private String type;
     private TaskStatus status;
+    private Date creationDate;
+
+    public Date getCreationDate() {
+        return this.creationDate;
+    }
+
+    public void setCreationDate(Date creationDate) {
+        this.creationDate = creationDate;
+    }
 
     public Long getId() {
         return this.id;

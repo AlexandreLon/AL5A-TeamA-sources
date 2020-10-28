@@ -1,11 +1,8 @@
 package fr.polytech.maintenance.models;
 
+import javax.persistence.Entity;
+
 import fr.polytech.task.models.Task;
 
-public class Maintenance extends Task {
-
-    public Maintenance(String name, String type) {
-        super(name, type);
-    }
-
-}
+@Entity
+public class Maintenance extends Task {}
