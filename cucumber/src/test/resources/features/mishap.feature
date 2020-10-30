@@ -4,11 +4,11 @@ Feature: Create Mishap
 
     Scenario: Create Mishap
     Given A "wagon breakdown" mishap
-    When I create a mishap with type "Breakdown" for it
-    And I get all tasks with mishap
+    When I create a mishap of type "Breakdown" and priority MEDIUM
+    And I get all tasks
     Then I have a "wagon breakdown" mishap in tasks
     And The task "wagon breakdown" is pending
 
-    When I put "wagon breakdown" done
-    And I get all tasks with done
-    Then I have a "wagon breakdown" mishap done
+    When I finish the "wagon breakdown" task
+    And I get all tasks again
+    Then the mishap named "wagon breakdown" is finished

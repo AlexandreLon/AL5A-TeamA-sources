@@ -1,5 +1,6 @@
 package fr.polytech.webservices.controllers;
 
+import fr.polytech.task.models.TaskStatus;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.http.ResponseEntity;

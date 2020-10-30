@@ -6,11 +6,11 @@ import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 @JsonIgnoreProperties(ignoreUnknown = true)
 public class Task {
     
-    private Long id;
-    private String name;
-    private String type;
-    private TaskStatus status;
-    private Date creationDate;
+    protected Long id;
+    protected String name;
+    protected String type;
+    protected TaskStatus status;
+    protected Date creationDate;
 
     public Date getCreationDate() {
         return this.creationDate;

@@ -4,6 +4,7 @@ import fr.polytech.mishap.models.Mishap;
 import fr.polytech.mishap.models.MishapPriority;
 import fr.polytech.mishap.repositories.MishapRepository;
 
+import fr.polytech.task.models.TaskStatus;
 import org.springframework.stereotype.Component;
 
 import java.util.ArrayList;
