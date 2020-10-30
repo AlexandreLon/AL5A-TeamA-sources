@@ -33,11 +33,6 @@ public class Mishap extends Task {
         this.priority = priority;
     }
 
-    public Mishap priority(MishapPriority priority) {
-        this.priority = priority;
-        return this;
-    }
-
     @Override
     public boolean equals(Object o) {
         if (o == this)
