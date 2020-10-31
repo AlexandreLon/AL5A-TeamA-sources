@@ -1,33 +1,35 @@
 package fr.polytech.api;
 
-/*
-import org.springframework.http.HttpEntity;
-import org.springframework.http.HttpHeaders;
-import org.springframework.http.MediaType;
+import fr.polytech.models.Mishap;
+import fr.polytech.models.MishapPriority;
+import fr.polytech.models.TaskStatus;
+import org.springframework.http.*;
 import org.springframework.web.client.RestTemplate;
 
-import fr.polytech.models.Mishap;
-*/
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
+
 
 public class MishapManager {
 
-	public void createMishap(String mishapName, String mishapType) {
-		
-		/*
+	private final String mishapUrl = String.format("http://%s:%s/mishap", Api.HOST, Api.PORT);
+	private final RestTemplate restTemplate = new RestTemplate();
+
+	public Mishap createMishap(String mishapName, String mishapType, MishapPriority priority) {
 		Mishap mishap = new Mishap();
 		mishap.setName(mishapName);
 		mishap.setType(mishapType);
+		mishap.setPriority(priority);
 
 		HttpHeaders headers = new HttpHeaders();
 		headers.add("Accept", MediaType.APPLICATION_JSON_VALUE);
 		headers.setContentType(MediaType.APPLICATION_JSON);
-	
-		RestTemplate restTemplate = new RestTemplate();
+
 		HttpEntity<Mishap> requestBody = new HttpEntity<>(mishap, headers);
- 
+
 		// Send request with POST method.
-		restTemplate.postForObject(String.format("http://%s:%s/mishap", Api.HOST, Api.PORT), requestBody, Mishap.class);
-		*/
+		return restTemplate.postForObject(mishapUrl, requestBody, Mishap.class);
 	}
 
 }

@@ -12,12 +12,6 @@ import fr.polytech.task.models.TaskStatus;
 public class Mishap extends Task {
 
     @Column
-    private String name;
-
-    @Column
-    private String type;
-
-    @Column
     private MishapPriority priority;
 
 
@@ -31,43 +25,12 @@ public class Mishap extends Task {
         this.creationDate = new Date();
     }
 
-    public String getName() {
-        return this.name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    public String getType() {
-        return this.type;
-    }
-
-    public void setType(String type) {
-        this.type = type;
-    }
-
     public MishapPriority getPriority() {
         return this.priority;
     }
 
     public void setPriority(MishapPriority priority) {
         this.priority = priority;
-    }
-
-    public Mishap name(String name) {
-        this.name = name;
-        return this;
-    }
-
-    public Mishap type(String type) {
-        this.type = type;
-        return this;
-    }
-
-    public Mishap priority(MishapPriority priority) {
-        this.priority = priority;
-        return this;
     }
 
     @Override

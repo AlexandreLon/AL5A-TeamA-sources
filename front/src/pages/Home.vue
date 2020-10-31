@@ -23,6 +23,13 @@
 					</div>
 				</router-link>
 			</li>
+			<li>
+				<router-link to="/mishap">
+					<div class="btn btn-primary">
+						Mishap
+					</div>
+				</router-link>
+			</li>
 		</ul>
 	</center>
 </template>
