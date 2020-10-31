@@ -1,6 +1,5 @@
 package fr.polytech;
 
-import fr.polytech.models.Mishap;
 import fr.polytech.models.MishapPriority;
 import fr.polytech.models.Task;
 import io.cucumber.java.ParameterType;

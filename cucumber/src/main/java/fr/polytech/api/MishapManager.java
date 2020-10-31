@@ -2,13 +2,8 @@ package fr.polytech.api;
 
 import fr.polytech.models.Mishap;
 import fr.polytech.models.MishapPriority;
-import fr.polytech.models.TaskStatus;
 import org.springframework.http.*;
 import org.springframework.web.client.RestTemplate;
-
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
 
 
 public class MishapManager {

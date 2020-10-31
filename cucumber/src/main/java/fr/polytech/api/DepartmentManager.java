@@ -7,7 +7,6 @@ import java.util.List;
 import org.springframework.web.client.RestTemplate;
 
 import fr.polytech.models.Task;
-import fr.polytech.models.TaskStatus;
 
 public class DepartmentManager {
 
