@@ -14,7 +14,6 @@ public class Mishap extends Task {
     @Column
     private MishapPriority priority;
 
-
     public Mishap(){}
 
     public Mishap(String name, String type, MishapPriority priority) {

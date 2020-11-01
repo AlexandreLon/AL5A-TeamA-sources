@@ -4,10 +4,13 @@ import fr.polytech.mishap.models.Mishap;
 import fr.polytech.mishap.models.MishapPriority;
 import fr.polytech.mishap.repositories.MishapRepository;
 
+import fr.polytech.task.models.Task;
+import fr.polytech.task.models.TaskStatus;
 import org.springframework.stereotype.Component;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.domain.EntityScan;
@@ -26,37 +29,36 @@ public class MishapBean implements MishapManager {
     @Override
     public Mishap createMishap(String name, String type, MishapPriority priority) {
         Mishap mishap = new Mishap(name, type, priority);
-        mishapRepository.save(mishap);
+        this.mishapRepository.save(mishap);
         return mishap;
     }
 
     @Override
     public List<Mishap> getMishaps() {
-        List<Mishap> mishaps = new ArrayList<>();
-        mishapRepository.findAll().forEach(mishaps::add);
-        return mishaps;
+        return (List<Mishap>) this.mishapRepository.findAll();
     }
 
     @Override
-    public Mishap getMishapById(Long id){
-        return mishapRepository.findById(id).orElse(null);
+    public Mishap getMishapById(Long id) {
+        return this.mishapRepository.findById(id).orElse(null);
     }
 
     @Override
-    public Mishap updateMishap(Long id, String name, String type, MishapPriority priority){
-        Mishap mishap = mishapRepository.findById(id).orElse(null);
-        if(mishap == null){
+    public Mishap updateMishap(Long id, String name, String type, MishapPriority priority) {
+        Optional<Mishap> opt = this.mishapRepository.findById(id);
+        if (opt.isPresent()) {
+            Mishap mishap = opt.get();
+            mishap.setName(name);
+            mishap.setType(type);
+            mishap.setPriority(priority);
+            this.mishapRepository.save(mishap);
             return mishap;
         }
-        mishap.setName(name);
-        mishap.setType(type);
-        mishap.setPriority(priority);
-        mishapRepository.save(mishap);
-        return mishap;
+        return null;
     }
 
     @Override
-    public void deleteMishap(Long id){
-        mishapRepository.deleteById(id);
+    public void deleteMishap(Long id) {
+        this.mishapRepository.deleteById(id);
     }
 }
