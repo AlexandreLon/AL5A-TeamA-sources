@@ -25,8 +25,9 @@
 				<Maintenance
 					v-for="maintenance of maintenances"
 					:key="maintenance.id"
-					:task="maintenance"
-					@task-updated="update"
+					:maintenance="maintenance"
+					@maintenance-updated="update"
+					@maintenance-deleted="remove"
 				/>
 			</tbody>
 		</table>
@@ -57,19 +58,19 @@ export default {
 				});
 		});
 
-		// function remove(deletedMaintenance) {
-		// 	maintenances.value = maintenances.value.filter(current =>
-		// 		current.id !== deletedMaintenance.id
-		// 	);
-		// }
-
 		function update(newMaintenance) {
 			maintenances.value = maintenances.value.map(current =>
 				current.id === newMaintenance.id ? newMaintenance : current
 			);
 		}
 
-		return { maintenances, update };
+		function remove(deleteMaintenanceId) {
+			maintenances.value = maintenances.value.filter(current =>
+				current.id !== deleteMaintenanceId
+			);
+		}
+
+		return { maintenances, update, remove };
 	}
 };
 </script>

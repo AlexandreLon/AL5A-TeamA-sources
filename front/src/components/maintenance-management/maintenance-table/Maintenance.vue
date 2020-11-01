@@ -11,10 +11,8 @@
 				@click="updateMaintenance"
 				class="btn btn-warning"
 			>
-				<i
-					class="“fad"
-					fa-pencil”
-				/>
+				Update
+				<i class="fas fa-pencil-alt" />
 			</div>
 			<div
 				@click="deleteMaintenance"
@@ -34,32 +32,32 @@ import Maintenance from "../../../models/maintenance-management/Maintenance";
 const maintenanceWSAPI = new MaintenanceWSAPI();
 
 export default {
-	props:{
+	props: {
 		maintenance: {
 			type: Maintenance,
 			default: null
 		}
 	},
-	emits: ['maintenance-updated', "maintenance-deleted"],
-	setup(props,{emit}) {
+	emits: ["maintenance-updated", "maintenance-deleted"],
+	setup(props, { emit }) {
 
 		const updateMaintenance = () => {
 			maintenanceWSAPI.updateMaintenance(props.maintenance.id).then(res => {
-				emit('maintenance-updated',res);
+				emit("maintenance-updated", res);
 			}).catch(error => {
 				console.error(error);
 			});
 		};
 
 		const deleteMaintenance = () => {
-			maintenanceWSAPI.updateMaintenance(props.maintenance.id).then(res => {
-				emit('maintenance-updated',res);
+			maintenanceWSAPI.deleteMaintenance(props.maintenance.id).then(res => {
+				emit("maintenance-deleted", res);
 			}).catch(error => {
 				console.error(error);
 			});
 		};
 
-		return {updateMaintenance, deleteMaintenance};
+		return { updateMaintenance, deleteMaintenance };
 	}
 
 };
