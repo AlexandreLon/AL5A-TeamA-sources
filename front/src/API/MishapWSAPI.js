@@ -7,7 +7,7 @@ class MishapWSAPI extends API {
 		return new Promise((resolve, reject) => {
 			this.axios.post('/mishap',mishap).then(res => {
 				if(res.data.name === undefined || res.data.type === undefined || res.data.status === undefined)
-				    reject(Error("Not received maintenance"));
+				    reject(Error("Did not receive mishap."));
 				resolve(new Mishap(res.data.id, res.data.name, res.data.type, res.data.status, res.data.priority));
 			}).catch(error => {
 				reject(error);

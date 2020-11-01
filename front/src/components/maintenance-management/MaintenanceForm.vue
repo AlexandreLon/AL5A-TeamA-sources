@@ -12,7 +12,7 @@
 			placeholder="Check brakes ..."
 		>
 		<div>
-			<select 
+			<select
 				class="form-control mb-3"
 				v-model="maintenance.type"
 			>
@@ -37,37 +37,40 @@
 </template>
 
 <script>
-import { ref, onMounted } from "vue";
+import {ref, onMounted} from "vue";
 import MaintenanceWSAPI from "../../API/MaintenanceWSAPI";
 
 const maintenanceWSAPI = new MaintenanceWSAPI();
 
 export default {
 	setup() {
-		const maintenance = ref({name:'',type:''});
+		const maintenance = ref({name: '', type: ''});
 		const result = ref(false);
 
-		onMounted(() => {});
+		onMounted(() => {
+		});
 
 		const createMaintenance = () => {
 			if (
 				maintenance.value.type !== "" &&
-                maintenance.value.name !== ""
+          maintenance.value.name !== ""
 			)
 				maintenanceWSAPI
-					.postMaintenance(maintenance.value)
+					.createMaintenance(maintenance.value)
 					.then(res => {
 						maintenance.value = res;
-						if(maintenance.value !== null)
+						if (maintenance.value !== null)
 							result.value = true;
-						setTimeout(()=>{result.value = false;},2000);
+						setTimeout(() => {
+							result.value = false;
+						}, 2000);
 					})
 					.catch(error => {
 						console.error(error);
 					});
 		};
 
-		return { maintenance,createMaintenance,result };
+		return {maintenance, createMaintenance, result};
 	}
 };
 </script>

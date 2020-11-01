@@ -56,8 +56,8 @@ export default {
 					console.error(error);
 				});
 		});
+
 		function update(newTask) {
-			console.log(newTask);
 			tasks.value = tasks.value.map(currentTask =>
 				currentTask.id === newTask.id ? newTask : currentTask
 			);
