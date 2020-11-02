@@ -12,7 +12,7 @@
 			placeholder="Train derailed !!"
 		>
 		<div>
-			<select 
+			<select
 				class="form-control mb-3"
 				v-model="mishap.type"
 			>
@@ -28,7 +28,7 @@
 			</select>
 		</div>
 		<div>
-			<select 
+			<select
 				class="form-control mb-3"
 				v-model="mishap.priority"
 			>
@@ -53,37 +53,40 @@
 </template>
 
 <script>
-import { ref, onMounted } from "vue";
+import {ref, onMounted} from "vue";
 import MishapWSAPI from "../../API/MishapWSAPI";
 
 const mishapWSAPI = new MishapWSAPI();
 
 export default {
 	setup() {
-		const mishap = ref({name:'',type:'', priority:''});
+		const mishap = ref({name: '', type: '', priority: ''});
 		const result = ref(false);
 
-		onMounted(() => {});
+		onMounted(() => {
+		});
 
 		const createMishap = () => {
 			if (
 				mishap.value.type !== "" &&
-                mishap.value.name !== ""
+          mishap.value.name !== ""
 			)
 				mishapWSAPI
 					.postMishap(mishap.value)
 					.then(res => {
 						mishap.value = res;
-						if(mishap.value !== null)
+						if (mishap.value !== null)
 							result.value = true;
-						setTimeout(()=>{result.value = false;},2000);
+						setTimeout(() => {
+							result.value = false;
+						}, 2000);
 					})
 					.catch(error => {
 						console.error(error);
 					});
 		};
 
-		return { mishap,createMishap,result };
+		return {mishap, createMishap, result};
 	}
 };
 </script>

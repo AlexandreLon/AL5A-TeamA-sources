@@ -5,4 +5,5 @@ import javax.persistence.Entity;
 import fr.polytech.task.models.Task;
 
 @Entity
-public class Maintenance extends Task {}
+public class Maintenance extends Task {
+}
