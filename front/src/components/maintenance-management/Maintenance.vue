@@ -41,13 +41,9 @@ export default {
 	},
 	emits: ["maintenance-updated", "maintenance-deleted"],
 	setup(props, { emit }) {
-
-		const updateMaintenance = () => {
-			maintenanceWSAPI.updateMaintenance(props.maintenance.id).then(res => {
-				emit("maintenance-updated", res);
-			}).catch(error => {
-				console.error(error);
-			});
+		
+		const updateMaintenance = (newMaintenance) => {
+			emit("maintenance-updated", newMaintenance);
 		};
 
 		const deleteMaintenance = () => {

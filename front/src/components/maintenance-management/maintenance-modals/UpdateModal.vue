@@ -106,26 +106,28 @@ export default {
 			default: undefined
 		}
 	},
-	emits: ['maintenance-created', 'maintenance-updated'],
+	emits: ['maintenance-updated'],
 	setup(props, {emit}) {
 
-		const updatedMaintenance = ref({name: props.maintenanceToUpdate.name, type: props.maintenanceToUpdate.type});
+		const updatedMaintenance = 
+		ref({
+			name: props.maintenanceToUpdate.name, 
+			type: props.maintenanceToUpdate.type,
+		});
 		const displayMaintenanceUpdateSuccess = ref(false);
 
 		const updateMaintenance = () => {
+			
 			// console.log(`to update :${ props.maintenanceToUpdate}` );
 			// console.log(`new one :${ updatedMaintenance.value}` );
 			maintenanceWSAPI.updateMaintenance(props.maintenanceToUpdate.id, updatedMaintenance.value)
 				.then(res => {
-
 					updatedMaintenance.value = res;
-
 					if (updatedMaintenance.value !== null) {
 						displayMaintenanceUpdateSuccess.value = true;
 					}
 
 					emit("maintenance-updated", res);
-
 					setTimeout(() => {
 						displayMaintenanceUpdateSuccess.value = false;
 					}, 2000);

@@ -99,7 +99,7 @@ import MaintenanceWSAPI from "../../../API/MaintenanceWSAPI";
 const maintenanceWSAPI = new MaintenanceWSAPI();
 
 export default {
-	emits: ['maintenance-created', 'maintenance-updated'],
+	emits: ['maintenance-created'],
 	setup(props, {emit}) {
 		const maintenance = ref({name: '', type: ''});
 		const result = ref(false);
