@@ -4,7 +4,7 @@
 			type="button"
 			class="btn btn-warning"
 			data-toggle="modal"
-			data-target="#updateMaintenanceModal"
+			:data-target="`#updateMaintenanceModal${maintenanceToUpdate.id}`"
 		>
 			<i class="fas fa-pencil-alt" />
 			Update
@@ -12,7 +12,7 @@
 
 		<div
 			class="modal fade"
-			id="updateMaintenanceModal"
+			:id="`updateMaintenanceModal${maintenanceToUpdate.id}`"
 			tabindex="-1"
 			aria-labelledby="updateMaintenanceModalLabel"
 			aria-hidden="true"
@@ -57,7 +57,7 @@
 								>
 									<option
 										disabled
-										value=""
+										:value="maintenanceToUpdate"
 									>
 										Please select a type
 									</option>
@@ -109,28 +109,19 @@ export default {
 	emits: ['maintenance-updated'],
 	setup(props, {emit}) {
 
-		const updatedMaintenance = 
-		ref({
-			name: props.maintenanceToUpdate.name, 
-			type: props.maintenanceToUpdate.type,
-		});
+		const updatedMaintenance = ref({...props.maintenanceToUpdate});
 		const displayMaintenanceUpdateSuccess = ref(false);
 
 		const updateMaintenance = () => {
-			
-			// console.log(`to update :${ props.maintenanceToUpdate}` );
-			// console.log(`new one :${ updatedMaintenance.value}` );
 			maintenanceWSAPI.updateMaintenance(props.maintenanceToUpdate.id, updatedMaintenance.value)
 				.then(res => {
-					updatedMaintenance.value = res;
 					if (updatedMaintenance.value !== null) {
 						displayMaintenanceUpdateSuccess.value = true;
 					}
-
 					emit("maintenance-updated", res);
 					setTimeout(() => {
 						displayMaintenanceUpdateSuccess.value = false;
-					}, 2000);
+					}, 2000); 		// TODO Close modal when displayMaintenanceUpdateSuccess is false again
 
 				}).catch(error => {
 					console.error(error);
