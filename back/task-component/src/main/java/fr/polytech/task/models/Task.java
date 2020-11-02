@@ -29,6 +29,9 @@ public class Task {
     @Column(name = "status", length = 30, nullable = false)
     protected TaskStatus status;
 
+    @Column
+    private TaskPriority priority;
+
     @Column(name = "creationDate")
     protected Date creationDate;
     
@@ -63,6 +66,14 @@ public class Task {
     public void setStatus(TaskStatus status) {
         this.status = status;
     }
+
+    public TaskPriority getPriority() {
+		return this.priority;
+	}
+
+	public void setPriority(TaskPriority priority) {
+		this.priority = priority;
+	}
 
     public Date getCreationDate() {
 		return this.creationDate;

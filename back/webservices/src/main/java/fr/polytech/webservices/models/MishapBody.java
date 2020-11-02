@@ -1,10 +1,9 @@
 package fr.polytech.webservices.models;
-
-import fr.polytech.mishap.models.MishapPriority;
+import fr.polytech.task.models.TaskPriority;
 
 public class MishapBody {
     
     public String name;
     public String type;
-    public MishapPriority priority;
+    public TaskPriority priority;
 }

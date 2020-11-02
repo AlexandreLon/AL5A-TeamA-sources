@@ -1,14 +1,14 @@
 package fr.polytech.mishap.components;
 
 import fr.polytech.mishap.models.Mishap;
-import fr.polytech.mishap.models.MishapPriority;
 import fr.polytech.mishap.repositories.MishapRepository;
 
-import fr.polytech.task.models.Task;
+import fr.polytech.task.models.TaskPriority;
 import fr.polytech.task.models.TaskStatus;
 import org.springframework.stereotype.Component;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 
@@ -27,9 +27,14 @@ public class MishapBean implements MishapManager {
     private MishapRepository mishapRepository;
 
     @Override
-    public Mishap createMishap(String name, String type, MishapPriority priority) {
-        Mishap mishap = new Mishap(name, type, priority);
-        this.mishapRepository.save(mishap);
+    public Mishap createMishap(String name, String type, TaskPriority priority) {
+        Mishap mishap = new Mishap();
+        mishap.setName(name);
+        mishap.setType(type);
+        mishap.setPriority(priority);
+        mishap.setStatus(TaskStatus.PENDING);
+        mishap.setCreationDate(new Date());
+        mishapRepository.save(mishap);
         return mishap;
     }
 
@@ -44,14 +49,9 @@ public class MishapBean implements MishapManager {
     }
 
     @Override
-    public Mishap updateMishap(Long id, String name, String type, MishapPriority priority) {
-        Optional<Mishap> opt = this.mishapRepository.findById(id);
-        if (opt.isPresent()) {
-            Mishap mishap = opt.get();
-            mishap.setName(name);
-            mishap.setType(type);
-            mishap.setPriority(priority);
-            this.mishapRepository.save(mishap);
+    public Mishap updateMishap(Long id, String name, String type, TaskPriority priority){
+        Mishap mishap = mishapRepository.findById(id).orElse(null);
+        if(mishap == null){
             return mishap;
         }
         return null;

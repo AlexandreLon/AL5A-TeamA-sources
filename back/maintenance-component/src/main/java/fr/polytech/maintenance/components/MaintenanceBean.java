@@ -3,6 +3,7 @@ package fr.polytech.maintenance.components;
 import fr.polytech.maintenance.models.Maintenance;
 import fr.polytech.maintenance.repositories.MaintenanceRepository;
 
+import fr.polytech.task.models.TaskPriority;
 import org.springframework.stereotype.Component;
 
 import java.util.Date;
@@ -32,7 +33,8 @@ public class MaintenanceBean implements MaintenanceManager {
         maintenance.setType(type);
         maintenance.setStatus(TaskStatus.PENDING);
         maintenance.setCreationDate(new Date());
-        this.maintenanceRepository.save(maintenance);
+        maintenance.setPriority(TaskPriority.NONE);
+        maintenanceRepository.save(maintenance);
         return maintenance;
     }
 

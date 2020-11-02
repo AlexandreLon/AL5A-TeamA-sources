@@ -35,6 +35,6 @@ public class TaskBean implements TaskAction, ScheduleVisualizer {
     
 	@Override
 	public List<Task> getPlanning() {
-        return (List<Task>) taskRepository.findAll();
+        return (List<Task>) taskRepository.findAllByOrderByPriorityDesc();
 	}
 }
