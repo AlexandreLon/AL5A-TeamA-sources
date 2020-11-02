@@ -1,17 +1,16 @@
 <template>
 	<div class="container">
 		<h1>Mishap management</h1>
-		<MishapManagement />
+		<Mishaps />
 	</div>
 </template>
 
 <script>
-
-import MishapManagement from '../components/mishap-management/MishapForm.vue';
+import Mishaps from "../components/mishap-management/mishap-table/Mishaps.vue";
 
 export default {
 	components: {
-		MishapManagement
+		Mishaps
 	}
 };
 </script>
