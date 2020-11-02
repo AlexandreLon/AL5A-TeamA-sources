@@ -1,14 +1,19 @@
 <template>
 	<div>
 		<MaintenanceForm
-			@maintenance-created="createMaintenance"/>
+			@maintenance-created="createMaintenance"
+		/>
+
+		<UpdateModal />
 
 		<button
 			@click="addMaintenance"
-			type="button" class="btn btn-info"
+			type="button"
+			class="btn btn-info"
 			data-toggle="modal"
-			data-target="#exampleModal">
-			<i class="fas fa-plus-circle"/>
+			data-target="#createMaintenanceModal"
+		>
+			<i class="fas fa-plus-circle" />
 			Add maintenance
 		</button>
 
@@ -41,9 +46,13 @@
 					@maintenance-deleted="remove"
 				/>
 			</tbody>
-			<tr v-else style="colspan:all; text-align: center;">There is no maintenance to display.</tr>
+			<tr
+				v-else
+				style="colspan:all; text-align: center;"
+			>
+				There is no maintenance to display.
+			</tr>
 		</table>
-
 	</div>
 </template>
 
@@ -52,11 +61,12 @@ import { ref, onMounted } from "vue";
 import MaintenanceWSAPI from "../../API/MaintenanceWSAPI";
 import Maintenance from "./Maintenance.vue";
 import MaintenanceForm from "./MaintenanceForm.vue";
+import UpdateModal from "./maintenance-update/UpdateModal.vue";
 
 const maintenanceWSAPI = new MaintenanceWSAPI();
 
 export default {
-	components: { Maintenance, MaintenanceForm },
+	components: { Maintenance, MaintenanceForm, UpdateModal },
 	setup() {
 		const maintenances = ref(null);
 
