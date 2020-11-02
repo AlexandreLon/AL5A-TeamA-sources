@@ -73,7 +73,6 @@ export default {
 				mishapWSAPI
 					.createMishap(mishap.value)
 					.then(res => {
-						mishap.value = res;
 						if (mishap.value !== null){
 							result.value = true;
 						}

@@ -11,7 +11,6 @@
 				:maintenance-to-update="maintenance"
 				@maintenance-updated="updateMaintenance"
 			/>
-			
 
 			<div
 				@click="deleteMaintenance"
