@@ -54,7 +54,7 @@
 
 <script>
 import {ref, onMounted} from "vue";
-import MishapWSAPI from "../../API/MishapWSAPI";
+import MishapWSAPI from "../../../API/MishapWSAPI";
 
 const mishapWSAPI = new MishapWSAPI();
 

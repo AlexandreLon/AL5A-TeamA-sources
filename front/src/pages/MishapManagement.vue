@@ -6,7 +6,7 @@
 </template>
 
 <script>
-import Mishaps from "../components/mishap-management/mishap-table/Mishaps.vue";
+import Mishaps from "../components/mishap-management/Mishaps.vue";
 
 export default {
 	components: {

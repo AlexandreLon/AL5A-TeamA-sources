@@ -41,9 +41,9 @@
 
 <script>
 import { ref, onMounted } from "vue";
-import MishapWSAPI from "../../../API/MishapWSAPI";
+import MishapWSAPI from "../../API/MishapWSAPI";
 import Mishap from "./Mishap.vue";
-import MishapForm from "../MishapForm.vue";
+import MishapForm from "./mishap-modals/MishapForm.vue";
 
 const mishapWSAPI = new MishapWSAPI();
 

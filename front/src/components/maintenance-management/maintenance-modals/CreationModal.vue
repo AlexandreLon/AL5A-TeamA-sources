@@ -93,7 +93,7 @@
 
 
 <script>
-import {ref, onMounted} from "vue";
+import {ref} from "vue";
 import MaintenanceWSAPI from "../../../API/MaintenanceWSAPI";
 
 const maintenanceWSAPI = new MaintenanceWSAPI();
@@ -103,9 +103,6 @@ export default {
 	setup(props, {emit}) {
 		const maintenance = ref({name: '', type: ''});
 		const result = ref(false);
-
-		onMounted(() => {
-		});
 
 		const createMaintenance = () => {
 			if (maintenance.value.type !== "" &&

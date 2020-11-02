@@ -27,8 +27,8 @@
 
 <script>
 
-import MishapWSAPI from "../../../API/MishapWSAPI";
-import Mishap from "../../../models/mishap-management/Mishap";
+import MishapWSAPI from "../../API/MishapWSAPI";
+import Mishap from "../../models/mishap-management/Mishap";
 
 const mishapWSAPI = new MishapWSAPI();
 
