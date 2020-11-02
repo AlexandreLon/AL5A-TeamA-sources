@@ -16,6 +16,9 @@
 						Status
 					</th>
 					<th scope="col">
+						Priority
+					</th>
+					<th scope="col">
 						Creation date
 					</th>
 					<th scope="col">

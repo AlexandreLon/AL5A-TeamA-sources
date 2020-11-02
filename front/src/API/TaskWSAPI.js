@@ -9,7 +9,7 @@ class TaskWSAPI extends API {
 			this.axios.put(`/task/${id}`).then(res => {
 				if(res.data.id === undefined || res.data.name === undefined || res.data.type === undefined || res.data.status === undefined)
 				    reject(Error("Not received task"));
-				resolve(new Task(res.data.id, res.data.name, res.data.type, res.data.status,res.data.creationDate));
+				resolve(new Task(res.data.id, res.data.name, res.data.type, res.data.status,res.data.priority,res.data.creationDate));
 			}).catch(error => {
 				reject(error);
 			});

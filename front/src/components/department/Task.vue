@@ -6,6 +6,7 @@
 		<td>{{ task.name }}</td>
 		<td>{{ task.type }}</td>
 		<td>{{ task.status }}</td>
+		<td>{{ task.priority }}</td>
 		<td>{{ task.creationDate }}</td>
 		<td>
 			<div
