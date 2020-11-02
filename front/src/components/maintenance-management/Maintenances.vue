@@ -2,6 +2,16 @@
 	<div>
 		<MaintenanceForm
 			@maintenance-created="createMaintenance"/>
+
+		<button
+			@click="addMaintenance"
+			type="button" class="btn btn-info"
+			data-toggle="modal"
+			data-target="#exampleModal">
+			<i class="fas fa-plus-circle"/>
+			Add maintenance
+		</button>
+
 		<table class="table mt-4">
 			<thead>
 				<tr>
@@ -22,7 +32,7 @@
 					</th>
 				</tr>
 			</thead>
-			<tbody>
+			<tbody v-if="maintenances && maintenances.length > 0">
 				<Maintenance
 					v-for="maintenance of maintenances"
 					:key="maintenance.id"
@@ -31,15 +41,17 @@
 					@maintenance-deleted="remove"
 				/>
 			</tbody>
+			<tr v-else style="colspan:all; text-align: center;">There is no maintenance to display.</tr>
 		</table>
+
 	</div>
 </template>
 
 <script>
 import { ref, onMounted } from "vue";
-import MaintenanceWSAPI from "../../../API/MaintenanceWSAPI";
+import MaintenanceWSAPI from "../../API/MaintenanceWSAPI";
 import Maintenance from "./Maintenance.vue";
-import MaintenanceForm from "../MaintenanceForm.vue";
+import MaintenanceForm from "./MaintenanceForm.vue";
 
 const maintenanceWSAPI = new MaintenanceWSAPI();
 

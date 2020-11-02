@@ -6,7 +6,7 @@
 </template>
 
 <script>
-import Maintenances from "../components/maintenance-management/maintenance-table/Maintenances.vue";
+import Maintenances from "../components/maintenance-management/Maintenances.vue";
 
 export default {
 	components: {

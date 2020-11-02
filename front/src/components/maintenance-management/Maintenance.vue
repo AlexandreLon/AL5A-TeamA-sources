@@ -26,8 +26,8 @@
 
 <script>
 
-import MaintenanceWSAPI from "../../../API/MaintenanceWSAPI";
-import Maintenance from "../../../models/maintenance-management/Maintenance";
+import MaintenanceWSAPI from "../../API/MaintenanceWSAPI";
+import Maintenance from "../../models/maintenance-management/Maintenance";
 
 const maintenanceWSAPI = new MaintenanceWSAPI();
 
