@@ -1,21 +1,8 @@
 <template>
 	<div>
-		<MaintenanceForm
+		<CreationModal
 			@maintenance-created="createMaintenance"
 		/>
-
-		<UpdateModal />
-
-		<button
-			@click="addMaintenance"
-			type="button"
-			class="btn btn-info"
-			data-toggle="modal"
-			data-target="#createMaintenanceModal"
-		>
-			<i class="fas fa-plus-circle" />
-			Add maintenance
-		</button>
 
 		<table class="table mt-4">
 			<thead>
@@ -60,13 +47,13 @@
 import { ref, onMounted } from "vue";
 import MaintenanceWSAPI from "../../API/MaintenanceWSAPI";
 import Maintenance from "./Maintenance.vue";
-import MaintenanceForm from "./MaintenanceForm.vue";
-import UpdateModal from "./maintenance-update/UpdateModal.vue";
+// import MaintenanceForm from "./MaintenanceForm.vue";
+import CreationModal from "./maintenance-modals/CreationModal.vue";
 
 const maintenanceWSAPI = new MaintenanceWSAPI();
 
 export default {
-	components: { Maintenance, MaintenanceForm, UpdateModal },
+	components: { Maintenance, /* MaintenanceForm, */ CreationModal },
 	setup() {
 		const maintenances = ref(null);
 

@@ -7,17 +7,17 @@
 		<td>{{ maintenance.type }}</td>
 		<td>{{ maintenance.status }}</td>
 		<td>
-			<div
-				@click="updateMaintenance"
-				class="btn btn-warning"
-			>
-				Update
-				<i class="fas fa-pencil-alt" />
-			</div>
+			<UpdateModal
+				:maintenance-to-update="maintenance"
+				@maintenance-updated="updateMaintenance"
+			/>
+			
+
 			<div
 				@click="deleteMaintenance"
 				class="btn btn-danger"
 			>
+				<i class="fas fa-trash-alt" />
 				Delete
 			</div>
 		</td>
@@ -25,13 +25,14 @@
 </template>
 
 <script>
-
 import MaintenanceWSAPI from "../../API/MaintenanceWSAPI";
 import Maintenance from "../../models/maintenance-management/Maintenance";
+import UpdateModal from "./maintenance-modals/UpdateModal.vue";
 
 const maintenanceWSAPI = new MaintenanceWSAPI();
 
 export default {
+	components: { UpdateModal },
 	props: {
 		maintenance: {
 			type: Maintenance,
