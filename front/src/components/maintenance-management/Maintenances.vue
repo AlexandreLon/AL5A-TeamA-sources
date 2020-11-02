@@ -1,7 +1,9 @@
 <template>
 	<div>
-		<MaintenanceForm
-			@maintenance-created="createMaintenance"/>
+		<CreationModal
+			@maintenance-created="createMaintenance"
+		/>
+
 		<table class="table mt-4">
 			<thead>
 				<tr>
@@ -22,7 +24,7 @@
 					</th>
 				</tr>
 			</thead>
-			<tbody>
+			<tbody v-if="maintenances && maintenances.length > 0">
 				<Maintenance
 					v-for="maintenance of maintenances"
 					:key="maintenance.id"
@@ -31,20 +33,27 @@
 					@maintenance-deleted="remove"
 				/>
 			</tbody>
+			<tr
+				v-else
+				style="colspan:all; text-align: center;"
+			>
+				There is no maintenance to display.
+			</tr>
 		</table>
 	</div>
 </template>
 
 <script>
 import { ref, onMounted } from "vue";
-import MaintenanceWSAPI from "../../../API/MaintenanceWSAPI";
+import MaintenanceWSAPI from "../../API/MaintenanceWSAPI";
 import Maintenance from "./Maintenance.vue";
-import MaintenanceForm from "../MaintenanceForm.vue";
+// import MaintenanceForm from "./MaintenanceForm.vue";
+import CreationModal from "./maintenance-modals/CreationModal.vue";
 
 const maintenanceWSAPI = new MaintenanceWSAPI();
 
 export default {
-	components: { Maintenance, MaintenanceForm },
+	components: { Maintenance, /* MaintenanceForm, */ CreationModal },
 	setup() {
 		const maintenances = ref(null);
 
