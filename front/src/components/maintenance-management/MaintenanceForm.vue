@@ -43,7 +43,8 @@ import MaintenanceWSAPI from "../../API/MaintenanceWSAPI";
 const maintenanceWSAPI = new MaintenanceWSAPI();
 
 export default {
-	setup() {
+	emits: ['maintenance-created'],
+	setup(props, {emit}) {
 		const maintenance = ref({name: '', type: ''});
 		const result = ref(false);
 
@@ -51,16 +52,16 @@ export default {
 		});
 
 		const createMaintenance = () => {
-			if (
-				maintenance.value.type !== "" &&
-          maintenance.value.name !== ""
-			)
+			if (maintenance.value.type !== "" &&
+          		maintenance.value.name !== "") {
 				maintenanceWSAPI
 					.createMaintenance(maintenance.value)
 					.then(res => {
 						maintenance.value = res;
-						if (maintenance.value !== null)
+						if (maintenance.value !== null) {
 							result.value = true;
+						}
+						emit('maintenance-created', res);
 						setTimeout(() => {
 							result.value = false;
 						}, 2000);
@@ -68,6 +69,7 @@ export default {
 					.catch(error => {
 						console.error(error);
 					});
+			}
 		};
 
 		return {maintenance, createMaintenance, result};

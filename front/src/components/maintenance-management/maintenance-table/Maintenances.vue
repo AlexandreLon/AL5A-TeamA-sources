@@ -1,6 +1,7 @@
 <template>
 	<div>
-		<MaintenanceForm />
+		<MaintenanceForm
+			@maintenance-created="createMaintenance"/>
 		<table class="table mt-4">
 			<thead>
 				<tr>
@@ -58,6 +59,10 @@ export default {
 				});
 		});
 
+		function createMaintenance(newMaintenance) {
+			maintenances.value.push(newMaintenance);
+		}
+
 		function update(newMaintenance) {
 			maintenances.value = maintenances.value.map(current =>
 				current.id === newMaintenance.id ? newMaintenance : current
@@ -70,7 +75,7 @@ export default {
 			);
 		}
 
-		return { maintenances, update, remove };
+		return { maintenances, createMaintenance, update, remove };
 	}
 };
 </script>
