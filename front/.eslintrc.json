@@ -18,16 +18,23 @@
         "eslint-plugin-html"
     ],
     "rules": {
-        "no-console":"off",
+        "no-console": "off",
         "semi": "error",
-        "indent": ["error", "tab"],
+        "indent": [
+            "error",
+            "tab"
+        ],
         // "vue/no-multiple-template-root": 1,
-        "vue/html-indent": ["error", "tab", {
-            "attribute": 1,
-            "baseIndent": 1,
-            "closeBracket": 0,
-            "alignAttributesVertically": true,
-            "ignores": []
-        }]
+        "vue/html-indent": [
+            "error",
+            "tab",
+            {
+                "attribute": 1,
+                "baseIndent": 1,
+                "closeBracket": 0,
+                "alignAttributesVertically": true,
+                "ignores": []
+            }
+        ]
     }
 }

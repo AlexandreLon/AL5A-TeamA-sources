@@ -5,10 +5,10 @@
 	<parent>
 		<groupId>fr.polytech</groupId>
 		<artifactId>al-trainmanagement</artifactId>
-    	<version>0.1.0-SNAPSHOT</version>
+    	<version>0.2.0-SNAPSHOT</version>
 	</parent>
 	<artifactId>task-component</artifactId>
-	<version>0.1.0-SNAPSHOT</version>
+	<version>0.2.0-SNAPSHOT</version>
 
 	<properties>
 		<java.version>11</java.version>

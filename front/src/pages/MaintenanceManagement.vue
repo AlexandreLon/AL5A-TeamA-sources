@@ -1,23 +1,22 @@
 <template>
 	<div class="container">
 		<h1>Maintenance management</h1>
-		<MaintenanceManagement />
+		<Maintenances />
 	</div>
 </template>
 
 <script>
-
-import MaintenanceManagement from '../components/maintenance-management/MaintenanceForm.vue';
+import Maintenances from "../components/maintenance-management/Maintenances.vue";
 
 export default {
 	components: {
-		MaintenanceManagement
+		Maintenances
 	}
 };
 </script>
 
 <style scoped>
 h1 {
-    text-align: center;
+	text-align: center;
 }
 </style>

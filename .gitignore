@@ -1,6 +1,6 @@
-VPP
 **/.DS_Store
 .vscode
 .idea
 **/*.http
 **/.env
+back/resources/application.properties

@@ -1,23 +1,40 @@
 package fr.polytech.task.components;
 
+import java.util.List;
+import java.util.Optional;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.autoconfigure.domain.EntityScan;
+import org.springframework.context.annotation.ComponentScan;
+import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 import org.springframework.stereotype.Component;
 import fr.polytech.task.models.TaskStatus;
+import fr.polytech.task.repositories.TaskRepository;
 import fr.polytech.task.models.Task;
 
-@Component("taskBean")
-public class TaskBean implements TaskCreator, TaskAction {
+@Component
+@ComponentScan("fr.polytech.task.repositories")
+@EntityScan("fr.polytech.task.models")
+@EnableJpaRepositories("fr.polytech.task.repositories")
+public class TaskBean implements TaskAction, ScheduleVisualizer {
 
-    private Task task;
+    @Autowired
+    private TaskRepository taskRepository;
 
-    public void createTask(Task task){
-        this.task = task;
+    @Override
+    public Task endTask(Long id) {
+        Optional<Task> opt = taskRepository.findById(id);
+        if(opt.isPresent()) {
+            Task task = opt.get();
+            task.setStatus(TaskStatus.FINISHED);
+            taskRepository.save(task);
+            return opt.get();
+        }
+        return null;
     }
-
-    public void endTask(){
-        this.task.setStatus(TaskStatus.FINISHED);
-    }
-
-    public Task getTask(){
-        return this.task;
-    }
+    
+	@Override
+	public List<Task> getPlanning() {
+        return (List<Task>) taskRepository.findAllByOrderByPriorityDesc();
+	}
 }

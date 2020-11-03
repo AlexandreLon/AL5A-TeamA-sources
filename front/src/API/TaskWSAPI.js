@@ -3,24 +3,13 @@ import API from './API';
 
 class TaskWSAPI extends API {
     
-	getTask() {
-		return new Promise((resolve, reject) => {
-			this.axios.get('/task').then(res => {
-				if(res.data.id === undefined || res.data.name === undefined || res.data.type === undefined || res.data.status === undefined)
-				    reject(Error("Not received task"));
-				resolve(new Task(res.data.id, res.data.name, res.data.type, res.data.status));
-			}).catch(error => {
-				reject(error);
-			});
-		});
-	}
 
-	putTask() {
+	putTask(id) {
 		return new Promise((resolve, reject) => {
-			this.axios.put('/task').then(res => {
+			this.axios.put(`/task/${id}`).then(res => {
 				if(res.data.id === undefined || res.data.name === undefined || res.data.type === undefined || res.data.status === undefined)
 				    reject(Error("Not received task"));
-				resolve(new Task(res.data.id, res.data.name, res.data.type, res.data.status));
+				resolve(new Task(res.data.id, res.data.name, res.data.type, res.data.status,res.data.priority,res.data.creationDate));
 			}).catch(error => {
 				reject(error);
 			});
