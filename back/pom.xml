@@ -11,7 +11,7 @@
 	<groupId>fr.polytech</groupId>
 	<artifactId>al-trainmanagement</artifactId>
 	<packaging>pom</packaging>
-	<version>0.1.0-SNAPSHOT</version>
+	<version>0.2.0-SNAPSHOT</version>
 
 	<modules>
 		<module>task-component</module>

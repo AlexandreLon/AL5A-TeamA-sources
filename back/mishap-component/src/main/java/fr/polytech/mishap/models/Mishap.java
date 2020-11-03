@@ -1,12 +1,10 @@
 package fr.polytech.mishap.models;
 
 import javax.persistence.Entity;
-import javax.persistence.Column;
 
 import java.util.Date;
 import java.util.Objects;
 import fr.polytech.task.models.Task;
-import fr.polytech.task.models.TaskPriority;
 import fr.polytech.task.models.TaskStatus;
 
 @Entity
