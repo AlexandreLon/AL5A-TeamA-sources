@@ -34,9 +34,11 @@ fi
 cp ../back/webservices/target/train-management-backend.war ./back
 
 # Create a dist directory and store it in front/ directory
-cd ../front
-npm run build
-cd $path
+if [[ $SARG == 0 ]]; then
+    cd ../front
+    npm run build
+    cd $path
+fi
 
 cp -r ../front/dist ./front
 
