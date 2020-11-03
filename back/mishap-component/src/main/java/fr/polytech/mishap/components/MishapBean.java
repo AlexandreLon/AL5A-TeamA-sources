@@ -50,8 +50,13 @@ public class MishapBean implements MishapManager {
 
     @Override
     public Mishap updateMishap(Long id, String name, String type, TaskPriority priority){
-        Mishap mishap = mishapRepository.findById(id).orElse(null);
-        if(mishap == null){
+        Optional<Mishap> opt = this.mishapRepository.findById(id);
+        if (opt.isPresent()) {
+            Mishap mishap = opt.get();
+            mishap.setName(name);
+            mishap.setType(type);
+            mishap.setPriority(priority);
+            this.mishapRepository.save(mishap);
             return mishap;
         }
         return null;

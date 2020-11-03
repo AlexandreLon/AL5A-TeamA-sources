@@ -8,17 +8,16 @@
 		<td>{{ mishap.status }}</td>
 		<td>{{ mishap.priority }}</td>
 		<td>
-			<div
-				@click="updateMishap"
-				class="btn btn-warning"
-			>
-				Update
-				<i class="fas fa-pencil-alt" />
-			</div>
+			<UpdateModal
+				:mishap-to-update="mishap"
+				@mishap-updated="updateMishap"
+			/>
+
 			<div
 				@click="deleteMishap"
 				class="btn btn-danger"
 			>
+				<i class="fas fa-trash-alt" />
 				Delete
 			</div>
 		</td>
@@ -26,13 +25,14 @@
 </template>
 
 <script>
-
 import MishapWSAPI from "../../API/MishapWSAPI";
 import Mishap from "../../models/mishap-management/Mishap";
+import UpdateModal from "./mishap-modals/UpdateModal.vue";
 
 const mishapWSAPI = new MishapWSAPI();
 
 export default {
+	components: { UpdateModal },
 	props: {
 		mishap: {
 			type: Mishap,
@@ -41,13 +41,9 @@ export default {
 	},
 	emits: ["mishap-updated", "mishap-deleted"],
 	setup(props, { emit }) {
-
-		const updateMishap = () => {
-			mishapWSAPI.updateMishap(props.mishap.id).then(res => {
-				emit("mishap-updated", res);
-			}).catch(error => {
-				console.error(error);
-			});
+		
+		const updateMishap = (newMishap) => {
+			emit("mishap-updated", newMishap);
 		};
 
 		const deleteMishap = () => {
