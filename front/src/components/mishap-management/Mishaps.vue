@@ -1,8 +1,9 @@
 <template>
 	<div>
-		<MishapForm
+		<CreationModal
 			@mishap-created="createMishap"
 		/>
+
 		<table class="table mt-4">
 			<thead>
 				<tr>
@@ -26,7 +27,7 @@
 					</th>
 				</tr>
 			</thead>
-			<tbody>
+			<tbody v-if="mishaps && mishaps.length > 0">
 				<Mishap
 					v-for="mishap of mishaps"
 					:key="mishap.id"
@@ -35,6 +36,12 @@
 					@mishap-deleted="remove"
 				/>
 			</tbody>
+			<tr
+				v-else
+				style="colspan:all; text-align: center;"
+			>
+				There is no mishap to display.
+			</tr>
 		</table>
 	</div>
 </template>
@@ -43,12 +50,13 @@
 import { ref, onMounted } from "vue";
 import MishapWSAPI from "../../API/MishapWSAPI";
 import Mishap from "./Mishap.vue";
-import MishapForm from "./mishap-modals/MishapForm.vue";
+// import MishapForm from "./MishapForm.vue";
+import CreationModal from "./mishap-modals/CreationModal.vue";
 
 const mishapWSAPI = new MishapWSAPI();
 
 export default {
-	components: { Mishap, MishapForm },
+	components: { Mishap, /* MishapForm, */ CreationModal },
 	setup() {
 		const mishaps = ref(null);
 

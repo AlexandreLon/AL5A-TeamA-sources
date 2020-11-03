@@ -17,7 +17,7 @@
 						Type
 					</th>
 					<th scope="col">
-						Creation date
+						Status
 					</th>
 					<th scope="col">
 						Actions
