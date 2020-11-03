@@ -4,6 +4,28 @@
 >
 > Impact : <Elevé, moyen, Fort>
 
+## Semaine 45
+
+### Flag : Green
+
+Nous avons terminé le développement du MVP avec quelques jours de retard par rapport à ce que l'on avais prévu.
+Au cours de cette semaine, nous avons pu mettre l'accent sur le développement de la partie fonctionnelle du projet en permettant la gestion de plusieurs maintenances et plusieurs incidents. Notre MVP passe ainsi par les trois couches fonctionnelles que nous avons défini :
+ - gérer des maintenances,
+ - gérer des incidents,
+ - voir et accomplir les tâches associées aux incidents et maintenances).
+ 
+ De plus, grâce à la mise en place de la persistance la semaine dernière, nos composants n'ont plus besoin d'être stateful et notre MVP possède également toutes les couches que nous avons prévu de mettre en place :
+ - une couche applicative (client)
+ - une couche de logique métier
+ - une couche d'accès aux données
+ 
+ Le reste de cette semaine sera consacré à la retrospective de nos choix et à la préparation de la soutenance.
+
+ Il y a un risque majeur à évoquer. Nous devons encore faire en sorte que le projet se lance avec Docker pour s'assurer qu'il marche dans un environnement isolé.  Pour l'instant, nous ne parvenons pas à faire en sorte que Docker se lance sur un profil de déploiement défini.
+ 
+ Probabilité : moyenne au vu de la charge de travail dans les autres projets en parallèle
+ Impact : Elevé
+
 ## Semaine 44
 
 ### Flag : Green
@@ -18,8 +40,11 @@ Nous avons prévu d'avoir un MVP fonctionnel cette semaine afin d'éviter des er
 
 ### Flag : Green
 Lors de cette semaine nous avons commencé à mettre en place nos stack technologiques et les brancher entre elles, et nous avons prévu et réparti entre nous les tâches que nous allons faire.
+
 Le risque, cette fois, est que si nous nous rendons compte d'un problème dans notre architecture au moment de passer à la pratique, il faudra à la fois revoir la partie de l'architecture qui pose problème, mais aussi changer le code en fonction, ce qui nous ferait prendre du retard dès le début du projet.
+
 Probabilité : Moyen
+
 Impact : Moyen
 Pour la suite nous allons faire les tâches que nous avons défini dans notre roadmap, pour la première SNAPSHOT
 
