@@ -62,7 +62,7 @@
 										Please select a type
 									</option>
 									<option>Accident</option>
-									<option>Meteo</option>
+									<option>Weather</option>
 									<option>Something else</option>
 								</select>
 							</div>
