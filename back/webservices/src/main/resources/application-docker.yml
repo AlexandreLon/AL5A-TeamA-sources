@@ -3,7 +3,7 @@ server:
 
 spring:
     datasource:
-        url: jdbc:mysql://database:3307/tmdocker?serverTimezone=Europe/Paris
+        url: jdbc:mysql://database:3306/tmdocker?serverTimezone=Europe/Paris
         username: user
         password: password
         driver-class-name: com.mysql.jdbc.Driver
