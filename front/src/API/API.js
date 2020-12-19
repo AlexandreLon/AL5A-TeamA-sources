@@ -9,7 +9,7 @@ class API {
 			Number.isNaN(host) || Number.isNaN(port)) {
 			throw new Error("No host or port specified or incorrect. Please edit your .env file");
 		}
-		this.axios = axios.create({baseURL: `http://${host}:${port}`});
+		this.axios = axios.create({baseURL: `http://${host}:${port}/api`});
 	}
 }
 

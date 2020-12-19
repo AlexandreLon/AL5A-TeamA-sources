@@ -1,5 +1,6 @@
 package fr.polytech.maintenance.components;
 
+import fr.polytech.maintenance.errors.MaintenanceNotFound;
 import fr.polytech.maintenance.models.Maintenance;
 import fr.polytech.maintenance.repositories.MaintenanceRepository;
 
@@ -44,13 +45,14 @@ public class MaintenanceBean implements MaintenanceManager {
     }
 
     @Override
-    public Maintenance getMaintenanceById(Long id) {
+    public Maintenance getMaintenanceById(Long id) throws MaintenanceNotFound {
         Optional<Maintenance> opt = this.maintenanceRepository.findById(id);
-        return opt.isPresent() ? opt.get() : null;
+        if(!opt.isPresent()) throw new MaintenanceNotFound();
+        return opt.get();
     }
 
     @Override
-    public Maintenance updateMaintenance(Long id, String name, String type) {
+    public Maintenance updateMaintenance(Long id, String name, String type) throws MaintenanceNotFound {
         Optional<Maintenance> opt = this.maintenanceRepository.findById(id);
         if (opt.isPresent()) {
             Maintenance maintenance = opt.get();
@@ -59,7 +61,7 @@ public class MaintenanceBean implements MaintenanceManager {
             this.maintenanceRepository.save(maintenance);
             return maintenance;
         }
-        return null;
+        throw new MaintenanceNotFound();
     }
 
     @Override
