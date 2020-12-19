@@ -50,6 +50,11 @@
             <artifactId>spring-boot-starter-data-jpa</artifactId>
 		</dependency>
 		<dependency>
+			<groupId>com.h2database</groupId>
+			<artifactId>h2</artifactId>
+			<version>1.4.193</version>
+		 </dependency>
+		<dependency>
 			<groupId>mysql</groupId>
 			<artifactId>mysql-connector-java</artifactId>
 			<scope>runtime</scope>
@@ -79,18 +84,6 @@
 		</plugins>
 	</build>
 	<profiles>
-        <profile>
-            <id>docker</id>
-            <properties>
-                <port>3000</port>
-                <database_host>database</database_host>
-                <database_port>3307</database_port>
-                <database_user>user</database_user>
-                <database_password>password</database_password>
-                <database_name>tmtests</database_name>
-                <ddlauto>create</ddlauto>
-            </properties>
-		</profile>
 		<profile>
             <id>travis</id>
             <properties>
