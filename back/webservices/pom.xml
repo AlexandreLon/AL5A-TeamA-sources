@@ -4,11 +4,11 @@
 	<parent>
 		<groupId>fr.polytech</groupId>
 		<artifactId>al-trainmanagement</artifactId>
-		<version>1.0.0</version>
+		<version>1.0.1-SNAPSHOT</version>
 	</parent>
 	<artifactId>webservices</artifactId>
 	<packaging>war</packaging>
-	<version>1.0.0</version>
+	<version>1.0.1-SNAPSHOT</version>
 
 
 	<properties>
@@ -19,17 +19,17 @@
 		<dependency>
 			<groupId>fr.polytech</groupId>
 			<artifactId>task-component</artifactId>
-			<version>1.0.0</version>
+			<version>1.0.1-SNAPSHOT</version>
 		</dependency>
 		<dependency>
 			<groupId>fr.polytech</groupId>
 			<artifactId>maintenance-component</artifactId>
-			<version>1.0.0</version>
+			<version>1.0.1-SNAPSHOT</version>
 		</dependency>
 		<dependency>
 			<groupId>fr.polytech</groupId>
 			<artifactId>mishap-component</artifactId>
-			<version>1.0.0</version>
+			<version>1.0.1-SNAPSHOT</version>
 		</dependency>
 		<dependency>
             <groupId>org.apache.maven.plugins</groupId>
