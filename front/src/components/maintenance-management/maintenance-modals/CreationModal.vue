@@ -1,6 +1,7 @@
 <template>
 	<div>
 		<button
+			@click="resetState"
 			type="button"
 			class="btn btn-info"
 			data-toggle="modal"
@@ -104,6 +105,10 @@ export default {
 		const maintenance = ref({name: '', type: ''});
 		const result = ref(false);
 
+		const resetState = () => {
+			maintenance.value = {name: '', type: ''};
+		};
+
 		const createMaintenance = () => {
 			if (maintenance.value.type !== "" &&
 				maintenance.value.name !== "") {
@@ -125,7 +130,7 @@ export default {
 			}
 		};
 
-		return {maintenance, createMaintenance, result};
+		return {maintenance, resetState, createMaintenance, result};
 	}
 };
 </script>

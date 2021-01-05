@@ -2,6 +2,7 @@ package fr.polytech.mishap.components;
 
 import java.util.List;
 
+import fr.polytech.mishap.errors.MishapNotFound;
 import fr.polytech.mishap.models.Mishap;
 import fr.polytech.task.models.TaskPriority;
 
@@ -10,9 +11,9 @@ public interface MishapManager {
 
     List<Mishap> getMishaps();
 
-    Mishap getMishapById(Long id);
+    Mishap getMishapById(Long id) throws MishapNotFound;
 
-    Mishap updateMishap(Long id, String name, String type, TaskPriority priority);
+    Mishap updateMishap(Long id, String name, String type, TaskPriority priority) throws MishapNotFound;
 
     void deleteMishap(Long id);
 }

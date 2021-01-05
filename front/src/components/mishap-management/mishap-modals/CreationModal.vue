@@ -1,6 +1,7 @@
 <template>
 	<div>
 		<button
+			@click="resetState"
 			type="button"
 			class="btn btn-info"
 			data-toggle="modal"
@@ -48,7 +49,7 @@
 							<input
 								class="form-control mb-3"
 								v-model="mishap.name"
-								placeholder="Train derailed !!"
+								placeholder="Ex : Train stopped"
 							>
 							<div>
 								<select
@@ -120,6 +121,10 @@ export default {
 		const mishap = ref({name: '', type: '', priority: ''});
 		const result = ref(false);
 
+		const resetState = () => {
+			mishap.value = {name: '', type: '', priority: ''};
+		};
+
 		const createMishap = () => {
 			if (mishap.value.type !== "" &&
 				mishap.value.name !== "" &&
@@ -142,7 +147,7 @@ export default {
 			}
 		};
 
-		return {mishap, createMishap, result};
+		return {mishap, resetState, createMishap, result};
 	}
 };
 </script>

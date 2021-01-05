@@ -10,6 +10,7 @@ import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 import org.springframework.stereotype.Component;
 import fr.polytech.task.models.TaskStatus;
 import fr.polytech.task.repositories.TaskRepository;
+import fr.polytech.task.errors.TaskNotFound;
 import fr.polytech.task.models.Task;
 
 @Component
@@ -22,7 +23,7 @@ public class TaskBean implements TaskAction, ScheduleVisualizer {
     private TaskRepository taskRepository;
 
     @Override
-    public Task endTask(Long id) {
+    public Task endTask(Long id) throws TaskNotFound {
         Optional<Task> opt = taskRepository.findById(id);
         if(opt.isPresent()) {
             Task task = opt.get();
@@ -30,7 +31,7 @@ public class TaskBean implements TaskAction, ScheduleVisualizer {
             taskRepository.save(task);
             return opt.get();
         }
-        return null;
+        throw new TaskNotFound();
     }
     
 	@Override

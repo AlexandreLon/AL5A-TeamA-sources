@@ -11,7 +11,7 @@
 	<groupId>fr.polytech</groupId>
 	<artifactId>al-trainmanagement</artifactId>
 	<packaging>pom</packaging>
-	<version>0.2.0-SNAPSHOT</version>
+	<version>1.0.0</version>
 
 	<modules>
 		<module>task-component</module>
@@ -50,9 +50,19 @@
             <artifactId>spring-boot-starter-data-jpa</artifactId>
 		</dependency>
 		<dependency>
+			<groupId>com.h2database</groupId>
+			<artifactId>h2</artifactId>
+			<version>1.4.193</version>
+		 </dependency>
+		<dependency>
 			<groupId>mysql</groupId>
 			<artifactId>mysql-connector-java</artifactId>
 			<scope>runtime</scope>
+		</dependency>
+		<dependency>
+			<groupId>io.springfox</groupId>
+			<artifactId>springfox-boot-starter</artifactId>
+			<version>3.0.0</version>
 		</dependency>
 	</dependencies>
 	<build>
@@ -74,18 +84,6 @@
 		</plugins>
 	</build>
 	<profiles>
-        <profile>
-            <id>docker</id>
-            <properties>
-                <port>3000</port>
-                <database_host>database</database_host>
-                <database_port>3307</database_port>
-                <database_user>user</database_user>
-                <database_password>password</database_password>
-                <database_name>tmtests</database_name>
-                <ddlauto>create</ddlauto>
-            </properties>
-		</profile>
 		<profile>
             <id>travis</id>
             <properties>
@@ -98,5 +96,18 @@
                 <ddlauto>create</ddlauto>
             </properties>
         </profile>
+		<profile>
+			<id>docker</id>
+			<properties>
+				<port>3000</port>
+				<database_host>database</database_host>
+				<database_port>3307</database_port>
+				<database_user>user</database_user>
+				<database_password>password</database_password>
+				<database_name>tmdocker</database_name>
+				<ddlauto>create</ddlauto>
+				<mode>test</mode>
+			</properties>
+		</profile>
     </profiles>
 </project>
