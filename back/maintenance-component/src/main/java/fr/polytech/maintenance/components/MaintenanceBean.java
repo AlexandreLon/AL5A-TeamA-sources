@@ -1,5 +1,6 @@
 package fr.polytech.maintenance.components;
 
+import fr.polytech.bid.components.BidCreator;
 import fr.polytech.maintenance.errors.MaintenanceNotFound;
 import fr.polytech.maintenance.models.Maintenance;
 import fr.polytech.maintenance.repositories.MaintenanceRepository;
@@ -19,13 +20,16 @@ import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 import fr.polytech.task.models.TaskStatus;
 
 @Component
-@ComponentScan("fr.polytech.maintenance.repositories")
+@ComponentScan({"fr.polytech.maintenance.repositories", "fr.polytech.bid.components"})
 @EntityScan("fr.polytech.maintenance.models")
 @EnableJpaRepositories("fr.polytech.maintenance.repositories")
 public class MaintenanceBean implements MaintenanceManager {
 
     @Autowired
     private MaintenanceRepository maintenanceRepository;
+
+    @Autowired
+    private BidCreator bidCreator;
 
     @Override
     public Maintenance createMaintenance(String name, String type) {
@@ -36,6 +40,7 @@ public class MaintenanceBean implements MaintenanceManager {
         maintenance.setCreationDate(new Date());
         maintenance.setPriority(TaskPriority.NONE);
         maintenanceRepository.save(maintenance);
+        bidCreator.createBid(maintenance);
         return maintenance;
     }
 

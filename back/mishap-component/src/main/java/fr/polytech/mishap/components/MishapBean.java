@@ -1,5 +1,6 @@
 package fr.polytech.mishap.components;
 
+import fr.polytech.bid.components.BidCreator;
 import fr.polytech.mishap.errors.MishapNotFound;
 import fr.polytech.mishap.models.Mishap;
 import fr.polytech.mishap.repositories.MishapRepository;
@@ -18,13 +19,16 @@ import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 import org.springframework.stereotype.Component;
 
 @Component
-@ComponentScan("fr.polytech.mishap.repositories")
+@ComponentScan({"fr.polytech.mishap.repositories", "fr.polytech.bid.components"})
 @EntityScan("fr.polytech.mishap.models")
 @EnableJpaRepositories("fr.polytech.mishap.repositories")
 public class MishapBean implements MishapManager {
 
     @Autowired
     private MishapRepository mishapRepository;
+
+    @Autowired
+    private BidCreator bidCreator;
 
     @Override
     public Mishap createMishap(String name, String type, TaskPriority priority) {
@@ -35,6 +39,7 @@ public class MishapBean implements MishapManager {
         mishap.setStatus(TaskStatus.PENDING);
         mishap.setCreationDate(new Date());
         mishapRepository.save(mishap);
+        bidCreator.createBid(mishap);
         return mishap;
     }
 

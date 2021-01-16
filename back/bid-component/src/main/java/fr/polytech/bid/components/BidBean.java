@@ -3,6 +3,8 @@ package fr.polytech.bid.components;
 import fr.polytech.bid.errors.BidNotFoundException;
 import fr.polytech.bid.models.Bid;
 import fr.polytech.bid.repositories.BidRepository;
+import fr.polytech.task.models.Task;
+
 import org.springframework.stereotype.Component;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,11 +19,10 @@ import java.util.Optional;
 @ComponentScan("fr.polytech.bid.repositories")
 @EntityScan("fr.polytech.bid.models")
 @EnableJpaRepositories("fr.polytech.bid.repositories")
-public class BidBean implements BidViewer{
+public class BidBean implements BidViewer, BidCreator {
 
     @Autowired
     private BidRepository bidRepository;
-
 
     @Override
     public List<Bid> getBids() {
@@ -31,7 +32,16 @@ public class BidBean implements BidViewer{
     @Override
     public Bid getBidById(Long id) throws BidNotFoundException {
         Optional<Bid> opt = bidRepository.findById(id);
-        if(!opt.isPresent()) throw new BidNotFoundException();
+        if (!opt.isPresent())
+            throw new BidNotFoundException();
         return opt.get();
+    }
+
+    @Override
+    public void createBid(Task task) {
+        Bid bid = new Bid();
+        bid.setName(task.getName()); //TODO Maybe remove name or how to choose the name of bid ?
+        bid.setTask(task);
+        bidRepository.save(bid);
     }
 }
