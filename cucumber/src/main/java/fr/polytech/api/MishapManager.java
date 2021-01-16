@@ -8,7 +8,7 @@ import org.springframework.web.client.RestTemplate;
 
 public class MishapManager {
 
-	private final String mishapUrl = String.format("http://%s:%s/mishap", Api.HOST, Api.PORT);
+	private final String mishapUrl = String.format("http://%s:%s/api/mishap", Api.HOST, Api.PORT);
 	private final RestTemplate restTemplate = new RestTemplate();
 
 	public Mishap createMishap(String mishapName, String mishapType, MishapPriority priority) {

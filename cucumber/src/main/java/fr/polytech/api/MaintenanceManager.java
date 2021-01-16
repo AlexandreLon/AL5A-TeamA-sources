@@ -22,6 +22,6 @@ public class MaintenanceManager {
 		HttpEntity<Maintenance> requestBody = new HttpEntity<>(maintenance, headers);
  
 		// Send request with POST method.
-		restTemplate.postForObject(String.format("http://%s:%s/maintenance", Api.HOST, Api.PORT), requestBody, Maintenance.class);
+		restTemplate.postForObject(String.format("http://%s:%s/api/maintenance", Api.HOST, Api.PORT), requestBody, Maintenance.class);
 	}
 }

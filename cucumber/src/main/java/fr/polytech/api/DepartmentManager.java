@@ -14,7 +14,7 @@ public class DepartmentManager {
 		RestTemplate restTemplate = new RestTemplate();
  
         // Send request with GET method and default Headers.
-        Task[] array = restTemplate.getForObject(String.format("http://%s:%s/schedule", Api.HOST, Api.PORT), Task[].class);
+        Task[] array = restTemplate.getForObject(String.format("http://%s:%s/api/schedule", Api.HOST, Api.PORT), Task[].class);
 		List<Task> tasks = new ArrayList<>(Arrays.asList(array));
 
         return tasks;
@@ -22,7 +22,7 @@ public class DepartmentManager {
 
 	public void done(Long id) {
 		RestTemplate restTemplate = new RestTemplate();
-		restTemplate.put(String.format("http://%s:%s/task/%d", Api.HOST, Api.PORT, id), new Object[] {});
+		restTemplate.put(String.format("http://%s:%s/api/task/%d", Api.HOST, Api.PORT, id), new Object[] {});
 	}
     
 }
