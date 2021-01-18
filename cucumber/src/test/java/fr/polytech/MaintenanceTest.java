@@ -1,5 +1,6 @@
 package fr.polytech;
 
+import fr.polytech.api.Api;
 import io.cucumber.java.en.And;
 import io.cucumber.java.en.Given;
 import io.cucumber.java.en.Then;
@@ -10,21 +11,26 @@ import static org.junit.Assert.*;
 import java.util.List;
 import java.util.stream.Collectors;
 
+import io.cucumber.spring.CucumberContextConfiguration;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.context.SpringBootContextLoader;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.context.annotation.ComponentScan;
+import org.springframework.test.context.ContextConfiguration;
 
 import fr.polytech.api.DepartmentManager;
 import fr.polytech.api.MaintenanceManager;
 import fr.polytech.models.Task;
 
-@ComponentScan(basePackages = { "fr.polytech.api" })
+//@ContextConfiguration(classes = SpringBootCucumberTest.class, loader = SpringBootContextLoader.class)
 @SpringBootTest
 public class MaintenanceTest {
 
     private String maintenanceName;
     private List<Task> tasks;
 
+    @Autowired
+    Api api;
     @Autowired
     private MaintenanceManager maintenanceManager;
 

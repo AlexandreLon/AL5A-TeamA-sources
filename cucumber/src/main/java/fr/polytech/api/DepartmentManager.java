@@ -15,6 +15,7 @@ public class DepartmentManager {
 
 	@Autowired Api api;
 
+
 	public List<Task> getTasks() {
 		RestTemplate restTemplate = new RestTemplate();
  
