@@ -10,16 +10,26 @@ import static org.junit.Assert.*;
 import java.util.List;
 import java.util.stream.Collectors;
 
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.context.annotation.ComponentScan;
+
 import fr.polytech.api.DepartmentManager;
 import fr.polytech.api.MaintenanceManager;
 import fr.polytech.models.Task;
 
+@ComponentScan(basePackages = { "fr.polytech.api" })
+@SpringBootTest
 public class MaintenanceTest {
 
     private String maintenanceName;
     private List<Task> tasks;
-    private MaintenanceManager maintenanceManager = new MaintenanceManager();
-    private DepartmentManager departmentManager = new DepartmentManager();
+
+    @Autowired
+    private MaintenanceManager maintenanceManager;
+
+    @Autowired
+    private DepartmentManager departmentManager;
 
     @Given("A {string} to do")
     public void aMaintenanceName(String maintenanceName) {

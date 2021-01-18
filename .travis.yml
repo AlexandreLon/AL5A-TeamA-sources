@@ -19,7 +19,14 @@ matrix:
           - npm install
           - npm run lint
           - npm run build
-  
+      
+      - language: java
+        java: 11
+        services: 
+          - docker
+        script:
+          - cd docker
+          - ./compose.sh
 
 notifications:
   slack: informatiquep-kyw7477:drzHOWQ9ow9kLfoGYeCvpsVN

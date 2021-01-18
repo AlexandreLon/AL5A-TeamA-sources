@@ -42,11 +42,15 @@ fi
 
 cp -r ../front/dist ./front
 
+cd ../cucumber
+zip -r ../docker/cucumber/cucumber.zip ./*
+cd $path
+
 # build docker images 
 docker-compose build
 
 # delete generated files
-rm -rf front/dist back/train-management-backend.war
+rm -rf front/dist back/train-management-backend.war cucumber/cucumber.zip
 
 # run docker 
 docker-compose up

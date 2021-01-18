@@ -13,10 +13,16 @@ import static org.junit.Assert.*;
 import java.util.List;
 import java.util.stream.Collectors;
 
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.context.annotation.ComponentScan;
+
 import fr.polytech.api.DepartmentManager;
 import fr.polytech.api.MishapManager;
 import fr.polytech.models.TaskStatus;
 
+@ComponentScan(basePackages = { "fr.polytech.api" })
+@SpringBootTest
 public class MishapTest {
 
     @ParameterType("LOW|MEDIUM|HIGH")
@@ -31,8 +37,12 @@ public class MishapTest {
 
     private String mishapName;
     private List<Task> tasks;
-    private final MishapManager mishapManager = new MishapManager();
-    private final DepartmentManager departmentManager = new DepartmentManager();
+
+    @Autowired
+    private MishapManager mishapManager;
+
+    @Autowired
+    private DepartmentManager departmentManager;
 
     @Given("A {string} mishap")
     public void aMishapName(String mishapName) {
