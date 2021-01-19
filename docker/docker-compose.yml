@@ -41,3 +41,5 @@ services:
         build:
             context: ./cucumber
             dockerfile: ./Dockerfile
+        depends_on:
+            - tm-system

@@ -12,7 +12,8 @@ import fr.polytech.models.Maintenance;
 @Service
 public class MaintenanceManager {
 
-	@Autowired Api api;
+	@Autowired 
+	private Api api;
 
 	public void createMaintenance(String maintenanceName, String maintenanceType) {
 		Maintenance maintenance = new Maintenance();

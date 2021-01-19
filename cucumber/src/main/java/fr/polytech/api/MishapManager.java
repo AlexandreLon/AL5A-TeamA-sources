@@ -4,7 +4,6 @@ import fr.polytech.models.Mishap;
 import fr.polytech.models.MishapPriority;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.annotation.ComponentScan;
 import org.springframework.http.*;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
@@ -13,8 +12,8 @@ import org.springframework.web.client.RestTemplate;
 @Service
 public class MishapManager extends Api{
 
- 	@Autowired Api api;
-
+	@Autowired 
+	private Api api;
 
 	private final RestTemplate restTemplate = new RestTemplate();
 

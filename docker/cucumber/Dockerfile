@@ -8,4 +8,4 @@ RUN su root -c "apt-get update && apt-get install unzip"
 RUN unzip ./cucumber.zip -d .
 RUN rm -rf cucumber.zip
 
-CMD ["mvn", "test"]
+CMD ["mvn", "test", "-Dspring.profiles.active=docker"]

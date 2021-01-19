@@ -13,17 +13,12 @@ import static org.junit.Assert.*;
 import java.util.List;
 import java.util.stream.Collectors;
 
-import io.cucumber.spring.CucumberContextConfiguration;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.context.annotation.ComponentScan;
-import org.springframework.test.context.ContextConfiguration;
 
 import fr.polytech.api.DepartmentManager;
 import fr.polytech.api.MishapManager;
 import fr.polytech.models.TaskStatus;
-
-//@ContextConfiguration(classes = SpringBootCucumberTest.class, loader = SpringApplicationContextLoader.class)
 
 @SpringBootTest
 public class MishapTest {

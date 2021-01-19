@@ -27,6 +27,7 @@ matrix:
         script:
           - cd docker
           - ./compose.sh
+        if: branch = ci or branch = master
 
 notifications:
   slack: informatiquep-kyw7477:drzHOWQ9ow9kLfoGYeCvpsVN

@@ -13,8 +13,8 @@ import fr.polytech.models.Task;
 @Service
 public class DepartmentManager {
 
-	@Autowired Api api;
-
+	@Autowired 
+	private Api api;
 
 	public List<Task> getTasks() {
 		RestTemplate restTemplate = new RestTemplate();

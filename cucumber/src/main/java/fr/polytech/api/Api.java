@@ -5,16 +5,12 @@ import org.springframework.stereotype.Service;
 
 @Service
 public class Api {
-    
-    // public static final String HOST = "localhost";
-    // public static final String PORT = "3000";
 
     @Value("${api.host}")
     private String host;
 
     @Value("${api.port}")
     private String port;
-
 
     public String getHost() {
         return host;
