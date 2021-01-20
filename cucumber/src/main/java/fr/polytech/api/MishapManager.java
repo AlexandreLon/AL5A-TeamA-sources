@@ -2,13 +2,19 @@ package fr.polytech.api;
 
 import fr.polytech.models.Mishap;
 import fr.polytech.models.MishapPriority;
+
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.*;
+import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 
 
-public class MishapManager {
+@Service
+public class MishapManager extends Api{
 
-	private final String mishapUrl = String.format("http://%s:%s/api/mishap", Api.HOST, Api.PORT);
+	@Autowired 
+	private Api api;
+
 	private final RestTemplate restTemplate = new RestTemplate();
 
 	public Mishap createMishap(String mishapName, String mishapType, MishapPriority priority) {
@@ -24,7 +30,7 @@ public class MishapManager {
 		HttpEntity<Mishap> requestBody = new HttpEntity<>(mishap, headers);
 
 		// Send request with POST method.
-		return restTemplate.postForObject(mishapUrl, requestBody, Mishap.class);
+		return restTemplate.postForObject(String.format("http://%s:%s/api/mishap", api.getHost(), api.getPort()), requestBody, Mishap.class);
 	}
 
 }

@@ -35,3 +35,11 @@ services:
             - '8080'
         ports:
             - '8080:80'
+    cucumber:
+        image: train-management/cucumber-tests
+        container_name: cucumber-tests
+        build:
+            context: ./cucumber
+            dockerfile: ./Dockerfile
+        depends_on:
+            - tm-system
