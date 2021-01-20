@@ -1,8 +1,20 @@
 > Modèle de risques :
 >
-> Probabilité : <basse, moyenne, haute>
+> Probabilité : <Basse, Moyenne, Haute>
 >
-> Impact : <Elevé, moyen, Fort>
+> Impact : <Faible, Moyen, Elevé>
+
+## Semaine 03
+
+### Flag : Green
+
+Cette semaine, nous avons commencé à mettre en place en priorité les nouveaux éléments liés aux changements du sujet.
+Nous avons aussi planifié une Roadmap pour ce 2ème bimestre en se séparant les tâches pour ce 1er sprint.
+
+Le risque cette semaine est que si nous avons mal conçu l'architecture par rapport aux changements du sujet, il se peut que nous rencontrions des problèmes imprévisibles à cause des nouveaux composants, notamment pour le système d'enchère. 
+
+ Probabilité : Moyenne
+ Impact : Elevé car il faudrait repenser l'architecture actuelle ce qui nous prendrait du temps de développement.
 
 ## Semaine 45
 
@@ -23,7 +35,7 @@ Au cours de cette semaine, nous avons pu mettre l'accent sur le développement d
 
  Il y a un risque majeur à évoquer. Nous devons encore faire en sorte que le projet se lance avec Docker pour s'assurer qu'il marche dans un environnement isolé.  Pour l'instant, nous ne parvenons pas à faire en sorte que Docker se lance sur un profil de déploiement défini.
  
- Probabilité : moyenne au vu de la charge de travail dans les autres projets en parallèle
+ Probabilité : Moyenne au vu de la charge de travail dans les autres projets en parallèle
  Impact : Elevé
 
 ## Semaine 44
