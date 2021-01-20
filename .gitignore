@@ -5,3 +5,4 @@
 **/.env
 back/resources/application.properties
 back/bid-component/.project
+*.ignore
