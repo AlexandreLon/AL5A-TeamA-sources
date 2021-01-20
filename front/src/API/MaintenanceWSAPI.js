@@ -4,6 +4,8 @@ import API from './API';
 class MaintenanceWSAPI extends API {
 
 	createMaintenance(maintenance) {
+		console.log("hhhhhhhhhhhhhhhhhhhhh");
+		console.log(maintenance);
 		return new Promise((resolve, reject) => {
 			this.axios.post('/maintenance', maintenance).then(res => {
 				if (res.data.name === undefined || res.data.type === undefined)
