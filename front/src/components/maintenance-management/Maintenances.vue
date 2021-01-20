@@ -52,7 +52,7 @@ import CreationModal from "./maintenance-modals/CreationModal.vue";
 const maintenanceWSAPI = new MaintenanceWSAPI();
 
 export default {
-	components: { Maintenance, /* MaintenanceForm, */ CreationModal },
+	components: { Maintenance, CreationModal },
 	setup() {
 		const maintenances = ref(null);
 
