@@ -3,6 +3,7 @@ package fr.polytech.bid.models;
 import fr.polytech.task.models.Task;
 
 import javax.persistence.*;
+import java.util.Date;
 
 @Entity
 public class Bid {
@@ -16,6 +17,9 @@ public class Bid {
     @OneToOne(targetEntity = Task.class)
     @JoinColumn(name = "task_id", referencedColumnName = "id")
     protected Task task;
+
+    @Column(nullable = false)
+    protected Date desiredDate;
 
     public Long getId() {
         return id;
@@ -39,5 +43,13 @@ public class Bid {
 
     public void setTask(Task task) {
         this.task = task;
+    }
+
+    public Date getDesiredDate() {
+        return desiredDate;
+    }
+
+    public void setDesiredDate(Date desiredDate) {
+        this.desiredDate = desiredDate;
     }
 }

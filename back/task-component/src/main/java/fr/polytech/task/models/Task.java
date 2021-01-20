@@ -29,6 +29,9 @@ public class Task {
     @Column(name = "status", length = 30, nullable = false)
     protected TaskStatus status;
 
+    @Column(nullable = false)
+    protected Date desiredDate;
+
     @Column
     private TaskPriority priority;
 
@@ -38,7 +41,6 @@ public class Task {
     public Long getId() {
         return this.id;
     }
-
     public void setId(Long id) {
         this.id = id;
     }
@@ -46,7 +48,6 @@ public class Task {
     public String getName() {
         return this.name;
     }
-
     public void setName(String name) {
         this.name = name;
     }
@@ -54,7 +55,6 @@ public class Task {
     public String getType() {
         return this.type;
     }
-
     public void setType(String type) {
         this.type = type;
     }
@@ -62,15 +62,20 @@ public class Task {
     public TaskStatus getStatus() {
         return this.status;
     }
-
     public void setStatus(TaskStatus status) {
         this.status = status;
+    }
+
+    public Date getDesiredDate() {
+        return this.desiredDate;
+    }
+    public void setDesiredDate(Date desiredDate) {
+        this.desiredDate = desiredDate;
     }
 
     public TaskPriority getPriority() {
 		return this.priority;
 	}
-
 	public void setPriority(TaskPriority priority) {
 		this.priority = priority;
 	}
@@ -78,7 +83,6 @@ public class Task {
     public Date getCreationDate() {
 		return this.creationDate;
 	}
-
 	public void setCreationDate(Date creationDate) {
 		this.creationDate = creationDate;
 	}

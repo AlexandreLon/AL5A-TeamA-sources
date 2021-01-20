@@ -31,7 +31,7 @@ public class MishapBean implements MishapManager {
     private BidCreator bidCreator;
 
     @Override
-    public Mishap createMishap(String name, String type, TaskPriority priority) {
+    public Mishap createMishap(String name, String type, Date desiredDate, TaskPriority priority) {
         Mishap mishap = new Mishap();
         mishap.setName(name);
         mishap.setType(type);
@@ -39,7 +39,7 @@ public class MishapBean implements MishapManager {
         mishap.setStatus(TaskStatus.PENDING);
         mishap.setCreationDate(new Date());
         mishapRepository.save(mishap);
-        bidCreator.createBid(mishap);
+        bidCreator.createBid(mishap, desiredDate);
         return mishap;
     }
 

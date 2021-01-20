@@ -12,6 +12,7 @@ import org.springframework.boot.autoconfigure.domain.EntityScan;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 
+import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 
@@ -38,7 +39,7 @@ public class BidBean implements BidViewer, BidCreator {
     }
 
     @Override
-    public void createBid(Task task) {
+    public void createBid(Task task, Date desiredDate) {
         Bid bid = new Bid();
         bid.setName(task.getName()); //TODO Maybe remove name or how to choose the name of bid ?
         bid.setTask(task);

@@ -32,7 +32,7 @@ public class MaintenanceBean implements MaintenanceManager {
     private BidCreator bidCreator;
 
     @Override
-    public Maintenance createMaintenance(String name, String type) {
+    public Maintenance createMaintenance(String name, String type, Date desiredDate) {
         Maintenance maintenance = new Maintenance();
         maintenance.setName(name);
         maintenance.setType(type);
@@ -40,7 +40,7 @@ public class MaintenanceBean implements MaintenanceManager {
         maintenance.setCreationDate(new Date());
         maintenance.setPriority(TaskPriority.NONE);
         maintenanceRepository.save(maintenance);
-        bidCreator.createBid(maintenance);
+        bidCreator.createBid(maintenance, desiredDate);
         return maintenance;
     }
 
@@ -52,7 +52,9 @@ public class MaintenanceBean implements MaintenanceManager {
     @Override
     public Maintenance getMaintenanceById(Long id) throws MaintenanceNotFound {
         Optional<Maintenance> opt = this.maintenanceRepository.findById(id);
-        if(!opt.isPresent()) throw new MaintenanceNotFound();
+        if(!opt.isPresent()) {
+            throw new MaintenanceNotFound();
+        }
         return opt.get();
     }
 
