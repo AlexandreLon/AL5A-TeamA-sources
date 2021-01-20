@@ -24,6 +24,8 @@ matrix:
         java: 11
         services: 
           - docker
+        before_script:
+          - nvm install 14 # for Node v5
         script:
           - cd docker
           - ./compose.sh

@@ -27,7 +27,7 @@ cd $path
 # Create a .war file and store it in back/ directory
 if [[ $SARG == 0 ]]; then
     cd ../back
-    mvn clean package -DskipTests
+    mvn clean package -DskipTests -Pdocker
     cd $path
 fi
 
@@ -36,6 +36,7 @@ cp ../back/webservices/target/train-management-backend.war ./back
 # Create a dist directory and store it in front/ directory
 if [[ $SARG == 0 ]]; then
     cd ../front
+    npm install
     npm run build
     cd $path
 fi
@@ -53,4 +54,4 @@ docker-compose build
 rm -rf front/dist back/train-management-backend.war cucumber/cucumber.zip
 
 # run docker 
-docker-compose up
+docker-compose up --exit-code-from cucumber
