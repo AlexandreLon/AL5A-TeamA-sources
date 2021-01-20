@@ -9,7 +9,7 @@
 		<td>
 			<UpdateModal
 				:maintenance-to-update="maintenance"
-				@maintenance-updated="updateMaintenance"
+				@updated="updateMaintenance"
 			/>
 
 			<div
@@ -38,16 +38,16 @@ export default {
 			default: null
 		}
 	},
-	emits: ["maintenance-updated", "maintenance-deleted"],
+	emits: ["updated", "deleted"],
 	setup(props, { emit }) {
 		
 		const updateMaintenance = (newMaintenance) => {
-			emit("maintenance-updated", newMaintenance);
+			emit("updated", newMaintenance);
 		};
 
 		const deleteMaintenance = () => {
 			maintenanceWSAPI.deleteMaintenance(props.maintenance.id).then(res => {
-				emit("maintenance-deleted", res);
+				emit("deleted", res);
 			}).catch(error => {
 				console.error(error);
 			});

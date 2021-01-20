@@ -10,7 +10,7 @@
 		<td>
 			<UpdateModal
 				:mishap-to-update="mishap"
-				@mishap-updated="updateMishap"
+				@updated="updateMishap"
 			/>
 
 			<div
@@ -39,16 +39,16 @@ export default {
 			default: null
 		}
 	},
-	emits: ["mishap-updated", "mishap-deleted"],
+	emits: ["updated", "deleted"],
 	setup(props, { emit }) {
 		
 		const updateMishap = (newMishap) => {
-			emit("mishap-updated", newMishap);
+			emit("updated", newMishap);
 		};
 
 		const deleteMishap = () => {
 			mishapWSAPI.deleteMishap(props.mishap.id).then(res => {
-				emit("mishap-deleted", res);
+				emit("deleted", res);
 			}).catch(error => {
 				console.error(error);
 			});

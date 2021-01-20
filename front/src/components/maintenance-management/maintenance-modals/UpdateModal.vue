@@ -106,7 +106,7 @@ export default {
 			default: undefined
 		}
 	},
-	emits: ['maintenance-updated'],
+	emits: ['updated'],
 	setup(props, {emit}) {
 
 		const updatedMaintenance = ref({...props.maintenanceToUpdate});
@@ -118,7 +118,7 @@ export default {
 					if (updatedMaintenance.value !== null) {
 						displayMaintenanceUpdateSuccess.value = true;
 					}
-					emit("maintenance-updated", res);
+					emit("updated", res);
 					setTimeout(() => {
 						displayMaintenanceUpdateSuccess.value = false;
 					}, 2000); 		// TODO Close modal when displayMaintenanceUpdateSuccess is false again

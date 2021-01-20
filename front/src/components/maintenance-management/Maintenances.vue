@@ -1,7 +1,7 @@
 <template>
 	<div>
 		<CreationModal
-			@maintenance-created="createMaintenance"
+			@created="createMaintenance($event)"
 		/>
 
 		<table class="table mt-4">
@@ -29,8 +29,8 @@
 					v-for="maintenance of maintenances"
 					:key="maintenance.id"
 					:maintenance="maintenance"
-					@maintenance-updated="update"
-					@maintenance-deleted="remove"
+					@updated="update($event)"
+					@deleted="remove"
 				/>
 			</tbody>
 			<tr
@@ -72,6 +72,7 @@ export default {
 		}
 
 		function update(newMaintenance) {
+			console.log(newMaintenance);
 			maintenances.value = maintenances.value.map(current =>
 				current.id === newMaintenance.id ? newMaintenance : current
 			);

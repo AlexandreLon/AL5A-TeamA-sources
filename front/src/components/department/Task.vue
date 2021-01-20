@@ -32,12 +32,12 @@ export default {
 			default: null
 		}
 	},
-	emits: ['task-updated'],
+	emits: ['updated'],
 	setup(props,{emit}) {
 		
 		const taskDone = () => {
 			taskWSAPI.putTask(props.task.id).then(res => {
-				emit('task-updated',res);
+				emit('updated',res);
 			}).catch(error => {
 				console.error(error);
 			});

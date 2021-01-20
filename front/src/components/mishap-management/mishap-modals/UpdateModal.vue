@@ -122,7 +122,7 @@ export default {
 			default: undefined
 		}
 	},
-	emits: ['mishap-updated'],
+	emits: ['updated'],
 	setup(props, {emit}) {
 
 		const updatedMishap = ref({...props.mishapToUpdate});
@@ -134,7 +134,7 @@ export default {
 					if (updatedMishap.value !== null) {
 						displayMishapUpdateSuccess.value = true;
 					}
-					emit("mishap-updated", res);
+					emit("updated", res);
 					setTimeout(() => {
 						displayMishapUpdateSuccess.value = false;
 					}, 2000); 		// TODO Close modal when displayMishapUpdateSuccess is false again

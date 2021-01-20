@@ -116,7 +116,7 @@ import MishapWSAPI from "../../../API/MishapWSAPI";
 const mishapWSAPI = new MishapWSAPI();
 
 export default {
-	emits: ['mishap-created'],
+	emits: ['created'],
 	setup(props, {emit}) {
 		const mishap = ref({name: '', type: '', priority: ''});
 		const result = ref(false);
@@ -136,7 +136,7 @@ export default {
 						if (mishap.value !== null) {
 							result.value = true;
 						}
-						emit('mishap-created', res);
+						emit('created', res);
 						setTimeout(() => {
 							result.value = false;
 						}, 2000);
