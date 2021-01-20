@@ -30,6 +30,13 @@
 					</div>
 				</router-link>
 			</li>
+			<li>
+				<router-link to="/bid">
+					<div class="btn btn-primary">
+						Bid
+					</div>
+				</router-link>
+			</li>
 		</ul>
 	</center>
 </template>
