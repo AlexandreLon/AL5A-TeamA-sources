@@ -31,7 +31,7 @@
 					v-for="task of tasks"
 					:key="task.id"
 					:task="task"
-					@task-updated="update"
+					@updated="update($event)"
 				/>
 			</tbody>
 		</table>

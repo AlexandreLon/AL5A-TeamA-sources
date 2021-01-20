@@ -100,7 +100,7 @@ import MaintenanceWSAPI from "../../../API/MaintenanceWSAPI";
 const maintenanceWSAPI = new MaintenanceWSAPI();
 
 export default {
-	emits: ['maintenance-created'],
+	emits: ['created'],
 	setup(props, {emit}) {
 		const maintenance = ref({name: '', type: ''});
 		const result = ref(false);
@@ -119,7 +119,7 @@ export default {
 						if (maintenance.value !== null) {
 							result.value = true;
 						}
-						emit('maintenance-created', res);
+						emit('created', res);
 						setTimeout(() => {
 							result.value = false;
 						}, 2000);
