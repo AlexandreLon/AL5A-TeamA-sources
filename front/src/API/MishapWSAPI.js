@@ -9,7 +9,7 @@ class MishapWSAPI extends API {
 			this.axios.post('/mishap',temp).then(res => {
 				if(res.data.name === undefined || res.data.type === undefined || res.data.status === undefined)
 				    reject(Error("Did not receive mishap."));
-				resolve(new Mishap(res.data.id, res.data.name, res.data.type, res.data.status, res.data.priority));
+				resolve(new Mishap(res.data.id, res.data.name, res.data.type, res.data.status, res.data.desiredDate, res.data.priority));
 			}).catch(error => {
 				reject(error);
 			});

@@ -10,7 +10,7 @@ class MaintenanceWSAPI extends API {
 			this.axios.post("/maintenance", temp).then(res => {
 				if (res.data.name === undefined || res.data.type === undefined)
 					reject(Error("An error occured. The server did not return the created maintenance."));
-				resolve(new Maintenance(res.data.id, res.data.name, res.data.type, res.data.status));
+				resolve(new Maintenance(res.data.id, res.data.name, res.data.type, res.data.status, res.data.desiredDate));
 			}).catch(error => {
 				reject(error);
 			});
