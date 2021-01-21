@@ -1,6 +1,6 @@
 export default class  Maintenance {
 
-	constructor(id, name, type, status, desiredDate = new Date()) {
+	constructor(id, name, type, status, desiredDate) {
 		this.id = id;
 		this.name = name;
 		this.type = type;

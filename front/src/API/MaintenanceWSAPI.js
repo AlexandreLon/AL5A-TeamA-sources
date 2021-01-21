@@ -1,13 +1,13 @@
-import Maintenance from '../models/maintenance-management/Maintenance';
-import API from './API';
+import Maintenance from "../models/maintenance-management/Maintenance";
+import API from "./API";
 
 class MaintenanceWSAPI extends API {
 
 	createMaintenance(maintenance) {
-		console.log("hhhhhhhhhhhhhhhhhhhhh");
-		console.log(maintenance);
+		const temp = { ...maintenance, desiredDate: Date.now() };
+		console.log(temp);
 		return new Promise((resolve, reject) => {
-			this.axios.post('/maintenance', maintenance).then(res => {
+			this.axios.post("/maintenance", temp).then(res => {
 				if (res.data.name === undefined || res.data.type === undefined)
 					reject(Error("An error occured. The server did not return the created maintenance."));
 				resolve(new Maintenance(res.data.id, res.data.name, res.data.type, res.data.status));
@@ -19,7 +19,7 @@ class MaintenanceWSAPI extends API {
 
 	getMaintenances() {
 		return new Promise((resolve, reject) => {
-			this.axios.get('/maintenance').then(res => {
+			this.axios.get("/maintenance").then(res => {
 				resolve(res.data.map(maintenance => new Maintenance(maintenance.id, maintenance.name, maintenance.type, maintenance.status)));
 			}).catch(error => {
 				reject(error);

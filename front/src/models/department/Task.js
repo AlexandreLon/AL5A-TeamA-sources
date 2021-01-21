@@ -1,6 +1,6 @@
 export default class Task {
 
-	constructor(id, name, type, status,priority,date, desiredDate = new Date()) {
+	constructor(id, name, type, status,priority,date, desiredDate) {
 		this.id = id;
 		this.name = name;
 		this.type = type;

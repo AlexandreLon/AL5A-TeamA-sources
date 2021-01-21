@@ -4,8 +4,9 @@ import API from './API';
 class MishapWSAPI extends API {
     
 	createMishap(mishap) {
+		const temp = { ...mishap, desiredDate: Date.now() };
 		return new Promise((resolve, reject) => {
-			this.axios.post('/mishap',mishap).then(res => {
+			this.axios.post('/mishap',temp).then(res => {
 				if(res.data.name === undefined || res.data.type === undefined || res.data.status === undefined)
 				    reject(Error("Did not receive mishap."));
 				resolve(new Mishap(res.data.id, res.data.name, res.data.type, res.data.status, res.data.priority));
