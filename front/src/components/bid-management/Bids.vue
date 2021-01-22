@@ -10,10 +10,10 @@
 						Name
 					</th>
 					<th scope="col">
-						Type
+						Desired Date
 					</th>
 					<th scope="col">
-						Status
+						Actions
 					</th>
 				</tr>
 			</thead>

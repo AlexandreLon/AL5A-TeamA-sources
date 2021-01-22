@@ -31,15 +31,16 @@ public class MishapBean implements MishapManager {
     private BidCreator bidCreator;
 
     @Override
-    public Mishap createMishap(String name, String type, TaskPriority priority) {
+    public Mishap createMishap(String name, String type, Date desiredDate, TaskPriority priority) {
         Mishap mishap = new Mishap();
         mishap.setName(name);
         mishap.setType(type);
         mishap.setPriority(priority);
         mishap.setStatus(TaskStatus.PENDING);
         mishap.setCreationDate(new Date());
+        mishap.setDesiredDate(desiredDate);
         mishapRepository.save(mishap);
-        bidCreator.createBid(mishap);
+        bidCreator.createBid(mishap, desiredDate);
         return mishap;
     }
 
