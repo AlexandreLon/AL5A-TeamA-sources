@@ -4,8 +4,7 @@ import API from "./API";
 class MaintenanceWSAPI extends API {
 
 	createMaintenance(maintenance) {
-		const temp = { ...maintenance, desiredDate: Date.now() };
-		console.log(temp);
+		const temp = { ...maintenance, desiredDate: new Date('05 October 2011 14:48 UTC').toISOString() };
 		return new Promise((resolve, reject) => {
 			this.axios.post("/maintenance", temp).then(res => {
 				if (res.data.name === undefined || res.data.type === undefined)

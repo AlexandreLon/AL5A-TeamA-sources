@@ -29,7 +29,7 @@ public class Task {
     @Column(name = "status", length = 30, nullable = false)
     protected TaskStatus status;
 
-    @Column(nullable = false)
+    @Column
     protected Date desiredDate;
 
     @Column

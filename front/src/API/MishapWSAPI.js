@@ -4,7 +4,7 @@ import API from './API';
 class MishapWSAPI extends API {
     
 	createMishap(mishap) {
-		const temp = { ...mishap, desiredDate: Date.now() };
+		const temp = { ...mishap, desiredDate: new Date('05 October 2011 14:48 UTC').toISOString() };
 		return new Promise((resolve, reject) => {
 			this.axios.post('/mishap',temp).then(res => {
 				if(res.data.name === undefined || res.data.type === undefined || res.data.status === undefined)

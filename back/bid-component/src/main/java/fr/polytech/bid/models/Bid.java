@@ -18,7 +18,7 @@ public class Bid {
     @JoinColumn(name = "task_id", referencedColumnName = "id")
     protected Task task;
 
-    @Column(nullable = false)
+    @Column
     protected Date desiredDate;
 
     public Long getId() {
