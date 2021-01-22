@@ -4,6 +4,7 @@ import fr.polytech.task.models.Task;
 
 import javax.persistence.*;
 import java.util.Date;
+import java.util.Objects;
 
 @Entity
 public class Bid {
@@ -52,4 +53,22 @@ public class Bid {
     public void setDesiredDate(Date desiredDate) {
         this.desiredDate = desiredDate;
     }
+
+    @Override
+    public boolean equals(Object o) {
+        if (o == this)
+            return true;
+        if (!(o instanceof Bid)) {
+            return false;
+        }
+        Bid bid = (Bid) o;
+        return Objects.equals(id, bid.id) && Objects.equals(name, bid.name) && Objects.equals(task, bid.task) && Objects.equals(desiredDate, bid.desiredDate);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(id, name, task, desiredDate);
+    }
+
+
 }

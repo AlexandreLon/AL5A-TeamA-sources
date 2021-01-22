@@ -28,8 +28,8 @@ public class TaskBean implements TaskAction, ScheduleVisualizer {
         if(opt.isPresent()) {
             Task task = opt.get();
             task.setStatus(TaskStatus.FINISHED);
-            taskRepository.save(task);
-            return opt.get();
+            task = taskRepository.save(task);
+            return task;
         }
         throw new TaskNotFound();
     }

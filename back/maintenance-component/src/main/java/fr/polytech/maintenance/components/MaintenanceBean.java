@@ -66,7 +66,7 @@ public class MaintenanceBean implements MaintenanceManager {
             Maintenance maintenance = opt.get();
             maintenance.setName(name);
             maintenance.setType(type);
-            this.maintenanceRepository.save(maintenance);
+            maintenance = this.maintenanceRepository.save(maintenance);
             return maintenance;
         }
         throw new MaintenanceNotFound();

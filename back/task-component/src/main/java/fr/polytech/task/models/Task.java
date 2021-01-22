@@ -1,6 +1,7 @@
 package fr.polytech.task.models;
 
 import java.util.Date;
+import java.util.Objects;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -86,5 +87,21 @@ public class Task {
 	public void setCreationDate(Date creationDate) {
 		this.creationDate = creationDate;
 	}
+
+    @Override
+    public boolean equals(Object o) {
+        if (o == this)
+            return true;
+        if (!(o instanceof Task)) {
+            return false;
+        }
+        Task task = (Task) o;
+        return Objects.equals(id, task.id) && Objects.equals(name, task.name) && Objects.equals(type, task.type) && Objects.equals(status, task.status) && Objects.equals(desiredDate, task.desiredDate) && Objects.equals(priority, task.priority) && Objects.equals(creationDate, task.creationDate);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(id, name, type, status, desiredDate, priority, creationDate);
+    }
 
 }

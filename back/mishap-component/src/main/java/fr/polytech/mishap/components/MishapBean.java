@@ -39,7 +39,7 @@ public class MishapBean implements MishapManager {
         mishap.setStatus(TaskStatus.PENDING);
         mishap.setCreationDate(new Date());
         mishap.setDesiredDate(desiredDate);
-        mishapRepository.save(mishap);
+        mishap = mishapRepository.save(mishap);
         bidCreator.createBid(mishap, desiredDate);
         return mishap;
     }
@@ -64,7 +64,7 @@ public class MishapBean implements MishapManager {
             mishap.setName(name);
             mishap.setType(type);
             mishap.setPriority(priority);
-            this.mishapRepository.save(mishap);
+            mishap = this.mishapRepository.save(mishap);
             return mishap;
         }
         throw new MishapNotFound();

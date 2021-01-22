@@ -18,7 +18,6 @@ import fr.polytech.webservices.Application;
 import fr.polytech.webservices.errors.ResourceNotFoundException;
 import fr.polytech.webservices.models.MishapBody;
 
-import java.util.Date;
 import java.util.List;
 
 import org.slf4j.Logger;

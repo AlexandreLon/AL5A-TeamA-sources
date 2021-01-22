@@ -23,9 +23,9 @@ public class MaintenanceTest {
     public void createMaintenanceTest() throws MaintenanceNotFound {
         // Mockito.when(maintenanceRepository.save(any(Maintenance.class))).thenAnswer(invocation -> (Maintenance)invocation.getArguments()[0]);
         Maintenance maintenance = maintenanceManager.createMaintenance("foo", "bar", new Date());
-        List<Maintenance> maintenances = maintenanceManager.getMaintenances();
-        Maintenance maintenance2 = maintenances.stream().filter(e -> e.getName().equals("foo")).collect(Collectors.toList()).get(0);
-        assertEquals(maintenance.getName(), maintenance2.getName());
-        assertEquals(maintenance.getType(), maintenance2.getType());
+        List<Maintenance> maintenances = maintenanceManager.getMaintenances().stream().filter(e -> e.getName().equals("foo")).collect(Collectors.toList());
+        assertEquals(1, maintenances.size());
+        Maintenance maintenance2 = maintenances.get(0);
+        assertEquals(maintenance, maintenance2);
     }
 }
