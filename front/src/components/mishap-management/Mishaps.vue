@@ -1,7 +1,7 @@
 <template>
 	<div>
 		<CreationModal
-			@mishap-created="createMishap"
+			@created="createMishap($event)"
 		/>
 
 		<table class="table mt-4">
@@ -23,6 +23,9 @@
 						Priority
 					</th>
 					<th scope="col">
+						Desired Date
+					</th>
+					<th scope="col">
 						Actions
 					</th>
 				</tr>
@@ -32,8 +35,8 @@
 					v-for="mishap of mishaps"
 					:key="mishap.id"
 					:mishap="mishap"
-					@mishap-updated="update"
-					@mishap-deleted="remove"
+					@updated="update($event)"
+					@deleted="remove"
 				/>
 			</tbody>
 			<tr
@@ -50,13 +53,12 @@
 import { ref, onMounted } from "vue";
 import MishapWSAPI from "../../API/MishapWSAPI";
 import Mishap from "./Mishap.vue";
-// import MishapForm from "./MishapForm.vue";
 import CreationModal from "./mishap-modals/CreationModal.vue";
 
 const mishapWSAPI = new MishapWSAPI();
 
 export default {
-	components: { Mishap, /* MishapForm, */ CreationModal },
+	components: { Mishap, CreationModal },
 	setup() {
 		const mishaps = ref(null);
 

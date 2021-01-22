@@ -1,7 +1,7 @@
 <template>
 	<div>
 		<CreationModal
-			@maintenance-created="createMaintenance"
+			@created="createMaintenance($event)"
 		/>
 
 		<table class="table mt-4">
@@ -20,6 +20,9 @@
 						Status
 					</th>
 					<th scope="col">
+						Desired Date
+					</th>
+					<th scope="col">
 						Actions
 					</th>
 				</tr>
@@ -29,8 +32,8 @@
 					v-for="maintenance of maintenances"
 					:key="maintenance.id"
 					:maintenance="maintenance"
-					@maintenance-updated="update"
-					@maintenance-deleted="remove"
+					@updated="update($event)"
+					@deleted="remove"
 				/>
 			</tbody>
 			<tr
@@ -52,7 +55,7 @@ import CreationModal from "./maintenance-modals/CreationModal.vue";
 const maintenanceWSAPI = new MaintenanceWSAPI();
 
 export default {
-	components: { Maintenance, /* MaintenanceForm, */ CreationModal },
+	components: { Maintenance, CreationModal },
 	setup() {
 		const maintenances = ref(null);
 
@@ -72,6 +75,7 @@ export default {
 		}
 
 		function update(newMaintenance) {
+			console.log(newMaintenance);
 			maintenances.value = maintenances.value.map(current =>
 				current.id === newMaintenance.id ? newMaintenance : current
 			);

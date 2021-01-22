@@ -18,6 +18,7 @@ import fr.polytech.webservices.Application;
 import fr.polytech.webservices.errors.ResourceNotFoundException;
 import fr.polytech.webservices.models.MishapBody;
 
+import java.util.Date;
 import java.util.List;
 
 import org.slf4j.Logger;
@@ -38,7 +39,7 @@ public class MishapService {
     @PostMapping("")
     public Mishap createMishap(@RequestBody MishapBody mishap) {
         log.info("POST : /api/mishap/");
-        return mishapManager.createMishap(mishap.name, mishap.type, mishap.priority);
+        return mishapManager.createMishap(mishap.name, mishap.type, mishap.desiredDate, mishap.priority);
     }
 
     @CrossOrigin

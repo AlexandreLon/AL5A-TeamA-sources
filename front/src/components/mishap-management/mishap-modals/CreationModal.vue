@@ -83,6 +83,12 @@
 									<option>HIGH</option>
 								</select>
 							</div>
+							Date of resolution :
+							<input
+								class="form-control mb-3"
+								type="datetime-local"
+								v-model="mishap.desiredDate"
+							>
 						</div>
 					</div>
 
@@ -116,7 +122,7 @@ import MishapWSAPI from "../../../API/MishapWSAPI";
 const mishapWSAPI = new MishapWSAPI();
 
 export default {
-	emits: ['mishap-created'],
+	emits: ['created'],
 	setup(props, {emit}) {
 		const mishap = ref({name: '', type: '', priority: ''});
 		const result = ref(false);
@@ -136,7 +142,7 @@ export default {
 						if (mishap.value !== null) {
 							result.value = true;
 						}
-						emit('mishap-created', res);
+						emit('created', res);
 						setTimeout(() => {
 							result.value = false;
 						}, 2000);

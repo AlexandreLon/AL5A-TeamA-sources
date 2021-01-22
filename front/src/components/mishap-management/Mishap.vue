@@ -7,10 +7,11 @@
 		<td>{{ mishap.type }}</td>
 		<td>{{ mishap.status }}</td>
 		<td>{{ mishap.priority }}</td>
+		<td>{{ this.formatDate(mishap.desiredDate) }}</td>
 		<td>
 			<UpdateModal
 				:mishap-to-update="mishap"
-				@mishap-updated="updateMishap"
+				@updated="updateMishap"
 			/>
 
 			<div
@@ -39,22 +40,27 @@ export default {
 			default: null
 		}
 	},
-	emits: ["mishap-updated", "mishap-deleted"],
+	emits: ["updated", "deleted"],
 	setup(props, { emit }) {
 		
 		const updateMishap = (newMishap) => {
-			emit("mishap-updated", newMishap);
+			emit("updated", newMishap);
 		};
 
 		const deleteMishap = () => {
 			mishapWSAPI.deleteMishap(props.mishap.id).then(res => {
-				emit("mishap-deleted", res);
+				emit("deleted", res);
 			}).catch(error => {
 				console.error(error);
 			});
 		};
 
-		return { updateMishap, deleteMishap };
+		const formatDate = (dateStr) => {
+			console.log(dateStr);
+			return new Date(dateStr).toLocaleString();
+		};
+
+		return { updateMishap, deleteMishap, formatDate };
 	}
 
 };
