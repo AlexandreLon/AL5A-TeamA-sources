@@ -40,7 +40,7 @@ public class MaintenanceBean implements MaintenanceManager {
         maintenance.setCreationDate(new Date());
         maintenance.setDesiredDate(desiredDate);
         maintenance.setPriority(TaskPriority.NONE);
-        maintenanceRepository.save(maintenance);
+        maintenance = maintenanceRepository.save(maintenance);
         bidCreator.createBid(maintenance, desiredDate);
         return maintenance;
     }
