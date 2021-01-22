@@ -4,12 +4,11 @@ import API from './API';
 class MishapWSAPI extends API {
     
 	createMishap(mishap) {
-		const temp = { ...mishap, desiredDate: new Date('05 October 2011 14:48 UTC').toISOString() };
 		return new Promise((resolve, reject) => {
-			this.axios.post('/mishap',temp).then(res => {
+			this.axios.post('/mishap',mishap).then(res => {
 				if(res.data.name === undefined || res.data.type === undefined || res.data.status === undefined)
 				    reject(Error("Did not receive mishap."));
-				resolve(new Mishap(res.data.id, res.data.name, res.data.type, res.data.status, res.data.desiredDate, res.data.priority));
+				resolve(new Mishap(res.data.id, res.data.name, res.data.type, res.data.status, res.data.desiredDate, res.data.priority, res.data.desiredDate));
 			}).catch(error => {
 				reject(error);
 			});
@@ -19,7 +18,7 @@ class MishapWSAPI extends API {
 	getMishaps() {
 		return new Promise((resolve, reject) => {
 			this.axios.get('/mishap').then(res => {
-				resolve(res.data.map(mishap => new Mishap(mishap.id, mishap.name, mishap.type, mishap.status, mishap.priority)));
+				resolve(res.data.map(mishap => new Mishap(mishap.id, mishap.name, mishap.type, mishap.status, mishap.priority, mishap.desiredDate)));
 			}).catch(error => {
 				reject(error);
 			});
@@ -29,7 +28,7 @@ class MishapWSAPI extends API {
 	getMishap(id) {
 		return new Promise((resolve, reject) => {
 			this.axios.get(`/mishap/${id}`).then(res => {
-				resolve(new Mishap(res.data.id, res.data.name, res.data.type, res.data.status, res.data.priority));
+				resolve(new Mishap(res.data.id, res.data.name, res.data.type, res.data.status, res.data.priority, res.data.desiredDate));
 			}).catch(error => {
 				reject(error);
 			});
@@ -42,7 +41,7 @@ class MishapWSAPI extends API {
 				if (res.data.id === undefined || res.data.name === undefined || res.data.type === undefined || res.data.status === undefined || res.data.priority === undefined) {
 					reject(Error("Server did not return the updated mishap."));
 				}
-				resolve(new Mishap(res.data.id, res.data.name, res.data.type, res.data.status, res.data.priority));
+				resolve(new Mishap(res.data.id, res.data.name, res.data.type, res.data.status, res.data.priority, res.data.desiredDate));
 			}).catch(error => {
 				reject(error);
 			});

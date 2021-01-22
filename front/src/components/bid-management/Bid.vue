@@ -4,8 +4,16 @@
 			{{ bid.id }}
 		</th>
 		<td>{{ bid.name }}</td>
-		<td>{{ bid.type }}</td>
-		<td>{{ bid.status }}</td>
+		<td>{{ this.formatDate(bid.desiredDate) }}</td>
+		<td>
+			<button
+				type="button"
+				class="btn btn-warning"
+			>
+				<i class="fas fa-pencil-alt" />
+				See Proposals
+			</button>
+		</td>
 	</tr>
 </template>
 
@@ -18,6 +26,14 @@ export default {
 			type: Bid,
 			default: null
 		}
+	},
+	setup() {
+
+		const formatDate = (dateStr) => {
+			return new Date(dateStr).toLocaleString();
+		};
+
+		return { formatDate };
 	}
 };
 </script>

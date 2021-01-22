@@ -4,9 +4,8 @@ import API from "./API";
 class MaintenanceWSAPI extends API {
 
 	createMaintenance(maintenance) {
-		const temp = { ...maintenance, desiredDate: new Date('05 October 2011 14:48 UTC').toISOString() };
 		return new Promise((resolve, reject) => {
-			this.axios.post("/maintenance", temp).then(res => {
+			this.axios.post("/maintenance", maintenance).then(res => {
 				if (res.data.name === undefined || res.data.type === undefined)
 					reject(Error("An error occured. The server did not return the created maintenance."));
 				resolve(new Maintenance(res.data.id, res.data.name, res.data.type, res.data.status, res.data.desiredDate));
@@ -19,7 +18,7 @@ class MaintenanceWSAPI extends API {
 	getMaintenances() {
 		return new Promise((resolve, reject) => {
 			this.axios.get("/maintenance").then(res => {
-				resolve(res.data.map(maintenance => new Maintenance(maintenance.id, maintenance.name, maintenance.type, maintenance.status)));
+				resolve(res.data.map(maintenance => new Maintenance(maintenance.id, maintenance.name, maintenance.type, maintenance.status, maintenance.desiredDate)));
 			}).catch(error => {
 				reject(error);
 			});
@@ -29,7 +28,7 @@ class MaintenanceWSAPI extends API {
 	getMaintenance(id) {
 		return new Promise((resolve, reject) => {
 			this.axios.get(`/maintenance/${id}`).then(res => {
-				resolve(new Maintenance(res.data.id, res.data.name, res.data.type, res.data.status));
+				resolve(new Maintenance(res.data.id, res.data.name, res.data.type, res.data.status, res.data.desiredDate));
 			}).catch(error => {
 				reject(error);
 			});
@@ -42,7 +41,7 @@ class MaintenanceWSAPI extends API {
 				if (res.data.id === undefined || res.data.name === undefined || res.data.type === undefined || res.data.status === undefined) {
 					reject(Error("Server did not return the updated maintenance."));
 				}
-				resolve(new Maintenance(res.data.id, res.data.name, res.data.type, res.data.status));
+				resolve(new Maintenance(res.data.id, res.data.name, res.data.type, res.data.status, res.data.desiredDate));
 			}).catch(error => {
 				reject(error);
 			});

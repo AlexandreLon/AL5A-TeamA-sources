@@ -67,6 +67,12 @@
 									<option>Something else</option>
 								</select>
 							</div>
+							Date of resolution :
+							<input
+								class="form-control mb-3"
+								type="datetime-local"
+								v-model="maintenance.desiredDate"
+							>
 						</div>
 					</div>
 
