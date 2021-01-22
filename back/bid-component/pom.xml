@@ -21,12 +21,6 @@
 			<version>1.0.1-SNAPSHOT</version>
 			<scope>compile</scope>
 		</dependency>
-		<dependency>
-			<groupId>fr.polytech</groupId>
-			<artifactId>task-component</artifactId>
-			<version>1.0.1-SNAPSHOT</version>
-			<scope>compile</scope>
-		</dependency>
 	</dependencies>
 
 	<build>
