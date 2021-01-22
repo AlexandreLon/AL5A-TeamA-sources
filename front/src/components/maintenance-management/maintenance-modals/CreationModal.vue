@@ -67,6 +67,12 @@
 									<option>Something else</option>
 								</select>
 							</div>
+							Date of resolution :
+							<input
+								class="form-control mb-3"
+								type="datetime-local"
+								v-model="maintenance.desiredDate"
+							>
 						</div>
 					</div>
 
@@ -100,7 +106,7 @@ import MaintenanceWSAPI from "../../../API/MaintenanceWSAPI";
 const maintenanceWSAPI = new MaintenanceWSAPI();
 
 export default {
-	emits: ['maintenance-created'],
+	emits: ['created'],
 	setup(props, {emit}) {
 		const maintenance = ref({name: '', type: ''});
 		const result = ref(false);
@@ -119,7 +125,7 @@ export default {
 						if (maintenance.value !== null) {
 							result.value = true;
 						}
-						emit('maintenance-created', res);
+						emit('created', res);
 						setTimeout(() => {
 							result.value = false;
 						}, 2000);

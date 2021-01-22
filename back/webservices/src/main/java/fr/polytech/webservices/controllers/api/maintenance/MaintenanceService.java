@@ -15,6 +15,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 
+import java.util.Date;
 import java.util.List;
 
 @RestController
@@ -31,7 +32,7 @@ public class MaintenanceService {
     @PostMapping("")
     public Maintenance createMaintenance(@RequestBody MaintenanceBody maintenance) {
         log.info("POST : /api/maintenance");
-        return maintenanceManager.createMaintenance(maintenance.name, maintenance.type);
+        return maintenanceManager.createMaintenance(maintenance.name, maintenance.type, maintenance.desiredDate);
     }
 
     @CrossOrigin

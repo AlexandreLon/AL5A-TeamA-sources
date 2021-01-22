@@ -17,6 +17,7 @@
 		<module>task-component</module>
 		<module>maintenance-component</module>
 		<module>mishap-component</module>
+		<module>bid-component</module>
 		<module>webservices</module>
 	</modules>
 

@@ -13,13 +13,6 @@ public class Mishap extends Task {
 
     public Mishap(){}
 
-    public Mishap(String name, String type) {
-        this.name = name;
-        this.type = type;
-        this.status = TaskStatus.PENDING;
-        this.creationDate = new Date();
-    }
-
     @Override
     public boolean equals(Object o) {
         if (o == this)
@@ -28,12 +21,14 @@ public class Mishap extends Task {
             return false;
         }
         Mishap mishap = (Mishap) o;
-        return Objects.equals(name, mishap.name) && Objects.equals(type, mishap.type);
+        return Objects.equals(this.name, mishap.name)
+                && Objects.equals(this.type, mishap.type)
+                && Objects.equals(this.desiredDate, mishap.desiredDate);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(name, type);
+        return Objects.hash(name, type, desiredDate);
     }
 
     @Override
@@ -41,6 +36,7 @@ public class Mishap extends Task {
         return "{" +
             " name='" + getName() + "'" +
             ", type='" + getType() + "'" +
+            ", desiredDate='" + getDesiredDate() + "'" +
             "}";
     }
 
