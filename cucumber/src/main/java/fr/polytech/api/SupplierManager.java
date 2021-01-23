@@ -11,7 +11,7 @@ import org.springframework.web.client.RestTemplate;
 import fr.polytech.models.Task;
 
 @Service
-public class DepartmentManager {
+public class SupplierManager {
 
 	@Autowired 
 	private Api api;

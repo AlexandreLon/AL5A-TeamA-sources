@@ -21,7 +21,7 @@
 
 <script>
 import TaskWSAPI from '../../API/TaskWSAPI';
-import Task from '../../models/department/Task';
+import Task from '../../models/supplier/Task';
 
 const taskWSAPI = new TaskWSAPI();
 

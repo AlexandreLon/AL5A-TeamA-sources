@@ -1,13 +1,13 @@
 <template>
 	<div class="container">
-		<h1>Department</h1>
+		<h1>Supplier</h1>
 		<Tasks />
 	</div>
 </template>
 
 <script>
 
-import Tasks from '../components/department/Tasks.vue';
+import Tasks from '../components/supplier/Tasks.vue';
 
 export default {
 	components: {

@@ -1,5 +1,6 @@
 package fr.polytech;
 
+import fr.polytech.api.SupplierManager;
 import io.cucumber.java.en.And;
 import io.cucumber.java.en.Given;
 import io.cucumber.java.en.Then;
@@ -13,7 +14,6 @@ import java.util.stream.Collectors;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
-import fr.polytech.api.DepartmentManager;
 import fr.polytech.api.MaintenanceManager;
 import fr.polytech.models.Task;
 
@@ -27,7 +27,7 @@ public class MaintenanceTest {
     private MaintenanceManager maintenanceManager;
 
     @Autowired
-    private DepartmentManager departmentManager;
+    private SupplierManager supplierManager;
 
     @Given("A {string} to do")
     public void aMaintenanceName(String maintenanceName) {
@@ -41,7 +41,7 @@ public class MaintenanceTest {
 
     @And("I get all tasks with maintenance")
     public void getAllTasksWithMaintenance() {
-        this.tasks = departmentManager.getTasks();
+        this.tasks = supplierManager.getTasks();
     }
 
     @Then("I have a {string} maintenance in tasks")

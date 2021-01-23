@@ -1,4 +1,4 @@
-import Task from '../models/department/Task';
+import Task from '../models/supplier/Task';
 import API from './API';
 
 class TaskWSAPI extends API {
