@@ -7,6 +7,5 @@ public class MishapBody {
     
     public String name;
     public String type;
-    public Date desiredDate;
     public TaskPriority priority;
 }

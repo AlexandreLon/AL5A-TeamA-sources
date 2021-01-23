@@ -40,7 +40,6 @@ public class TaskTest {
     public void endTaskTestExist() {
         final Task task = new Task();
         task.setCreationDate(new Date());
-        task.setDesiredDate(new Date());
         task.setName("foo");
         task.setPriority(TaskPriority.HIGH);
         task.setStatus(TaskStatus.PENDING);
@@ -65,7 +64,6 @@ public class TaskTest {
     public void scheduleVisualizerTest() {
         Task task = new Task();
         task.setCreationDate(new Date());
-        task.setDesiredDate(new Date());
         task.setName("foo");
         task.setPriority(TaskPriority.HIGH);
         task.setStatus(TaskStatus.PENDING);

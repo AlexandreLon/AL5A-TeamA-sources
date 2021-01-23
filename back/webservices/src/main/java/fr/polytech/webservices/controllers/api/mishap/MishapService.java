@@ -1,5 +1,6 @@
 package fr.polytech.webservices.controllers.api.mishap;
 
+import fr.polytech.webservices.models.MishapCreationBody;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -36,9 +37,9 @@ public class MishapService {
 
     @CrossOrigin
     @PostMapping("")
-    public Mishap createMishap(@RequestBody MishapBody mishap) {
+    public Mishap createMishap(@RequestBody MishapCreationBody mishapCreation) {
         log.info("POST : /api/mishap/");
-        return mishapManager.createMishap(mishap.name, mishap.type, mishap.desiredDate, mishap.priority);
+        return mishapManager.createMishap(mishapCreation.name, mishapCreation.type, mishapCreation.desiredDate, mishapCreation.priority);
     }
 
     @CrossOrigin
