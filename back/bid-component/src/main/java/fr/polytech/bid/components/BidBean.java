@@ -2,6 +2,7 @@ package fr.polytech.bid.components;
 
 import fr.polytech.bid.errors.BidNotFoundException;
 import fr.polytech.bid.models.Bid;
+import fr.polytech.bid.models.Supplier;
 import fr.polytech.bid.repositories.BidRepository;
 import fr.polytech.task.models.Task;
 
@@ -39,7 +40,7 @@ public class BidBean implements BidViewer, BidCreator {
     }
 
     @Override
-    public Bid createBid(Task task, Date desiredDate) {
+    public Bid createBid(Task task, List<Supplier> suppliers, Date desiredDate) {
         Bid bid = new Bid();
         bid.setName(task.getName()); //TODO Maybe remove name or how to choose the name of bid ?
         bid.setTask(task);

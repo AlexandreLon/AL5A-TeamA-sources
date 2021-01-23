@@ -1,6 +1,9 @@
 package fr.polytech.mishap.components;
 
+import com.google.inject.internal.util.Lists;
 import fr.polytech.bid.components.BidCreator;
+import fr.polytech.bid.models.Supplier;
+import fr.polytech.bid.repositories.SupplierRepository;
 import fr.polytech.mishap.errors.MishapNotFoundException;
 import fr.polytech.mishap.models.Mishap;
 import fr.polytech.mishap.repositories.MishapRepository;
@@ -28,6 +31,9 @@ public class MishapBean implements MishapManager {
     private MishapRepository mishapRepository;
 
     @Autowired
+    private SupplierRepository supplierRepository;
+
+    @Autowired
     private BidCreator bidCreator;
 
     @Override
@@ -40,7 +46,7 @@ public class MishapBean implements MishapManager {
         mishap.setCreationDate(new Date());
         mishap.setDesiredDate(desiredDate);
         mishap = mishapRepository.save(mishap);
-        bidCreator.createBid(mishap, desiredDate);
+        bidCreator.createBid(mishap, Lists.newArrayList(supplierRepository.findAll()), desiredDate);
         return mishap;
     }
 

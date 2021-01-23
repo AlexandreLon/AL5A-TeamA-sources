@@ -8,6 +8,8 @@ import java.util.Date;
 import java.util.List;
 import java.util.stream.Collectors;
 
+import fr.polytech.bid.models.Supplier;
+import fr.polytech.task.models.TaskType;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.domain.EntityScan;
@@ -49,7 +51,12 @@ public class BidTest {
         task.setStatus(TaskStatus.PENDING);
         task.setType("bar");
         task = tr.save(task);
-        Bid bid = bidCreator.createBid(task, new Date());
+
+        Supplier s = new Supplier();
+        s.setName("mecalex");
+        s.setTaskType(TaskType.VERIFICATION);
+
+        Bid bid = bidCreator.createBid(task,List.of(s), new Date());
         List<Bid> bids = bidViewer.getBids().stream().filter(e -> e.getName().equals("foo")).collect(Collectors.toList());
         assertEquals(1, bids.size());
         Bid gettingBid = bids.get(0);
@@ -66,7 +73,12 @@ public class BidTest {
         task.setStatus(TaskStatus.PENDING);
         task.setType("bar");
         task = tr.save(task);
-        Bid bid = bidCreator.createBid(task, new Date());
+
+        Supplier s = new Supplier();
+        s.setName("mecalex");
+        s.setTaskType(TaskType.VERIFICATION);
+
+        Bid bid = bidCreator.createBid(task,List.of(s), new Date());
         List<Bid> bids = bidViewer.getBids().stream().filter(e -> e.getName().equals("foo")).collect(Collectors.toList());
         assertEquals(1, bids.size());
         Bid gettingBid = bids.get(0);
@@ -83,7 +95,12 @@ public class BidTest {
         task.setStatus(TaskStatus.PENDING);
         task.setType("bar");
         task = tr.save(task);
-        Bid bid = bidCreator.createBid(task, new Date());
+
+        Supplier s = new Supplier();
+        s.setName("mecalex");
+        s.setTaskType(TaskType.VERIFICATION);
+
+        Bid bid = bidCreator.createBid(task,List.of(s), new Date());
         assertDoesNotThrow(() -> {
             Bid gettingBid = bidViewer.getBidById(bid.getId());
             assertEquals(bid, gettingBid);

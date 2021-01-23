@@ -1,6 +1,8 @@
 package fr.polytech.maintenance.components;
 
+import com.google.inject.internal.util.Lists;
 import fr.polytech.bid.components.BidCreator;
+import fr.polytech.bid.repositories.SupplierRepository;
 import fr.polytech.maintenance.errors.MaintenanceNotFoundException;
 import fr.polytech.maintenance.models.Maintenance;
 import fr.polytech.maintenance.repositories.MaintenanceRepository;
@@ -29,6 +31,9 @@ public class MaintenanceBean implements MaintenanceManager {
     private MaintenanceRepository maintenanceRepository;
 
     @Autowired
+    private SupplierRepository supplierRepository;
+
+    @Autowired
     private BidCreator bidCreator;
 
     @Override
@@ -41,7 +46,7 @@ public class MaintenanceBean implements MaintenanceManager {
         maintenance.setDesiredDate(desiredDate);
         maintenance.setPriority(TaskPriority.NONE);
         maintenance = maintenanceRepository.save(maintenance);
-        bidCreator.createBid(maintenance, desiredDate);
+        bidCreator.createBid(maintenance, Lists.newArrayList(supplierRepository.findAll()), desiredDate);
         return maintenance;
     }
 
