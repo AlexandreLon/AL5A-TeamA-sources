@@ -23,9 +23,6 @@
 						Priority
 					</th>
 					<th scope="col">
-						Desired Date
-					</th>
-					<th scope="col">
 						Actions
 					</th>
 				</tr>

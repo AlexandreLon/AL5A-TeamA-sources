@@ -6,7 +6,6 @@
 		<td>{{ maintenance.name }}</td>
 		<td>{{ maintenance.type }}</td>
 		<td>{{ maintenance.status }}</td>
-		<td>{{ this.formatDate(maintenance.desiredDate) }}</td>
 		<td>
 			<UpdateModal
 				:maintenance-to-update="maintenance"
@@ -54,11 +53,7 @@ export default {
 			});
 		};
 
-		const formatDate = (dateStr) => {
-			return new Date(dateStr).toLocaleString();
-		};
-
-		return { updateMaintenance, deleteMaintenance, formatDate };
+		return { updateMaintenance, deleteMaintenance };
 	}
 
 };
