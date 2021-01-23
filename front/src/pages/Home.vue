@@ -4,7 +4,7 @@
 			Train Management
 		</h1>
 		<img
-			class="m-2"
+			class="m-4"
 			src="https://www.pkpcargointernational.com//static/2018/08/railway-1.jpg"
 			alt="Train"
 		>

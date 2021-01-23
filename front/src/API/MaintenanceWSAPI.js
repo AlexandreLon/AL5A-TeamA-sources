@@ -10,7 +10,6 @@ class MaintenanceWSAPI extends API {
 				if (res.data.name === undefined || res.data.type === undefined) {
 					reject(Error("An error occurred. The server did not return the created maintenance."));
 				}
-				console.log(res.data);
 				resolve(new MaintenanceCreationModel(res.data.id, res.data.name, res.data.type, res.data.status, res.data.desiredDate));
 			}).catch(error => {
 				reject(error);
