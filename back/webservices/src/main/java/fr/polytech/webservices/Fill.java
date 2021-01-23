@@ -4,6 +4,7 @@ import java.util.concurrent.TimeUnit;
 
 import com.github.javafaker.Faker;
 
+import fr.polytech.task.models.TaskType;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -11,7 +12,12 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
 import fr.polytech.bid.models.Bid;
+import fr.polytech.bid.models.Supplier;
+
 import fr.polytech.bid.repositories.BidRepository;
+import fr.polytech.bid.repositories.SupplierRepository;
+
+
 import fr.polytech.maintenance.models.Maintenance;
 import fr.polytech.maintenance.repositories.MaintenanceRepository;
 import fr.polytech.mishap.models.Mishap;
@@ -37,6 +43,10 @@ public class Fill {
     @Autowired
     private BidRepository br;
 
+    @Autowired
+    private SupplierRepository sr;
+
+
     private Faker faker = new Faker();
 
     public TaskPriority generateTaskPriority() {
@@ -60,6 +70,8 @@ public class Fill {
             generateSomeMaintenances();
             log.info("Generating some mishaps with bid");
             generateSomeMishap();
+            log.info("Generating some supplier");
+            generateSomeSupplier();
         }
         log.info("Generating data done... Server up !!");
 	}
@@ -89,6 +101,16 @@ public class Fill {
             createBidFromTask(mir.save(m));
         }
     }
+
+    private void generateSomeSupplier() {
+        TaskType[] types = {TaskType.CLEANING, TaskType.REPLACING, TaskType.VERIFICATION};
+        for(int i=0; i<20; i++) {
+            Supplier s = new Supplier();
+            s.setName(faker.lorem().word());
+            s.setTaskType(types[faker.random().nextInt(0,2)]);
+        }
+    }
+
 
     private Bid createBidFromTask(Task task) {
         Bid bid = new Bid();
