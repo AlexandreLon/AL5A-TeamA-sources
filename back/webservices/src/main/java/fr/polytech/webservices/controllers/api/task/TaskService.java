@@ -8,7 +8,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import fr.polytech.task.components.TaskAction;
-import fr.polytech.task.errors.TaskNotFound;
+import fr.polytech.task.errors.TaskNotFoundException;
 import fr.polytech.task.models.Task;
 import fr.polytech.webservices.Application;
 import fr.polytech.webservices.errors.ResourceNotFoundException;
@@ -33,7 +33,7 @@ public class TaskService {
         log.info("PUT : /api/task/" + id);
         try {
             return taskAction.endTask(id);
-        } catch (TaskNotFound e) {
+        } catch (TaskNotFoundException e) {
             throw new ResourceNotFoundException();
         }
     }

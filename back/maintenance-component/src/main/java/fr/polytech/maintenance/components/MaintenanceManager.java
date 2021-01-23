@@ -1,6 +1,6 @@
 package fr.polytech.maintenance.components;
 
-import fr.polytech.maintenance.errors.MaintenanceNotFound;
+import fr.polytech.maintenance.errors.MaintenanceNotFoundException;
 import fr.polytech.maintenance.models.Maintenance;
 
 import java.util.Date;
@@ -11,9 +11,9 @@ public interface MaintenanceManager {
 
     List<Maintenance> getMaintenances();
 
-    Maintenance getMaintenanceById(Long id) throws MaintenanceNotFound;
+    Maintenance getMaintenanceById(Long id) throws MaintenanceNotFoundException;
 
-    Maintenance updateMaintenance(Long id, String name, String type) throws MaintenanceNotFound;
+    Maintenance updateMaintenance(Long id, String name, String type) throws MaintenanceNotFoundException;
 
     void deleteMaintenance(Long id);
 }

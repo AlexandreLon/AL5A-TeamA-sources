@@ -12,13 +12,12 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import fr.polytech.mishap.components.MishapManager;
-import fr.polytech.mishap.errors.MishapNotFound;
+import fr.polytech.mishap.errors.MishapNotFoundException;
 import fr.polytech.mishap.models.Mishap;
 import fr.polytech.webservices.Application;
 import fr.polytech.webservices.errors.ResourceNotFoundException;
 import fr.polytech.webservices.models.MishapBody;
 
-import java.util.Date;
 import java.util.List;
 
 import org.slf4j.Logger;
@@ -55,7 +54,7 @@ public class MishapService {
         log.info("GET : /api/mishap/" + id);
         try {
             return mishapManager.getMishapById(id);
-        } catch (MishapNotFound e) {
+        } catch (MishapNotFoundException e) {
             throw new ResourceNotFoundException();
         }
     }
@@ -66,7 +65,7 @@ public class MishapService {
         log.info("PUT : /api/mishap/" + id);
         try {
             return mishapManager.updateMishap(id, mishap.name, mishap.type, mishap.priority);
-        } catch (MishapNotFound e) {
+        } catch (MishapNotFoundException e) {
             throw new ResourceNotFoundException();
         }
     }

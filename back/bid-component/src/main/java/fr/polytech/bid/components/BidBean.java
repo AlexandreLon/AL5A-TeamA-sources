@@ -39,11 +39,11 @@ public class BidBean implements BidViewer, BidCreator {
     }
 
     @Override
-    public void createBid(Task task, Date desiredDate) {
+    public Bid createBid(Task task, Date desiredDate) {
         Bid bid = new Bid();
         bid.setName(task.getName()); //TODO Maybe remove name or how to choose the name of bid ?
         bid.setTask(task);
         bid.setDesiredDate((desiredDate));
-        bidRepository.save(bid);
+        return bidRepository.save(bid);
     }
 }

@@ -1,15 +1,11 @@
 package fr.polytech.mishap.models;
 
 import javax.persistence.Entity;
-
-import java.util.Date;
 import java.util.Objects;
 import fr.polytech.task.models.Task;
-import fr.polytech.task.models.TaskStatus;
 
 @Entity
 public class Mishap extends Task {
-
 
     public Mishap(){}
 
