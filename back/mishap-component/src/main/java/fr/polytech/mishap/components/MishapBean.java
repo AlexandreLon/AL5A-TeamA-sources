@@ -1,7 +1,7 @@
 package fr.polytech.mishap.components;
 
 import fr.polytech.bid.components.BidCreator;
-import fr.polytech.mishap.errors.MishapNotFound;
+import fr.polytech.mishap.errors.MishapNotFoundException;
 import fr.polytech.mishap.models.Mishap;
 import fr.polytech.mishap.repositories.MishapRepository;
 
@@ -50,14 +50,14 @@ public class MishapBean implements MishapManager {
     }
 
     @Override
-    public Mishap getMishapById(Long id) throws MishapNotFound {
+    public Mishap getMishapById(Long id) throws MishapNotFoundException {
         Optional<Mishap> mishap = this.mishapRepository.findById(id);
-        if(!mishap.isPresent()) throw new MishapNotFound();
+        if(!mishap.isPresent()) throw new MishapNotFoundException();
         return mishap.get();
     }
 
     @Override
-    public Mishap updateMishap(Long id, String name, String type, TaskPriority priority) throws MishapNotFound {
+    public Mishap updateMishap(Long id, String name, String type, TaskPriority priority) throws MishapNotFoundException {
         Optional<Mishap> opt = this.mishapRepository.findById(id);
         if (opt.isPresent()) {
             Mishap mishap = opt.get();
@@ -67,7 +67,7 @@ public class MishapBean implements MishapManager {
             mishap = this.mishapRepository.save(mishap);
             return mishap;
         }
-        throw new MishapNotFound();
+        throw new MishapNotFoundException();
     }
 
     @Override

@@ -13,7 +13,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.annotation.DirtiesContext;
 
-import fr.polytech.maintenance.errors.MaintenanceNotFound;
+import fr.polytech.maintenance.errors.MaintenanceNotFoundException;
 import fr.polytech.maintenance.models.Maintenance;
 
 
@@ -45,7 +45,7 @@ public class MaintenanceTest {
 
     @Test
     public void getMaintenanceByIdDoesntExist() {
-        assertThrows(MaintenanceNotFound.class, () -> {
+        assertThrows(MaintenanceNotFoundException.class, () -> {
 			maintenanceManager.getMaintenanceById(100000l);
 		});
     }
@@ -63,7 +63,7 @@ public class MaintenanceTest {
 
     @Test
     public void updateMaintenanceDoentExist() {
-        assertThrows(MaintenanceNotFound.class, () -> {
+        assertThrows(MaintenanceNotFoundException.class, () -> {
 			maintenanceManager.updateMaintenance(100000l, "foo", "bar");
 		});
     }
@@ -76,7 +76,7 @@ public class MaintenanceTest {
             assertEquals(maintenance, gettingMaintenance);
         });
         maintenanceManager.deleteMaintenance(maintenance.getId());
-        assertThrows(MaintenanceNotFound.class, () -> {
+        assertThrows(MaintenanceNotFoundException.class, () -> {
 			maintenanceManager.getMaintenanceById(maintenance.getId());
 		});
     }

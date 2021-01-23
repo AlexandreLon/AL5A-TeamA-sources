@@ -5,7 +5,7 @@ import org.springframework.context.annotation.ComponentScan;
 import org.springframework.web.bind.annotation.*;
 
 import fr.polytech.maintenance.components.MaintenanceManager;
-import fr.polytech.maintenance.errors.MaintenanceNotFound;
+import fr.polytech.maintenance.errors.MaintenanceNotFoundException;
 import fr.polytech.maintenance.models.Maintenance;
 import fr.polytech.webservices.Application;
 import fr.polytech.webservices.errors.ResourceNotFoundException;
@@ -47,7 +47,7 @@ public class MaintenanceService {
         log.info("GET : /api/maintenance/" + id);
         try {
             return maintenanceManager.getMaintenanceById(id);
-        } catch (MaintenanceNotFound e) {
+        } catch (MaintenanceNotFoundException e) {
             throw new ResourceNotFoundException();
         }
     }
@@ -58,7 +58,7 @@ public class MaintenanceService {
         log.info("PUT : /api/maintenance/" + id);
         try {
             return maintenanceManager.updateMaintenance(id, maintenance.name, maintenance.type);
-        } catch (MaintenanceNotFound e) {
+        } catch (MaintenanceNotFoundException e) {
             throw new ResourceNotFoundException();
         }
     }

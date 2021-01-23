@@ -1,6 +1,6 @@
 package fr.polytech.mishap.errors;
 
-public class MishapNotFound extends Exception {
+public class MishapNotFoundException extends Exception {
 
     /**
      *

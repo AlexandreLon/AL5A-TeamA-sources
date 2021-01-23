@@ -13,7 +13,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.annotation.DirtiesContext;
 
-import fr.polytech.mishap.errors.MishapNotFound;
+import fr.polytech.mishap.errors.MishapNotFoundException;
 import fr.polytech.mishap.models.Mishap;
 import fr.polytech.task.models.TaskPriority;
 
@@ -46,7 +46,7 @@ public class MishapTest {
 
     @Test
     public void getMishapByIdDoesntExist() {
-        assertThrows(MishapNotFound.class, () -> {
+        assertThrows(MishapNotFoundException.class, () -> {
 			mishapManager.getMishapById(100000l);
 		});
     }
@@ -64,7 +64,7 @@ public class MishapTest {
 
     @Test
     public void updateMishapDoentExist() {
-        assertThrows(MishapNotFound.class, () -> {
+        assertThrows(MishapNotFoundException.class, () -> {
 			mishapManager.updateMishap(100000l, "foo", "bar", TaskPriority.HIGH);
 		});
     }
@@ -77,7 +77,7 @@ public class MishapTest {
             assertEquals(mishap, gettingMishap);
         });
         mishapManager.deleteMishap(mishap.getId());
-        assertThrows(MishapNotFound.class, () -> {
+        assertThrows(MishapNotFoundException.class, () -> {
 			mishapManager.getMishapById(mishap.getId());
 		});
     }

@@ -1,6 +1,6 @@
 package fr.polytech.maintenance.errors;
 
-public class MaintenanceNotFound extends Exception {
+public class MaintenanceNotFoundException extends Exception {
 
     /**
      *

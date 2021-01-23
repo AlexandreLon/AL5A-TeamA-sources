@@ -1,6 +1,6 @@
 package fr.polytech.task.errors;
 
-public class TaskNotFound extends Exception {
+public class TaskNotFoundException extends Exception {
 
     /**
      *
