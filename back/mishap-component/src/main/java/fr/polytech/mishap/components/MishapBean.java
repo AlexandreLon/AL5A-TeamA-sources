@@ -44,7 +44,6 @@ public class MishapBean implements MishapManager {
         mishap.setPriority(priority);
         mishap.setStatus(TaskStatus.PENDING);
         mishap.setCreationDate(new Date());
-        mishap.setDesiredDate(desiredDate);
         mishap = mishapRepository.save(mishap);
         bidCreator.createBid(mishap, Lists.newArrayList(supplierRepository.findAll()), desiredDate);
         return mishap;

@@ -43,7 +43,6 @@ public class MaintenanceBean implements MaintenanceManager {
         maintenance.setType(type);
         maintenance.setStatus(TaskStatus.PENDING);
         maintenance.setCreationDate(new Date());
-        maintenance.setDesiredDate(desiredDate);
         maintenance.setPriority(TaskPriority.NONE);
         maintenance = maintenanceRepository.save(maintenance);
         bidCreator.createBid(maintenance, Lists.newArrayList(supplierRepository.findAll()), desiredDate);

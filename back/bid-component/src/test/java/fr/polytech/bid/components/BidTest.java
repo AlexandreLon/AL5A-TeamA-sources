@@ -45,7 +45,6 @@ public class BidTest {
     public void createBid() {
         Task task = new Task();
         task.setCreationDate(new Date());
-        task.setDesiredDate(new Date());
         task.setName("foo");
         task.setPriority(TaskPriority.HIGH);
         task.setStatus(TaskStatus.PENDING);
@@ -67,7 +66,6 @@ public class BidTest {
     public void getBidById() {
         Task task = new Task();
         task.setCreationDate(new Date());
-        task.setDesiredDate(new Date());
         task.setName("foo");
         task.setPriority(TaskPriority.HIGH);
         task.setStatus(TaskStatus.PENDING);
@@ -89,7 +87,6 @@ public class BidTest {
     public void getMishapByIdExist() {
         Task task = new Task();
         task.setCreationDate(new Date());
-        task.setDesiredDate(new Date());
         task.setName("foo");
         task.setPriority(TaskPriority.HIGH);
         task.setStatus(TaskStatus.PENDING);

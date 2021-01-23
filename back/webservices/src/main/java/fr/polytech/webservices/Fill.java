@@ -69,9 +69,9 @@ public class Fill {
             log.info("Generating some maintenances with bid");
             generateSomeMaintenances();
             log.info("Generating some mishaps with bid");
-            generateSomeMishap();
+            generateSomeMishaps();
             log.info("Generating some supplier");
-            generateSomeSupplier();
+            generateSomeSuppliers();
         }
         log.info("Generating data done... Server up !!");
 	}
@@ -80,7 +80,6 @@ public class Fill {
         for(int i=0; i<20; i++) {
             Maintenance m = new Maintenance();
             m.setCreationDate(faker.date().past(3, TimeUnit.DAYS));
-            m.setDesiredDate(faker.date().future(5, TimeUnit.DAYS));
             m.setName(faker.lorem().word());
             m.setPriority(TaskPriority.NONE);
             m.setStatus(faker.random().nextBoolean() ? TaskStatus.PENDING : TaskStatus.FINISHED);
@@ -89,11 +88,10 @@ public class Fill {
         }
     }
 
-    private void generateSomeMishap() {
+    private void generateSomeMishaps() {
         for(int i=0; i<20; i++) {
             Mishap m = new Mishap();
             m.setCreationDate(faker.date().past(3, TimeUnit.DAYS));
-            m.setDesiredDate(faker.date().future(5, TimeUnit.DAYS));
             m.setName(faker.lorem().word());
             m.setPriority(generateTaskPriority());
             m.setStatus(faker.random().nextBoolean() ? TaskStatus.PENDING : TaskStatus.FINISHED);
@@ -102,7 +100,7 @@ public class Fill {
         }
     }
 
-    private void generateSomeSupplier() {
+    private void generateSomeSuppliers() {
         TaskType[] types = {TaskType.CLEANING, TaskType.REPLACING, TaskType.VERIFICATION};
         for(int i=0; i<20; i++) {
             Supplier s = new Supplier();

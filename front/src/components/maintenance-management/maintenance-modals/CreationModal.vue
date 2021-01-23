@@ -39,7 +39,7 @@
 
 
 					<div class="modal-body">
-						<div class="w-50 text-center d-block m-auto">
+						<div class="w-50 d-block m-auto">
 							<div
 								v-if="result"
 								class="alert-success p-2 mb-3"
@@ -67,7 +67,7 @@
 									<option>Something else</option>
 								</select>
 							</div>
-							Date of resolution :
+							<div>Desired date of resolution <span>(the date will appear in the bid for suppliers)</span> :</div>
 							<input
 								class="form-control mb-3"
 								type="datetime-local"

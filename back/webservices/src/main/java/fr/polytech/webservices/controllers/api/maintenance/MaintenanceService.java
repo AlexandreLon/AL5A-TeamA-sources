@@ -1,5 +1,6 @@
 package fr.polytech.webservices.controllers.api.maintenance;
 
+import fr.polytech.webservices.models.MaintenanceCreationBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.web.bind.annotation.*;
@@ -29,9 +30,9 @@ public class MaintenanceService {
 
     @CrossOrigin
     @PostMapping("")
-    public Maintenance createMaintenance(@RequestBody MaintenanceBody maintenance) {
+    public Maintenance createMaintenance(@RequestBody MaintenanceCreationBody maintenanceCreation) {
         log.info("POST : /api/maintenance");
-        return maintenanceManager.createMaintenance(maintenance.name, maintenance.type, maintenance.desiredDate);
+        return maintenanceManager.createMaintenance(maintenanceCreation.name, maintenanceCreation.type, maintenanceCreation.desiredDate);
     }
 
     @CrossOrigin

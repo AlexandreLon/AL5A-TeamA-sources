@@ -31,9 +31,6 @@ public class Task {
     protected TaskStatus status;
 
     @Column
-    protected Date desiredDate;
-
-    @Column
     private TaskPriority priority;
 
     @Column(name = "creationDate")
@@ -67,13 +64,6 @@ public class Task {
         this.status = status;
     }
 
-    public Date getDesiredDate() {
-        return this.desiredDate;
-    }
-    public void setDesiredDate(Date desiredDate) {
-        this.desiredDate = desiredDate;
-    }
-
     public TaskPriority getPriority() {
 		return this.priority;
 	}
@@ -96,12 +86,12 @@ public class Task {
             return false;
         }
         Task task = (Task) o;
-        return Objects.equals(id, task.id) && Objects.equals(name, task.name) && Objects.equals(type, task.type) && Objects.equals(status, task.status) && Objects.equals(desiredDate, task.desiredDate) && Objects.equals(priority, task.priority) && Objects.equals(creationDate, task.creationDate);
+        return Objects.equals(id, task.id) && Objects.equals(name, task.name) && Objects.equals(type, task.type) && Objects.equals(status, task.status) && Objects.equals(priority, task.priority) && Objects.equals(creationDate, task.creationDate);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, name, type, status, desiredDate, priority, creationDate);
+        return Objects.hash(id, name, type, status, priority, creationDate);
     }
 
 }
