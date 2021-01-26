@@ -10,9 +10,7 @@ matrix:
           - cd back
         script:
           - mvn clean install -Ptravis
-        after_script:
-          - cd webservices
-          - mvn spring-boot:run
+        if: branch != ci or branch != master or branch != release
   
       - language: node_js
         node_js: 14
@@ -22,7 +20,7 @@ matrix:
           - npm install
           - npm run lint
           - npm run build
-        if: branch = develop
+        if: branch != ci or branch != master or branch != release
       
       - language: java
         java: 11
