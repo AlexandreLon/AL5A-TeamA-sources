@@ -6,6 +6,8 @@
 
 ## Semaine 04
 
+### Flag : Green
+
 Cette semaine, nous continuons sur notre lancée pour sortir une version stable de l'application. Cette version permettra d'agir sur les enchères (surenchérir, voir les autres offres faites sur une enchère et le responsable des maintenances pourra accepter une offre).
 Nous avons également décidé d'allouer plus de ressources pour tester les fonctionnalités actuelles via des tests fonctionnels et unitaires car l'application en manque beaucoup.
 
@@ -24,6 +26,7 @@ Nous avons aussi planifié une Roadmap pour ce 2ème bimestre en se séparant le
 Le risque cette semaine est que si nous avons mal conçu l'architecture par rapport aux changements du sujet, il se peut que nous rencontrions des problèmes imprévisibles à cause des nouveaux composants, notamment pour le système d'enchère.
 
 Probabilité : Moyenne
+
 Impact : Elevé car il faudrait repenser l'architecture actuelle ce qui nous prendrait du temps de développement.
 
 ## Semaine 45
@@ -48,6 +51,7 @@ Le reste de cette semaine sera consacré à la retrospective de nos choix et à 
 Il y a un risque majeur à évoquer. Nous devons encore faire en sorte que le projet se lance avec Docker pour s'assurer qu'il marche dans un environnement isolé. Pour l'instant, nous ne parvenons pas à faire en sorte que Docker se lance sur un profil de déploiement défini.
 
 Probabilité : Moyenne au vu de la charge de travail dans les autres projets en parallèle
+
 Impact : Elevé
 
 ## Semaine 44
