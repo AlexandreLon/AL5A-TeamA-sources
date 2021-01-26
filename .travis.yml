@@ -10,7 +10,7 @@ matrix:
           - cd back
         script:
           - mvn clean install -Ptravis
-        if: branch != ci or branch != master or branch != release
+        if: branch != ci and branch != master and branch != release
   
       - language: node_js
         node_js: 14
@@ -20,7 +20,7 @@ matrix:
           - npm install
           - npm run lint
           - npm run build
-        if: branch != ci or branch != master or branch != release
+        if: branch != ci and branch != master and branch != release
       
       - language: java
         java: 11
