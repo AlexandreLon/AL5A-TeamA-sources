@@ -17,7 +17,7 @@ import fr.polytech.task.models.Task;
 @ComponentScan("fr.polytech.task.repositories")
 @EntityScan("fr.polytech.task.models")
 @EnableJpaRepositories("fr.polytech.task.repositories")
-public class TaskBean implements TaskAction, ScheduleVisualizer {
+public class TaskBean implements TaskManager {
 
     @Autowired
     private TaskRepository taskRepository;
@@ -35,7 +35,7 @@ public class TaskBean implements TaskAction, ScheduleVisualizer {
     }
     
 	@Override
-	public List<Task> getPlanning() {
+	public List<Task> getTasks() {
         return (List<Task>) taskRepository.findAllByOrderByPriorityDesc();
 	}
 }

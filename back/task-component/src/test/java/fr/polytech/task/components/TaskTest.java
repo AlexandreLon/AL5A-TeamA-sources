@@ -28,10 +28,7 @@ import fr.polytech.task.repositories.TaskRepository;
 public class TaskTest {
     
     @Autowired
-    private TaskAction taskAction;
-
-    @Autowired
-    private ScheduleVisualizer scheduleVisualizer;
+    private TaskManager taskManager;
 
     @Autowired 
     private TaskRepository tr;
@@ -46,7 +43,7 @@ public class TaskTest {
         task.setType("bar");
         tr.save(task);
         assertDoesNotThrow(() -> {
-            Task doneTask = taskAction.endTask(task.getId());
+            Task doneTask = taskManager.endTask(task.getId());
             assertEquals(TaskStatus.FINISHED, doneTask.getStatus());
 		});
         
@@ -55,23 +52,23 @@ public class TaskTest {
     @Test
     public void endTaskTestDoesntExist() {
         assertThrows(TaskNotFoundException.class, () -> {
-			taskAction.endTask(10000l);
+			taskManager.endTask(10000l);
 		});
         
     }
 
     @Test
-    public void scheduleVisualizerTest() {
+    public void taskTest() {
         Task task = new Task();
         task.setCreationDate(new Date());
         task.setName("foo");
         task.setPriority(TaskPriority.HIGH);
         task.setStatus(TaskStatus.PENDING);
         task.setType("bar");
-        assertEquals(0, scheduleVisualizer.getPlanning().size());
+        assertEquals(0, taskManager.getTasks().size());
         task = tr.save(task);
-        assertEquals(1, scheduleVisualizer.getPlanning().size());
-        assertEquals(task, scheduleVisualizer.getPlanning().get(0));
+        assertEquals(1, taskManager.getTasks().size());
+        assertEquals(task, taskManager.getTasks().get(0));
     }
 
 }
