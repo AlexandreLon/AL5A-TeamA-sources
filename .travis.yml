@@ -22,7 +22,7 @@ matrix:
           - npm install
           - npm run lint
           - npm run build
-      if: branch = develop
+        if: branch = develop
       
       - language: java
         java: 11
