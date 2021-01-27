@@ -5,15 +5,11 @@ import java.util.concurrent.TimeUnit;
 import com.github.javafaker.Faker;
 
 import fr.polytech.task.models.TaskType;
-import fr.polytech.webservices.yaml.YamlPropertySourceFactory;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.boot.context.properties.ConfigurationProperties;
-import org.springframework.context.annotation.Configuration;
-import org.springframework.context.annotation.PropertySource;
 import org.springframework.stereotype.Service;
 
 import fr.polytech.bid.models.Bid;
@@ -32,9 +28,6 @@ import fr.polytech.task.models.TaskPriority;
 import fr.polytech.task.models.TaskStatus;
 
 @Service
-@Configuration
-@PropertySource(value = "classpath:application-${spring.profiles.active:default}.yml", factory = YamlPropertySourceFactory.class)
-@ConfigurationProperties(prefix = "shiba-configuration")
 public class Fill {
 
     @Value("${env.mode}")
