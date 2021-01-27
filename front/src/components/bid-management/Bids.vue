@@ -13,6 +13,9 @@
 						Desired Date
 					</th>
 					<th scope="col">
+						Status
+					</th>
+					<th scope="col">
 						Actions
 					</th>
 				</tr>

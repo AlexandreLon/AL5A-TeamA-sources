@@ -22,6 +22,9 @@ public class Bid {
     @Column
     protected Date desiredDate;
 
+    @Column(name = "status", length = 30, nullable = false)
+    protected BidStatus status;
+
     public Long getId() {
         return id;
     }
@@ -52,6 +55,14 @@ public class Bid {
 
     public void setDesiredDate(Date desiredDate) {
         this.desiredDate = desiredDate;
+    }
+
+    public BidStatus getStatus() {
+        return status;
+    }
+
+    public void setStatus(BidStatus status) {
+        this.status = status;
     }
 
     @Override

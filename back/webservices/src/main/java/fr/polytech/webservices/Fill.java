@@ -13,6 +13,7 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
 import fr.polytech.bid.models.Bid;
+import fr.polytech.bid.models.BidStatus;
 import fr.polytech.bid.models.Supplier;
 
 import fr.polytech.bid.repositories.BidRepository;
@@ -116,6 +117,7 @@ public class Fill {
         bid.setDesiredDate(faker.date().future(5, TimeUnit.DAYS));
         bid.setName(task.getName());
         bid.setTask(task);
+        bid.setStatus((task.getStatus() == TaskStatus.PENDING ? BidStatus.ONGOING : BidStatus.CLOSED));
         return br.save(bid);
     }
     
