@@ -5,6 +5,7 @@ import java.util.concurrent.TimeUnit;
 import com.github.javafaker.Faker;
 
 import fr.polytech.task.models.TaskType;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;

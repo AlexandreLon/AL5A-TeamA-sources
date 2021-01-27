@@ -10,6 +10,9 @@ matrix:
           - cd back
         script:
           - mvn clean install -Ptravis
+        after_script:
+          - cd webservices
+          - mvn spring-boot:run
   
       - language: node_js
         node_js: 14
@@ -19,6 +22,7 @@ matrix:
           - npm install
           - npm run lint
           - npm run build
+        if: branch = develop
       
       - language: java
         java: 11
