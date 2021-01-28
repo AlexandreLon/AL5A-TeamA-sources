@@ -110,6 +110,7 @@ public class Fill {
             Supplier s = new Supplier();
             s.setName(faker.lorem().word());
             s.setTaskType(types[faker.random().nextInt(0,2)]);
+            sr.save(s);
         }
     }
 
