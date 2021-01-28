@@ -1,5 +1,7 @@
 package fr.polytech.webservices;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.concurrent.TimeUnit;
 
 import com.github.javafaker.Faker;
@@ -14,9 +16,11 @@ import org.springframework.stereotype.Service;
 
 import fr.polytech.bid.models.Bid;
 import fr.polytech.bid.models.BidStatus;
+import fr.polytech.bid.models.Offer;
 import fr.polytech.bid.models.Supplier;
 
 import fr.polytech.bid.repositories.BidRepository;
+import fr.polytech.bid.repositories.OfferRepository;
 import fr.polytech.bid.repositories.SupplierRepository;
 
 
@@ -48,6 +52,10 @@ public class Fill {
     @Autowired
     private SupplierRepository sr;
 
+    @Autowired
+    private OfferRepository of;
+
+    private List<Supplier> suppliers = new ArrayList<>();
 
     private Faker faker = new Faker();
 
@@ -68,12 +76,12 @@ public class Fill {
 	public void generate() {
         log.info("Generating some data...");
         if (env.equals("dev")) {
+            log.info("Generating some supplier");
+            generateSomeSuppliers();
             log.info("Generating some maintenances with bid");
             generateSomeMaintenances();
             log.info("Generating some mishaps with bid");
             generateSomeMishaps();
-            log.info("Generating some supplier");
-            generateSomeSuppliers();
         }
         log.info("Generating data done... Server up !!");
 	}
@@ -110,6 +118,7 @@ public class Fill {
             Supplier s = new Supplier();
             s.setName(faker.lorem().word());
             s.setTaskType(types[faker.random().nextInt(0,2)]);
+            suppliers.add(s);
             sr.save(s);
         }
     }
@@ -120,7 +129,19 @@ public class Fill {
         bid.setName(task.getName());
         bid.setTask(task);
         bid.setStatus((task.getRealizationDate() == null ? BidStatus.ONGOING : BidStatus.CLOSED));
+        bid = br.save(bid);
+        generateSomeOfferFromBid(bid, suppliers.get(faker.random().nextInt(0, suppliers.size()-1))); 
         return br.save(bid);
     }
-    
+
+    private void generateSomeOfferFromBid(Bid bid, Supplier supplier) {
+        for(int i=0; i<10; i++) {
+            Offer offer = new Offer();
+            offer.setBid(bid);
+            offer.setSupplier(supplier);
+            offer.setProposedDate(faker.date().future(5, TimeUnit.DAYS));
+            offer.setPrice(faker.random().nextDouble()*10000);
+            of.save(offer);
+        }
+    }    
 }
