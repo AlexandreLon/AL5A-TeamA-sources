@@ -2,7 +2,6 @@ package fr.polytech.mishap.components;
 
 import com.google.inject.internal.util.Lists;
 import fr.polytech.bid.components.BidCreator;
-import fr.polytech.bid.models.Supplier;
 import fr.polytech.bid.repositories.SupplierRepository;
 import fr.polytech.mishap.errors.MishapNotFoundException;
 import fr.polytech.mishap.models.Mishap;
