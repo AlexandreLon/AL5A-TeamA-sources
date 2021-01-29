@@ -41,7 +41,6 @@
 <script>
 import { ref } from 'vue';
 import Bid from "../../models/bid-management/Bid";
-import Supplier from "../../models/supplier/Supplier";
 import CreateOffer from "./offers/CreateOffer2.vue";
 import ViewOffer from "./offers/ViewOffer.vue";
 import BidWSAPI from '../../API/BidWSAPI';
@@ -58,8 +57,8 @@ export default {
 			default: null
 		},
 		suppliers: {
-			type: [Supplier],
-			default: []
+			type: Array,
+			default: () => []
 		}
 	},
 	setup(props) {

@@ -77,13 +77,12 @@
 export default {
 	props: {
 		bidid: {
-			type: String,
-			default: ''
+			type: Number,
+			default: 0
 		},
 		offers: {
-			type: [Object],
-			// eslint-disable-next-line vue/require-valid-default-prop
-			default: []
+			type: Array,
+			default: () => []
 		}
 	}
 };

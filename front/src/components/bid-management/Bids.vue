@@ -57,7 +57,6 @@ export default {
 		onMounted(() => {
 			supplierAPI.getSuppliers().then(res => {
 				suppliers.value = res;
-				console.log(res);
 			});
 			bidWSAPI
 				.getBids()

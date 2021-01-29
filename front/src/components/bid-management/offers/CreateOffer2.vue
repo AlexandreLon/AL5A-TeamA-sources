@@ -108,19 +108,18 @@
 <script>
 import { ref } from 'vue';
 import SupplierWSAPI from '../../../API/SupplierWSAPI';
-import Supplier from "../../../models/supplier/Supplier";
 
 const supplierAPI = new SupplierWSAPI();
 
 export default {
 	props: {
 		bidid: {
-			type: String,
-			default: ''
+			type: Number,
+			default: 0
 		},
 		suppliers: {
-			type: [Supplier],
-			default: []
+			type: Array,
+			default: () => []
 		}
 	},
 	setup(props) {
