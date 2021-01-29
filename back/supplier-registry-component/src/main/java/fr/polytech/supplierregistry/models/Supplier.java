@@ -1,4 +1,4 @@
-package fr.polytech.bid.models;
+package fr.polytech.supplierregistry.models;
 
 import fr.polytech.task.models.TaskType;
 

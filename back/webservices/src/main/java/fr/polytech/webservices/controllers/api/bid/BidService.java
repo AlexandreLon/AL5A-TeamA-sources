@@ -3,6 +3,8 @@ package fr.polytech.webservices.controllers.api.bid;
 import fr.polytech.bid.components.BidViewer;
 import fr.polytech.bid.errors.BidNotFoundException;
 import fr.polytech.bid.models.Bid;
+import fr.polytech.bid.models.Offer;
+
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.web.bind.annotation.*;
@@ -41,6 +43,17 @@ public class BidService {
         log.info("GET : /api/bid/" + id);
         try {
             return bidViewer.getBidById(id);
+        } catch (BidNotFoundException e) {
+            throw new ResourceNotFoundException();
+        }
+    }
+
+    @CrossOrigin
+    @GetMapping("/{id}/offers")
+    public List<Offer> getOffers(@PathVariable Long id) {
+        log.info("GET : /api/bid/" + id + "/offers");
+        try {
+            return bidViewer.getOffers(id);
         } catch (BidNotFoundException e) {
             throw new ResourceNotFoundException();
         }

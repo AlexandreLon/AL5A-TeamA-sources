@@ -2,11 +2,11 @@ package fr.polytech.maintenance.components;
 
 import com.google.inject.internal.util.Lists;
 import fr.polytech.bid.components.BidCreator;
-import fr.polytech.bid.repositories.SupplierRepository;
 import fr.polytech.maintenance.errors.MaintenanceNotFoundException;
 import fr.polytech.maintenance.models.Maintenance;
 import fr.polytech.maintenance.repositories.MaintenanceRepository;
 
+import fr.polytech.supplierregistry.repositories.SupplierRepository;
 import fr.polytech.task.models.TaskPriority;
 import org.springframework.stereotype.Component;
 
@@ -22,7 +22,7 @@ import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 import fr.polytech.task.models.TaskStatus;
 
 @Component
-@ComponentScan({"fr.polytech.maintenance.repositories", "fr.polytech.bid.components"})
+@ComponentScan({"fr.polytech.maintenance.repositories", "fr.polytech.bid.components","fr.polytech.supplierregistry.repositories"})
 @EntityScan("fr.polytech.maintenance.models")
 @EnableJpaRepositories("fr.polytech.maintenance.repositories")
 public class MaintenanceBean implements MaintenanceManager {

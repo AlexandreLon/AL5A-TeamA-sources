@@ -25,6 +25,7 @@
 					v-for="bid of bids"
 					:key="bid.id"
 					:bid="bid"
+					:suppliers="suppliers"
 				/>
 			</tbody>
 			<tr
@@ -41,6 +42,9 @@
 import { ref, onMounted } from "vue";
 import BidWSAPI from "../../API/BidWSAPI";
 import Bid from "./Bid.vue";
+import SupplierWSAPI from '../../API/SupplierWSAPI';
+
+const supplierAPI = new SupplierWSAPI();
 
 const bidWSAPI = new BidWSAPI();
 
@@ -48,8 +52,12 @@ export default {
 	components: { Bid },
 	setup() {
 		const bids = ref(null);
+		const suppliers = ref([]);
 
 		onMounted(() => {
+			supplierAPI.getSuppliers().then(res => {
+				suppliers.value = res;
+			});
 			bidWSAPI
 				.getBids()
 				.then(res => {
@@ -60,7 +68,7 @@ export default {
 				});
 		});
 
-		return { bids };
+		return { bids, suppliers };
 	}
 };
 </script>
