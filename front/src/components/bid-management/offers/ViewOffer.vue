@@ -4,7 +4,7 @@
 		tabindex="-1"
 		:id="'viewOfferModal' + bidid"
 	>
-		<div class="modal-dialog">
+		<div class="modal-dialog modal-xl">
 			<div class="modal-content">
 				<div class="modal-header">
 					<h5 class="modal-title">
@@ -35,6 +35,9 @@
 								<th scope="col">
 									Date
 								</th>
+								<th scope="col">
+									Actions
+								</th>
 							</tr>
 						</thead>
 						<tbody>
@@ -46,8 +49,16 @@
 									{{ offer.id }}
 								</th>
 								<td>{{ offer.supplier.name }}</td>
-								<td>{{ Math.round(offer.price)/100 }}€</td>
+								<td>{{ new Intl.NumberFormat('de-DE', { style: 'currency', currency: 'EUR' }).format(offer.price) }}</td>
 								<td>{{ new Date(offer.proposedDate).toISOString().replace(/T/, ' ').replace(/\..+/, '').split(' ')[0] }}</td>
+								<td>
+									<button
+										type="button"
+										class="btn btn-success"
+									>
+										Accept offer
+									</button>
+								</td>
 							</tr>
 						</tbody>
 					</table>
@@ -59,13 +70,6 @@
 						data-dismiss="modal"
 					>
 						Close
-					</button>
-					<button
-						type="button"
-						class="btn btn-primary"
-						@click="submit"
-					>
-						Create
 					</button>
 				</div>
 			</div>
