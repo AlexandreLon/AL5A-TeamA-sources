@@ -35,6 +35,9 @@ public class Task {
 
     @Column(name = "creationDate")
     protected Date creationDate;
+
+    @Column(name = "realizationDate", nullable = true)
+    protected Date realizationDate;
     
     public Long getId() {
         return this.id;
@@ -72,11 +75,20 @@ public class Task {
 	}
 
     public Date getCreationDate() {
-		return this.creationDate;
-	}
-	public void setCreationDate(Date creationDate) {
-		this.creationDate = creationDate;
-	}
+        return this.creationDate;
+    }
+
+    public void setCreationDate(Date creationDate) {
+        this.creationDate = creationDate;
+    }
+
+    public Date getRealizationDate() {
+        return this.realizationDate;
+    }
+
+    public void setRealizationDate(Date realizationDate) {
+        this.realizationDate = realizationDate;
+    }
 
     @Override
     public boolean equals(Object o) {
