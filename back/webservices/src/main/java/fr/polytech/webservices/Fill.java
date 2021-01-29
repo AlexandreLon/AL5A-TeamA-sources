@@ -116,7 +116,7 @@ public class Fill {
         TaskType[] types = {TaskType.CLEANING, TaskType.REPLACING, TaskType.VERIFICATION};
         for(int i=0; i<20; i++) {
             Supplier s = new Supplier();
-            s.setName(faker.lorem().word());
+            s.setName(faker.name().fullName());
             s.setTaskType(types[faker.random().nextInt(0,2)]);
             suppliers.add(s);
             sr.save(s);
@@ -130,15 +130,15 @@ public class Fill {
         bid.setTask(task);
         bid.setStatus((task.getRealizationDate() == null ? BidStatus.ONGOING : BidStatus.CLOSED));
         bid = br.save(bid);
-        generateSomeOfferFromBid(bid, suppliers.get(faker.random().nextInt(0, suppliers.size()-1))); 
+        generateSomeOfferFromBid(bid);
         return br.save(bid);
     }
 
-    private void generateSomeOfferFromBid(Bid bid, Supplier supplier) {
+    private void generateSomeOfferFromBid(Bid bid) {
         for(int i=0; i<10; i++) {
             Offer offer = new Offer();
             offer.setBid(bid);
-            offer.setSupplier(supplier);
+            offer.setSupplier(suppliers.get(faker.random().nextInt(0, suppliers.size()-1)));
             offer.setProposedDate(faker.date().future(5, TimeUnit.DAYS));
             offer.setPrice(faker.random().nextDouble()*10000);
             of.save(offer);
