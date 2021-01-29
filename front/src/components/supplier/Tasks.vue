@@ -45,9 +45,7 @@ import Task from "./Task.vue";
 import SupplierWSAPI from "../../API/SupplierWSAPI";
 
 const taskWSAPI = new TaskWSAPI();
-const scheduleWSAPI = new ScheduleWSAPI();
 const supplierWSAPI = new SupplierWSAPI();
-
 
 export default {
 	components: { Task },

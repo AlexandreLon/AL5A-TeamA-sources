@@ -5,7 +5,6 @@ import fr.polytech.bid.errors.SupplierNotFoundException;
 import fr.polytech.bid.models.Bid;
 import fr.polytech.bid.models.Offer;
 import fr.polytech.bid.models.BidStatus;
-import fr.polytech.bid.models.Supplier;
 import fr.polytech.bid.repositories.BidRepository;
 import fr.polytech.bid.repositories.OfferRepository;
 import fr.polytech.supplierregistry.models.Supplier;
