@@ -8,8 +8,8 @@ import java.util.Date;
 import java.util.List;
 import java.util.stream.Collectors;
 
-import fr.polytech.bid.models.Supplier;
-import fr.polytech.bid.repositories.SupplierRepository;
+import fr.polytech.supplierregistry.models.Supplier;
+import fr.polytech.supplierregistry.repositories.SupplierRepository;
 import fr.polytech.task.models.TaskType;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -29,7 +29,7 @@ import fr.polytech.task.repositories.TaskRepository;
 
 @SpringBootTest
 @DirtiesContext(classMode = DirtiesContext.ClassMode.AFTER_EACH_TEST_METHOD)
-@ComponentScan({"fr.polytech.task.repositories", "fr.polytech.bid.components"})
+@ComponentScan({"fr.polytech.task.repositories","fr.polytech.supplierregistry.repositories", "fr.polytech.bid.components"})
 @EntityScan("fr.polytech.task.models")
 @EnableJpaRepositories("fr.polytech.task.repositories")
 public class BidTest {

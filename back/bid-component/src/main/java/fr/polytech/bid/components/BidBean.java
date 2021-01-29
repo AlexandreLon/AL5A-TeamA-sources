@@ -8,7 +8,8 @@ import fr.polytech.bid.models.BidStatus;
 import fr.polytech.bid.models.Supplier;
 import fr.polytech.bid.repositories.BidRepository;
 import fr.polytech.bid.repositories.OfferRepository;
-import fr.polytech.bid.repositories.SupplierRepository;
+import fr.polytech.supplierregistry.models.Supplier;
+import fr.polytech.supplierregistry.repositories.SupplierRepository;
 import fr.polytech.task.models.Task;
 
 import org.springframework.stereotype.Component;
@@ -22,9 +23,9 @@ import java.util.List;
 import java.util.Optional;
 
 @Component
-@ComponentScan("fr.polytech.bid.repositories")
+@ComponentScan({"fr.polytech.bid.repositories","fr.polytech.supplierregistry.repositories"})
 @EntityScan("fr.polytech.bid.models")
-@EnableJpaRepositories("fr.polytech.bid.repositories")
+@EnableJpaRepositories({"fr.polytech.bid.repositories","fr.polytech.supplierregistry.repositories"})
 public class BidBean implements BidViewer, BidCreator, BidProposer {
 
     @Autowired

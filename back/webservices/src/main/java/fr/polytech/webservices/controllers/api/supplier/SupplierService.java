@@ -5,6 +5,8 @@ import fr.polytech.bid.errors.BidNotFoundException;
 import fr.polytech.bid.errors.SupplierNotFoundException;
 import fr.polytech.bid.models.Offer;
 
+import fr.polytech.supplierregistry.components.SupplierAuthenticator;
+import fr.polytech.supplierregistry.models.Supplier;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.web.bind.annotation.*;
@@ -18,8 +20,10 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 
+import java.util.List;
+
 @RestController
-@ComponentScan({ "fr.polytech.bid" })
+@ComponentScan({ "fr.polytech.bid","fr.polytech.supplierregistry" })
 @RequestMapping("/api/supplier")
 public class SupplierService {
 
@@ -27,6 +31,17 @@ public class SupplierService {
 
     @Autowired
     private BidProposer bidProposer;
+
+    @Autowired
+    private SupplierAuthenticator supplierAuthenticator;
+
+    @CrossOrigin
+    @GetMapping("")
+    public List<Supplier> getSuppliers() {
+        log.info("GET : /api/supplier");
+        return supplierAuthenticator.getSuppliers();
+
+    }
 
     @CrossOrigin
     @PostMapping("/{id}/outbid")

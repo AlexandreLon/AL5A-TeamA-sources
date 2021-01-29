@@ -12,6 +12,16 @@ class SupplierWSAPI extends API {
 		});
 	}
 
+	getSuppliers() {
+		return new Promise((resolve, reject) => {
+			this.axios.get('/supplier').then(res => {
+				resolve(res);
+			}).catch(error => {
+				reject(error);
+			});
+		});
+	}
+
 	
 }
 

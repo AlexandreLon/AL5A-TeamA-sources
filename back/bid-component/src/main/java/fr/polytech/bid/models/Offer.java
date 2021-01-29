@@ -1,5 +1,7 @@
 package fr.polytech.bid.models;
 
+import fr.polytech.supplierregistry.models.Supplier;
+
 import java.util.Date;
 
 import javax.persistence.Column;

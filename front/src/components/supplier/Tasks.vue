@@ -42,14 +42,19 @@
 import { ref, onMounted } from "vue";
 import TaskWSAPI from "../../API/TaskWSAPI";
 import Task from "./Task.vue";
+import SupplierWSAPI from "../../API/SupplierWSAPI";
 
 const taskWSAPI = new TaskWSAPI();
+const scheduleWSAPI = new ScheduleWSAPI();
+const supplierWSAPI = new SupplierWSAPI();
+
 
 export default {
 	components: { Task },
 	setup() {
 		const tasks = ref(null);
 		onMounted(() => {
+			supplierWSAPI.getSuppliers().then(res => console.log(res.data));
 			taskWSAPI
 				.getTasks()
 				.then(res => {

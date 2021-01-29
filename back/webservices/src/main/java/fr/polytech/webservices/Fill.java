@@ -6,6 +6,8 @@ import java.util.concurrent.TimeUnit;
 
 import com.github.javafaker.Faker;
 
+import fr.polytech.supplierregistry.models.Supplier;
+import fr.polytech.supplierregistry.repositories.SupplierRepository;
 import fr.polytech.task.models.TaskType;
 
 import org.slf4j.Logger;
@@ -17,11 +19,9 @@ import org.springframework.stereotype.Service;
 import fr.polytech.bid.models.Bid;
 import fr.polytech.bid.models.BidStatus;
 import fr.polytech.bid.models.Offer;
-import fr.polytech.bid.models.Supplier;
 
 import fr.polytech.bid.repositories.BidRepository;
 import fr.polytech.bid.repositories.OfferRepository;
-import fr.polytech.bid.repositories.SupplierRepository;
 
 
 import fr.polytech.maintenance.models.Maintenance;
