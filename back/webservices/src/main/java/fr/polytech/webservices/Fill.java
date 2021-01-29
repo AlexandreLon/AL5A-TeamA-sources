@@ -13,6 +13,7 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
 import fr.polytech.bid.models.Bid;
+import fr.polytech.bid.models.BidStatus;
 import fr.polytech.bid.models.Supplier;
 
 import fr.polytech.bid.repositories.BidRepository;
@@ -85,6 +86,7 @@ public class Fill {
             m.setPriority(TaskPriority.NONE);
             m.setStatus(faker.random().nextBoolean() ? TaskStatus.PENDING : TaskStatus.FINISHED);
             m.setType(faker.lorem().word());
+            m.setRealizationDate(faker.date().future(5, TimeUnit.DAYS));
             createBidFromTask(mar.save(m));
         }
     }
@@ -97,6 +99,7 @@ public class Fill {
             m.setPriority(generateTaskPriority());
             m.setStatus(faker.random().nextBoolean() ? TaskStatus.PENDING : TaskStatus.FINISHED);
             m.setType(faker.lorem().word());
+            m.setRealizationDate(faker.date().future(5, TimeUnit.DAYS));
             createBidFromTask(mir.save(m));
         }
     }
@@ -110,12 +113,12 @@ public class Fill {
         }
     }
 
-
     private Bid createBidFromTask(Task task) {
         Bid bid = new Bid();
         bid.setDesiredDate(faker.date().future(5, TimeUnit.DAYS));
         bid.setName(task.getName());
         bid.setTask(task);
+        bid.setStatus((task.getRealizationDate() == null ? BidStatus.ONGOING : BidStatus.CLOSED));
         return br.save(bid);
     }
     

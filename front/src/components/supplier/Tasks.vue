@@ -40,18 +40,18 @@
 
 <script>
 import { ref, onMounted } from "vue";
-import ScheduleWSAPI from "../../API/ScheduleWSAPI";
+import TaskWSAPI from "../../API/TaskWSAPI";
 import Task from "./Task.vue";
 
-const scheduleWSAPI = new ScheduleWSAPI();
+const taskWSAPI = new TaskWSAPI();
 
 export default {
 	components: { Task },
 	setup() {
 		const tasks = ref(null);
 		onMounted(() => {
-			scheduleWSAPI
-				.getPlanning()
+			taskWSAPI
+				.getTasks()
 				.then(res => {
 					tasks.value = res;
 				})

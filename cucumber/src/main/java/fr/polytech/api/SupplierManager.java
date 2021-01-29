@@ -20,7 +20,7 @@ public class SupplierManager {
 		RestTemplate restTemplate = new RestTemplate();
  
         // Send request with GET method and default Headers.
-        Task[] array = restTemplate.getForObject(String.format("http://%s:%s/api/schedule", api.getHost(), api.getPort()), Task[].class);
+        Task[] array = restTemplate.getForObject(String.format("http://%s:%s/api/task", api.getHost(), api.getPort()), Task[].class);
 		List<Task> tasks = new ArrayList<>(Arrays.asList(array));
 
         return tasks;

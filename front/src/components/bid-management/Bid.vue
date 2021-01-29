@@ -5,6 +5,7 @@
 		</th>
 		<td>{{ bid.name }}</td>
 		<td>{{ this.formatDate(bid.desiredDate) }}</td>
+		<td>{{ bid.status }}</td>
 		<td>
 			<button
 				type="button"
