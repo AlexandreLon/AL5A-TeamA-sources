@@ -82,4 +82,13 @@ public class BidBean implements BidViewer, BidCreator, BidProposer {
 
         return offerRepository.save(offer);
     }
+
+    @Override
+    public List<Offer> getOffers(Long id) throws BidNotFoundException {
+        Optional<Bid> opt = bidRepository.findById(id);
+        if (!opt.isPresent())
+            throw new BidNotFoundException();
+        Bid bid = opt.get();
+        return offerRepository.findByBidId(bid.getId());
+    }
 }

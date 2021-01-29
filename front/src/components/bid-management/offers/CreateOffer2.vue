@@ -20,6 +20,20 @@
 					</button>
 				</div>
 				<div class="modal-body">
+					<div
+						v-if="response.error"
+						class="alert alert-danger"
+						role="alert"
+					>
+						{{ error }}
+					</div>
+					<div
+						v-if="response.success"
+						class="alert alert-success"
+						role="alert"
+					>
+						Offer registred
+					</div>
 					<form>
 						<div class="form-group row">
 							<label
@@ -69,8 +83,6 @@
 							</div>
 						</div>
 					</form>
-					{{ date }}
-					{{ price }}
 				</div>
 				<div class="modal-footer">
 					<button
@@ -96,6 +108,7 @@
 <script>
 import { ref } from 'vue';
 import SupplierWSAPI from '../../../API/SupplierWSAPI';
+import Supplier from "../../../models/supplier/Supplier";
 
 const supplierAPI = new SupplierWSAPI();
 
@@ -104,24 +117,44 @@ export default {
 		bidid: {
 			type: String,
 			default: ''
+		},
+		suppliers: {
+			type: [Supplier],
+			default: []
 		}
 	},
 	setup(props) {
 		const price = ref(null);
 		const date = ref(new Date().toISOString().replace(/T/, ' ').replace(/\..+/, '').split(' ')[0]);
 		const supplier = ref(null);
-		const suppliers = [];
+
+		const response = ref({error: null, success: false});
 
 		const submit = async () => {
-			const res = await supplierAPI.outbid({
-				supplierId: supplier,
+			supplierAPI.outbid({
+				supplierId: supplier.value,
 				price: parseInt(price.value, 10),
 				proposedDate: new Date(date.value)
-			}, props.bidid);
-			console.log(res);
+			}, props.bidid).then(() => {
+				response.value.success = true;
+				price.value = "";
+				[date.value] = new Date().toISOString().replace(/T/, ' ').replace(/\..+/, '').split(' ');
+				supplier.value = null;
+				setTimeout(() => {
+					response.value = {error: null, success: false};
+				});
+			}).catch(err => {
+				response.value.error = err;
+				price.value = "";
+				[date.value] = new Date().toISOString().replace(/T/, ' ').replace(/\..+/, '').split(' ');
+				supplier.value = null;
+				setTimeout(() => {
+					response.value = {error: null, success: false};
+				});
+			});
 		};
 
-		return {price, date, submit, supplier, suppliers};
+		return {price, date, submit, supplier, response};
 	}
 };
 </script>

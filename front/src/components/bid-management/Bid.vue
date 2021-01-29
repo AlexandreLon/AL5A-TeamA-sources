@@ -10,6 +10,8 @@
 			<button
 				type="button"
 				class="btn btn-warning"
+				data-toggle="modal" 
+				:data-target="'#viewOfferModal' + bid.id"
 			>
 				<i class="fas fa-pencil-alt" />
 				See Proposals
@@ -24,22 +26,32 @@
 				Create Proposals
 			</button>
 		</td>
-		<CreateOffer :bidid="bid.id" />
+		<CreateOffer
+			:bidid="bid.id"
+			:suppliers="suppliers"
+		/>
+		<ViewOffer :bidid="bid.id" />
 	</tr>
 </template>
 
 <script>
 import Bid from "../../models/bid-management/Bid";
+import Supplier from "../../models/supplier/Supplier";
 import CreateOffer from "./offers/CreateOffer2.vue";
+import ViewOffer from "./offers/ViewOffer.vue";
 
 export default {
 	components: {
-		CreateOffer
+		CreateOffer, ViewOffer
 	},
 	props: {
 		bid: {
 			type: Bid,
 			default: null
+		},
+		suppliers: {
+			type: [Supplier],
+			default: []
 		}
 	},
 	setup() {
