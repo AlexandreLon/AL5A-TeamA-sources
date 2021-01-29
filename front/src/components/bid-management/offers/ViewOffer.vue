@@ -74,26 +74,17 @@
 </template>
 
 <script>
-import { onMounted, ref } from 'vue';
-import BidWSAPI from '../../../API/BidWSAPI';
-
-const bidWSAPI = new BidWSAPI();
-
 export default {
 	props: {
 		bidid: {
 			type: String,
 			default: ''
 		},
-	},
-	setup(props) {
-		const offers = ref([]);
-        
-		onMounted(() => {
-			bidWSAPI.getOffers(props.bidid).then(res => {offers.value = res; console.log(offers.value.proposedDate);});
-		});
-        
-		return {offers};
+		offers: {
+			type: [Object],
+			// eslint-disable-next-line vue/require-valid-default-prop
+			default: []
+		}
 	}
 };
 </script>

@@ -142,7 +142,7 @@ export default {
 				supplier.value = null;
 				setTimeout(() => {
 					response.value = {error: null, success: false};
-				});
+				}, 3000);
 			}).catch(err => {
 				response.value.error = err;
 				price.value = "";
@@ -150,7 +150,7 @@ export default {
 				supplier.value = null;
 				setTimeout(() => {
 					response.value = {error: null, success: false};
-				});
+				}, 3000);
 			});
 		};
 
