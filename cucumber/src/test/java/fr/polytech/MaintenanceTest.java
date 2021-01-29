@@ -1,6 +1,6 @@
 package fr.polytech;
 
-import fr.polytech.api.SupplierManager;
+import fr.polytech.api.SupplierService;
 import io.cucumber.java.en.And;
 import io.cucumber.java.en.Given;
 import io.cucumber.java.en.Then;
@@ -8,6 +8,7 @@ import io.cucumber.java.en.When;
 
 import static org.junit.Assert.*;
 
+import java.util.Date;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -27,7 +28,7 @@ public class MaintenanceTest {
     private MaintenanceManager maintenanceManager;
 
     @Autowired
-    private SupplierManager supplierManager;
+    private SupplierService supplierService;
 
     @Given("A {string} to do")
     public void aMaintenanceName(String maintenanceName) {
@@ -36,12 +37,12 @@ public class MaintenanceTest {
 
     @When("I create a maintenance with type {string} for it")
     public void createMaintenance(String maintenanceType) {
-        maintenanceManager.createMaintenance(maintenanceName, maintenanceType);
+        maintenanceManager.createMaintenance(maintenanceName, maintenanceType, new Date());
     }
 
     @And("I get all tasks with maintenance")
     public void getAllTasksWithMaintenance() {
-        this.tasks = supplierManager.getTasks();
+        this.tasks = supplierService.getTasks();
     }
 
     @Then("I have a {string} maintenance in tasks")

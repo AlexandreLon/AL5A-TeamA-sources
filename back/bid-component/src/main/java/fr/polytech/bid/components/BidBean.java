@@ -57,7 +57,7 @@ public class BidBean implements BidViewer, BidCreator, BidProposer, BidManager {
         Bid bid = new Bid();
         bid.setName(task.getName()); // TODO Maybe remove name or how to choose the name of bid ?
         bid.setTask(task);
-        bid.setDesiredDate((desiredDate));
+        bid.setDesiredDate(desiredDate);
         bid.setStatus(BidStatus.ONGOING);
         return bidRepository.save(bid);
     }

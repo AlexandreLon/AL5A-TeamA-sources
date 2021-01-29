@@ -1,6 +1,6 @@
 package fr.polytech;
 
-import fr.polytech.api.SupplierManager;
+import fr.polytech.api.SupplierService;
 import fr.polytech.models.MishapPriority;
 import fr.polytech.models.Task;
 import io.cucumber.java.ParameterType;
@@ -40,7 +40,7 @@ public class MishapTest {
     private MishapManager mishapManager;
 
     @Autowired
-    private SupplierManager supplierManager;
+    private SupplierService supplierService;
 
     @Given("A {string} mishap")
     public void aMishapName(String mishapName) {
@@ -54,7 +54,7 @@ public class MishapTest {
 
     @And("I get all tasks")
     public void getAllTasks() {
-        this.tasks = supplierManager.getTasks();
+        this.tasks = supplierService.getTasks();
     }
 
     @Then("I have a {string} mishap in tasks")
@@ -72,12 +72,12 @@ public class MishapTest {
     @When("I finish the {string} task")
     public void doneTask(String taskName) {
         Long id = this.tasks.stream().filter(element -> element.getName().equals(taskName)).collect(Collectors.toList()).get(0).getId();
-        supplierManager.done(id);
+        supplierService.done(id);
     }
 
     @And("I get all tasks again")
     public void getAllTasksAgain() {
-        this.tasks = supplierManager.getTasks();
+        this.tasks = supplierService.getTasks();
     }
 
     @Then("the mishap named {string} is finished")
