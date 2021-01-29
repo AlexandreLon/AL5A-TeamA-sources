@@ -29,9 +29,9 @@ public class SupplierService {
     private BidProposer bidProposer;
 
     @CrossOrigin
-    @PostMapping("/{id}")
+    @PostMapping("/{id}/outbid")
     public Offer outbid(@PathVariable Long id, @RequestBody OfferBody offerBody) {
-        log.info("GET : /api/sipplier/" + id);
+        log.info("GET : /api/supplier/" + id + "/outbid");
         try {
             return bidProposer.outbid(id, offerBody.supplierId, offerBody.price, offerBody.proposedDate);
         } catch (BidNotFoundException e) {

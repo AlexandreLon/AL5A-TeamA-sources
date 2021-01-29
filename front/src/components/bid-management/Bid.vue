@@ -14,14 +14,28 @@
 				<i class="fas fa-pencil-alt" />
 				See Proposals
 			</button>
+			<button
+				type="button"
+				class="btn btn-primary"
+				data-toggle="modal" 
+				:data-target="'#createOfferModal' + bid.id"
+			>
+				<i class="fas fa-plus" />
+				Create Proposals
+			</button>
 		</td>
+		<CreateOffer :bidid="bid.id" />
 	</tr>
 </template>
 
 <script>
 import Bid from "../../models/bid-management/Bid";
+import CreateOffer from "./offers/CreateOffer2.vue";
 
 export default {
+	components: {
+		CreateOffer
+	},
 	props: {
 		bid: {
 			type: Bid,
