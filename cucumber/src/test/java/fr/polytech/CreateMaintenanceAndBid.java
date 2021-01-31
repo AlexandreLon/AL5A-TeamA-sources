@@ -33,8 +33,8 @@ public class CreateMaintenanceAndBid {
 
     @When("Manu creates a new maintenance {string} for {string}")
     public void manuCreatesANewMaintenance(String name, String dateText) throws ParseException {
-        SimpleDateFormat formatter=new SimpleDateFormat("dd-MM-yyyy");
-        Date date=formatter.parse(dateText);
+        SimpleDateFormat formatter = new SimpleDateFormat("dd-MM-yyyy");
+        Date date = formatter.parse(dateText);
         manu.createMaintenance(name, "Verification", date);
     }
 
@@ -43,7 +43,8 @@ public class CreateMaintenanceAndBid {
         List<Maintenance> maintenances = manu.getMaintenances();
         List<String> maintenanceNames = maintenances.stream().map(element -> element.getName()).collect(Collectors.toList());
         assertTrue(maintenanceNames.contains(maintenanceName));
-        this.maintenance = maintenances.get(0);
+        this.maintenance = maintenances.stream().filter(maintenance ->
+                maintenance.getName().equals(maintenanceName)).collect(Collectors.toList()).get(0);
     }
 
     @And("its realizationDate is not defined")
@@ -51,21 +52,18 @@ public class CreateMaintenanceAndBid {
         assertNull(this.maintenance.getRealizationDate());
     }
 
-    @And("a new bid is created and visible by Superman")
-    public void aNewBidIsCreatedAndVisibleBySuperman() {
+    @And("a new bid {string} is created and visible by Superman")
+    public void aNewBidIsCreatedAndVisibleBySuperman(String maintenanceName) {
         List<Bid> bids = bidService.getBids();
-        assertTrue(bids.size() > 0);
-        this.bid = bids.get(0);
+        this.bid = bids.stream().filter(bid ->
+                bid.getName().equals(maintenanceName)).collect(Collectors.toList()).get(0);
+        assertEquals(maintenanceName, this.bid.getName());
     }
-//
-//    @And("its name is {string}")
-//    public void itsNameIs(String arg0) {
-//    }
-//
-//    @And("the desired date associated is {string}")
-//    public void theDesiredDateAssociatedIsTZ(int arg0, int arg1, int arg2, int arg3, int arg4, int arg5) {
-//    }
 
-
+    @And("the desired date associated is {string}")
+    public void theDesiredDateAssociatedIsTZ(String dateText) {
+        SimpleDateFormat formatter = new SimpleDateFormat("dd-MM-yyyy");
+        assertEquals(dateText, formatter.format(this.bid.getDesiredDate()));
+    }
 
 }

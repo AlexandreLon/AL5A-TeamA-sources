@@ -48,13 +48,9 @@ public class MaintenanceManager {
 		return maintenances;
 	}
 
-	public List<Maintenance> getMaintenanceByID(Long id){
+	public Maintenance getMaintenanceByID(Long id){
 		RestTemplate restTemplate = new RestTemplate();
-
-		// Send request with GET method and default Headers.
-		Maintenance[] array = restTemplate.getForObject(String.format("http://%s:%s/api/maintenance/" + id, api.getHost(), api.getPort()), Maintenance[].class);
-		List<Maintenance> maintenances = new ArrayList<>(Arrays.asList(array));
-
-		return maintenances;
+		Maintenance maintenance = restTemplate.getForObject(String.format("http://%s:%s/api/maintenance/" + id, api.getHost(), api.getPort()), Maintenance.class);
+		return maintenance;
 	}
 }

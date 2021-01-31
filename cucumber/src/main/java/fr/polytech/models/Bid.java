@@ -12,13 +12,6 @@ public class Bid {
     private Date desiredDate;
 
 
-    public Bid(Long id, String name, Task task, Date desiredDate) {
-        this.id = id;
-        this.name = name;
-        this.task = task;
-        this.desiredDate = desiredDate;
-    }
-
     public Long getId() {
         return id;
     }

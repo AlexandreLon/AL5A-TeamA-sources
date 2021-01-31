@@ -26,13 +26,9 @@ public class BidService {
         return bid;
     }
 
-    public List<Bid> getBidById(Long id) {
+    public Bid getBidById(Long id) {
         RestTemplate restTemplate = new RestTemplate();
-
-        // Send request with GET method and default Headers.
-        Bid[] array = restTemplate.getForObject(String.format("http://%s:%s/api/bid", api.getHost(), api.getPort()), Bid[].class);
-        List<Bid> bid = new ArrayList<>(Arrays.asList(array));
-
+        Bid bid = restTemplate.getForObject(String.format("http://%s:%s/api/bid/" + id, api.getHost(), api.getPort()), Bid.class);
         return bid;
     }
 }
