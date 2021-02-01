@@ -2,7 +2,7 @@ package fr.polytech.webservices.controllers.api.supplier;
 
 import fr.polytech.bid.components.BidProposer;
 import fr.polytech.bid.errors.BidNotFoundException;
-import fr.polytech.bid.errors.SupplierNotFoundException;
+import fr.polytech.supplierregistry.errors.SupplierNotFoundException;
 import fr.polytech.bid.models.Offer;
 
 import fr.polytech.supplierregistry.components.SupplierAuthenticator;

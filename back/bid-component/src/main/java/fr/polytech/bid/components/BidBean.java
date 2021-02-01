@@ -1,14 +1,14 @@
 package fr.polytech.bid.components;
 
 import fr.polytech.bid.errors.BidNotFoundException;
-import fr.polytech.bid.errors.SupplierNotFoundException;
 import fr.polytech.bid.models.Bid;
 import fr.polytech.bid.models.Offer;
 import fr.polytech.bid.models.BidStatus;
 import fr.polytech.bid.repositories.BidRepository;
 import fr.polytech.bid.repositories.OfferRepository;
+import fr.polytech.supplierregistry.components.SupplierAuthenticator;
+import fr.polytech.supplierregistry.errors.SupplierNotFoundException;
 import fr.polytech.supplierregistry.models.Supplier;
-import fr.polytech.supplierregistry.repositories.SupplierRepository;
 import fr.polytech.task.models.Task;
 
 import org.springframework.stereotype.Component;
@@ -22,16 +22,16 @@ import java.util.List;
 import java.util.Optional;
 
 @Component
-@ComponentScan({"fr.polytech.bid.repositories","fr.polytech.supplierregistry.repositories"})
+@ComponentScan({"fr.polytech.bid.repositories","fr.polytech.supplierregistry.components"})
 @EntityScan("fr.polytech.bid.models")
-@EnableJpaRepositories({"fr.polytech.bid.repositories","fr.polytech.supplierregistry.repositories"})
+@EnableJpaRepositories("fr.polytech.bid.repositories")
 public class BidBean implements BidViewer, BidCreator, BidProposer {
 
     @Autowired
     private BidRepository bidRepository;
 
     @Autowired
-    private SupplierRepository supplierReposity;
+    private SupplierAuthenticator supplierAuthenticator;
 
     @Autowired
     private OfferRepository offerRepository;
@@ -61,7 +61,7 @@ public class BidBean implements BidViewer, BidCreator, BidProposer {
 
     @Override
     public Offer outbid(long bidId, long supplierId, double price, Date proposedDate) throws BidNotFoundException,
-            SupplierNotFoundException {
+            SupplierNotFoundException, SupplierNotFoundException {
         Offer offer = new Offer();
 
         Optional<Bid> optBid = bidRepository.findById(bidId);
@@ -69,10 +69,7 @@ public class BidBean implements BidViewer, BidCreator, BidProposer {
             throw new BidNotFoundException();
         Bid bid = optBid.get();
 
-        Optional<Supplier> optSupplier = supplierReposity.findById(supplierId);
-        if (!optSupplier.isPresent())
-            throw new SupplierNotFoundException();
-        Supplier supplier = optSupplier.get();
+        Supplier supplier = supplierAuthenticator.getSupplierById(supplierId);
         
         offer.setBid(bid);
         offer.setPrice(price);
