@@ -38,6 +38,9 @@ public class Task {
 
     @Column(name = "realizationDate", nullable = true)
     protected Date realizationDate;
+
+    @Column(nullable = true)
+    private double price;
     
     public Long getId() {
         return this.id;
@@ -88,6 +91,14 @@ public class Task {
 
     public void setRealizationDate(Date realizationDate) {
         this.realizationDate = realizationDate;
+    }
+
+    public double getPrice(){
+        return this.price;
+    }
+
+    public void setPrice(double price){
+        this.price = price;
     }
 
     @Override

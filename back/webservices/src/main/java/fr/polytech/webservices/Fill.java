@@ -9,6 +9,7 @@ import com.github.javafaker.Faker;
 import fr.polytech.supplierregistry.models.Supplier;
 import fr.polytech.supplierregistry.repositories.SupplierRepository;
 import fr.polytech.task.models.TaskType;
+import fr.polytech.webservices.controllers.api.bid.BidManagerService;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -19,7 +20,7 @@ import org.springframework.stereotype.Service;
 import fr.polytech.bid.models.Bid;
 import fr.polytech.bid.models.BidStatus;
 import fr.polytech.bid.models.Offer;
-
+import fr.polytech.bid.models.OfferStatus;
 import fr.polytech.bid.repositories.BidRepository;
 import fr.polytech.bid.repositories.OfferRepository;
 
@@ -54,6 +55,9 @@ public class Fill {
 
     @Autowired
     private OfferRepository of;
+
+    @Autowired
+    private BidManagerService bidManagerService;
 
     private List<Supplier> suppliers = new ArrayList<>();
 
@@ -94,7 +98,9 @@ public class Fill {
             m.setPriority(TaskPriority.NONE);
             m.setStatus(faker.random().nextBoolean() ? TaskStatus.PENDING : TaskStatus.FINISHED);
             m.setType(faker.lorem().word());
-            m.setRealizationDate(faker.date().future(5, TimeUnit.DAYS));
+            if(faker.random().nextBoolean()){
+                m.setRealizationDate(faker.date().future(5, TimeUnit.DAYS));
+            }
             createBidFromTask(mar.save(m));
         }
     }
@@ -107,7 +113,9 @@ public class Fill {
             m.setPriority(generateTaskPriority());
             m.setStatus(faker.random().nextBoolean() ? TaskStatus.PENDING : TaskStatus.FINISHED);
             m.setType(faker.lorem().word());
-            m.setRealizationDate(faker.date().future(5, TimeUnit.DAYS));
+            if(faker.random().nextBoolean()){
+                m.setRealizationDate(faker.date().future(5, TimeUnit.DAYS));
+            }
             createBidFromTask(mir.save(m));
         }
     }
@@ -135,13 +143,18 @@ public class Fill {
     }
 
     private void generateSomeOfferFromBid(Bid bid) {
+        List<Long> offerIds = new ArrayList<>();
         for(int i=0; i<10; i++) {
             Offer offer = new Offer();
             offer.setBid(bid);
             offer.setSupplier(suppliers.get(faker.random().nextInt(0, suppliers.size()-1)));
             offer.setProposedDate(faker.date().future(5, TimeUnit.DAYS));
             offer.setPrice(faker.random().nextDouble()*10000);
-            of.save(offer);
+            offer.setStatus(OfferStatus.PENDING);
+            offer = of.save(offer);
+            offerIds.add(offer.getId());
         }
+        Long idOffer = offerIds.get(faker.random().nextInt(0,9));
+        bidManagerService.acceptOffer(idOffer); // Maybe change this so we don't have logs appearing when generating data
     }    
 }
