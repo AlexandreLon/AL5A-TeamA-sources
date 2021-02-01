@@ -22,7 +22,7 @@ import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 import org.springframework.test.annotation.DirtiesContext;
 
 import fr.polytech.bid.errors.BidNotFoundException;
-import fr.polytech.bid.errors.SupplierNotFoundException;
+import fr.polytech.supplierregistry.errors.SupplierNotFoundException;
 import fr.polytech.bid.models.Bid;
 import fr.polytech.bid.models.BidStatus;
 import fr.polytech.bid.models.Offer;

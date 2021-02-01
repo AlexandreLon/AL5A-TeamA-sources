@@ -3,13 +3,14 @@ package fr.polytech.bid.components;
 import fr.polytech.bid.errors.BidNotClosedException;
 import fr.polytech.bid.errors.BidNotFoundException;
 import fr.polytech.bid.errors.OfferNotFoundException;
-import fr.polytech.bid.errors.SupplierNotFoundException;
 import fr.polytech.bid.models.Bid;
 import fr.polytech.bid.models.Offer;
 import fr.polytech.bid.models.OfferStatus;
 import fr.polytech.bid.models.BidStatus;
 import fr.polytech.bid.repositories.BidRepository;
 import fr.polytech.bid.repositories.OfferRepository;
+import fr.polytech.supplierregistry.components.SupplierAuthenticator;
+import fr.polytech.supplierregistry.errors.SupplierNotFoundException;
 import fr.polytech.supplierregistry.models.Supplier;
 import fr.polytech.supplierregistry.repositories.SupplierRepository;
 import fr.polytech.task.models.Task;
@@ -25,7 +26,7 @@ import java.util.List;
 import java.util.Optional;
 
 @Component
-@ComponentScan({"fr.polytech.bid.repositories","fr.polytech.supplierregistry.repositories"})
+@ComponentScan({"fr.polytech.bid.repositories","fr.polytech.supplierregistry.components"})
 @EntityScan("fr.polytech.bid.models")
 @EnableJpaRepositories({"fr.polytech.bid.repositories","fr.polytech.supplierregistry.repositories"})
 public class BidBean implements BidViewer, BidCreator, BidProposer, BidManager {
@@ -34,7 +35,10 @@ public class BidBean implements BidViewer, BidCreator, BidProposer, BidManager {
     private BidRepository bidRepository;
 
     @Autowired
-    private SupplierRepository supplierRepository;
+    private SupplierRepository supplierRepository; // TODO Add a method in SupplierAuthenticator to update the supplier
+
+    @Autowired
+    private SupplierAuthenticator supplierAuthenticator;
 
     @Autowired
     private OfferRepository offerRepository;
@@ -64,7 +68,7 @@ public class BidBean implements BidViewer, BidCreator, BidProposer, BidManager {
 
     @Override
     public Offer outbid(long bidId, long supplierId, double price, Date proposedDate) throws BidNotFoundException,
-            SupplierNotFoundException {
+            SupplierNotFoundException, SupplierNotFoundException {
         Offer offer = new Offer();
 
         Optional<Bid> optBid = bidRepository.findById(bidId);
@@ -72,10 +76,7 @@ public class BidBean implements BidViewer, BidCreator, BidProposer, BidManager {
             throw new BidNotFoundException();
         Bid bid = optBid.get();
 
-        Optional<Supplier> optSupplier = supplierRepository.findById(supplierId);
-        if (!optSupplier.isPresent())
-            throw new SupplierNotFoundException();
-        Supplier supplier = optSupplier.get();
+        Supplier supplier = supplierAuthenticator.getSupplierById(supplierId);
         
         offer.setBid(bid);
         offer.setPrice(price);
@@ -94,7 +95,6 @@ public class BidBean implements BidViewer, BidCreator, BidProposer, BidManager {
         Bid bid = opt.get();
         return offerRepository.findByBidId(bid.getId());
     }
-<<<<<<< HEAD
 
     @Override
     public Offer acceptOffer(Long id) throws OfferNotFoundException {
@@ -129,6 +129,3 @@ public class BidBean implements BidViewer, BidCreator, BidProposer, BidManager {
         return offer;
     }
 }
-=======
-}
->>>>>>> 264243b (Update pom version to 1.1.2)

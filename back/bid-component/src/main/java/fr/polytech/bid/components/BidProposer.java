@@ -3,7 +3,7 @@ package fr.polytech.bid.components;
 import java.util.Date;
 
 import fr.polytech.bid.errors.BidNotFoundException;
-import fr.polytech.bid.errors.SupplierNotFoundException;
+import fr.polytech.supplierregistry.errors.SupplierNotFoundException;
 import fr.polytech.bid.models.Offer;
 
 public interface BidProposer {
