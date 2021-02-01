@@ -8,8 +8,7 @@ public class Offer {
 
     private Date proposedDate;
     private double price;
-    private Supplier supplier;
-    private Bid bid;
+    private long supplierId;
 
     public Date getProposedDate() {
         return proposedDate;
@@ -27,19 +26,11 @@ public class Offer {
         this.price = price;
     }
 
-    public Supplier getSupplier() {
-        return supplier;
+    public long getSupplierId() {
+        return supplierId;
     }
 
-    public void setSupplier(Supplier supplier) {
-        this.supplier = supplier;
-    }
-
-    public Bid getBid() {
-        return bid;
-    }
-
-    public void setBid(Bid bid) {
-        this.bid = bid;
+    public void setSupplierId(long supplierId) {
+        this.supplierId = supplierId;
     }
 }

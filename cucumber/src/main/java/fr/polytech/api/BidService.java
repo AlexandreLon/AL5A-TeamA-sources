@@ -33,11 +33,10 @@ public class BidService {
         return bid;
     }
 
-    public Offer outbid(long bidId, long supplierId, double price, Date proposedDate){
-
+    public Bid getBidById(Long id) {
+        RestTemplate restTemplate = new RestTemplate();
+        Bid bid = restTemplate.getForObject(String.format("http://%s:%s/api/bid/" + id, api.getHost(), api.getPort()), Bid.class);
+        return bid;
     }
 
-    public List<Offer> getOffers(Long id){
-
-    }
 }
