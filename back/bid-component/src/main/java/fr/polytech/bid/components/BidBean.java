@@ -94,6 +94,7 @@ public class BidBean implements BidViewer, BidCreator, BidProposer, BidManager {
         Bid bid = opt.get();
         return offerRepository.findByBidId(bid.getId());
     }
+<<<<<<< HEAD
 
     @Override
     public Offer acceptOffer(Long id) throws OfferNotFoundException {
@@ -128,3 +129,6 @@ public class BidBean implements BidViewer, BidCreator, BidProposer, BidManager {
         return offer;
     }
 }
+=======
+}
+>>>>>>> 264243b (Update pom version to 1.1.2)
