@@ -35,10 +35,10 @@ public class BidBean implements BidViewer, BidCreator, BidProposer, BidManager {
     private BidRepository bidRepository;
 
     @Autowired
-    private SupplierRepository supplierRepository; // TODO Add a method in SupplierAuthenticator to update the supplier
+    private SupplierAuthenticator supplierAuthenticator;
 
     @Autowired
-    private SupplierAuthenticator supplierAuthenticator;
+    private SupplierRepository supplierRepository; // TODO Add a method in SupplierRegisterBean to avoid using this to update the supplier
 
     @Autowired
     private OfferRepository offerRepository;
