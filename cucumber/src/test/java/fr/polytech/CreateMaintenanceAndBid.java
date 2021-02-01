@@ -2,7 +2,7 @@ package fr.polytech;
 
 import fr.polytech.api.BidService;
 import fr.polytech.api.MaintenanceManager;
-import fr.polytech.models.Bid;
+import fr.polytech.models.bid.Bid;
 import fr.polytech.models.maintenance.Maintenance;
 import io.cucumber.java.en.And;
 import io.cucumber.java.en.Then;

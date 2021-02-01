@@ -8,4 +8,4 @@ Feature: Create a maintenance and a bid
     Then a new maintenance is created with the name "Rail servicing"
     And its realizationDate is not defined
     And a new bid "Rail servicing" is created and visible by Superman
-#    And the desired date associated is "21-03-2021"
+    And the desired date associated is "21-03-2021"
