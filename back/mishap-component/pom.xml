@@ -5,10 +5,10 @@
 	<parent>
 		<groupId>fr.polytech</groupId>
 		<artifactId>al-trainmanagement</artifactId>
-		<version>1.1.2-SNAPSHOT</version>
+		<version>2.0.0</version>
 	</parent>
 	<artifactId>mishap-component</artifactId>
-	<version>1.1.2-SNAPSHOT</version>
+	<version>2.0.0</version>
 
 	<properties>
 		<java.version>11</java.version>
@@ -18,19 +18,19 @@
 		<dependency>
 			<groupId>fr.polytech</groupId>
 			<artifactId>task-component</artifactId>
-			<version>1.1.2-SNAPSHOT</version>
+			<version>2.0.0</version>
 			<scope>compile</scope>
 		</dependency>
 		<dependency>
 			<groupId>fr.polytech</groupId>
 			<artifactId>bid-component</artifactId>
-			<version>1.1.2-SNAPSHOT</version>
+			<version>2.0.0</version>
 			<scope>compile</scope>
 		</dependency>
 		<dependency>
 			<groupId>fr.polytech</groupId>
 			<artifactId>supplier-registry-component</artifactId>
-			<version>1.1.2-SNAPSHOT</version>
+			<version>2.0.0</version>
 			<scope>compile</scope>
 		</dependency>
 	</dependencies>
