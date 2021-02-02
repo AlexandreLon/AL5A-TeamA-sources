@@ -22,11 +22,10 @@ import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 import org.springframework.test.annotation.DirtiesContext;
 
 import fr.polytech.bid.errors.BidNotFoundException;
+import fr.polytech.bid.errors.OfferNotFoundException;
 import fr.polytech.supplierregistry.errors.SupplierNotFoundException;
 import fr.polytech.bid.models.Bid;
-import fr.polytech.bid.models.BidStatus;
 import fr.polytech.bid.models.Offer;
-import fr.polytech.bid.repositories.OfferRepository;
 import fr.polytech.task.models.Task;
 import fr.polytech.task.models.TaskPriority;
 import fr.polytech.task.models.TaskStatus;
@@ -137,6 +136,13 @@ public class BidTest {
             Date proposedDate = new Date();
             Offer offer = bidProposer.outbid(bid.getId(), this.supplier.getId(), 10d, proposedDate);
             bidManager.acceptOffer(offer.getId());
+        });
+    }
+
+    @Test
+    public void acceptOfferDoesntExist() {
+        assertThrows(OfferNotFoundException.class, () -> {
+            bidManager.acceptOffer(10000l);
         });
     }
 }
