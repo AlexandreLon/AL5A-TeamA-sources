@@ -35,7 +35,6 @@ public class Offer {
     @JoinColumn(name = "bid_id")
     private Bid bid;
 
-
     public Long getId() {
         return this.id;
     }

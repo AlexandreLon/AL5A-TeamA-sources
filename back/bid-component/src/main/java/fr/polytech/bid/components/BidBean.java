@@ -102,7 +102,7 @@ public class BidBean implements BidViewer, BidCreator, BidProposer, BidManager {
         associatedBid.setStatus(BidStatus.CLOSED);
         associatedBid.getTask().setRealizationDate(offerToAccept.getProposedDate());
         associatedBid.getTask().setPrice(offerToAccept.getPrice());
-        offerToAccept.getSupplier().addTask(associatedBid.getTask());
+        offerToAccept.getSupplier().getTasks().add(associatedBid.getTask());
         offerToAccept.setStatus(OfferStatus.ACCEPTED);
         offerToAccept = offerRepository.save(offerToAccept);
         List<Offer> offersToReject = offerRepository.findByBidId(associatedBid.getId());

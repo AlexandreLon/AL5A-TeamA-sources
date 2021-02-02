@@ -19,7 +19,8 @@ public class Supplier {
     protected TaskType taskType;
 
     @OneToMany(fetch = FetchType.EAGER)
-    protected List<Task> associatedTasks;
+    @JoinColumn(name = "supplier_id")
+    protected List<Task> tasks;
 
     public Long getId() {
         return id;
@@ -45,11 +46,12 @@ public class Supplier {
         this.taskType = taskType;
     }
 
-    public void addTask(Task task){
-        this.associatedTasks.add(task);
+    public List<Task> getTasks() {
+        return this.tasks;
     }
 
-    public List<Task> getTasks(){
-        return this.associatedTasks;
+    public void setTasks(List<Task> tasks) {
+        this.tasks = tasks;
     }
+
 }

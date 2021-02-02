@@ -9,7 +9,6 @@ import com.github.javafaker.Faker;
 import fr.polytech.supplierregistry.models.Supplier;
 import fr.polytech.supplierregistry.repositories.SupplierRepository;
 import fr.polytech.task.models.TaskType;
-import fr.polytech.webservices.controllers.api.bid.BidManagerService;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -55,9 +54,6 @@ public class Fill {
 
     @Autowired
     private OfferRepository of;
-
-    @Autowired
-    private BidManagerService bidManagerService;
 
     private List<Supplier> suppliers = new ArrayList<>();
 
@@ -125,6 +121,7 @@ public class Fill {
         for(int i=0; i<20; i++) {
             Supplier s = new Supplier();
             s.setName(faker.name().fullName());
+            s.setTasks(new ArrayList<>());
             s.setTaskType(types[faker.random().nextInt(0,2)]);
             suppliers.add(s);
             sr.save(s);
@@ -143,7 +140,7 @@ public class Fill {
     }
 
     private void generateSomeOfferFromBid(Bid bid) {
-        List<Long> offerIds = new ArrayList<>();
+        List<Offer> offers = new ArrayList<>();
         for(int i=0; i<10; i++) {
             Offer offer = new Offer();
             offer.setBid(bid);
@@ -152,9 +149,21 @@ public class Fill {
             offer.setPrice(faker.random().nextDouble()*10000);
             offer.setStatus(OfferStatus.PENDING);
             offer = of.save(offer);
-            offerIds.add(offer.getId());
+            offers.add(offer);
         }
-        Long idOffer = offerIds.get(faker.random().nextInt(0,9));
-        bidManagerService.acceptOffer(idOffer); // Maybe change this so we don't have logs appearing when generating data
+        Offer offerToAccept = offers.get(faker.random().nextInt(0,9));
+        bid.setStatus(BidStatus.CLOSED);
+        bid.getTask().setRealizationDate(offerToAccept.getProposedDate());
+        bid.getTask().setPrice(offerToAccept.getPrice());
+        offerToAccept.getSupplier().getTasks().add(bid.getTask());
+        offerToAccept.setStatus(OfferStatus.ACCEPTED);
+        offerToAccept = of.save(offerToAccept);
+        List<Offer> offersToReject = of.findByBidId(bid.getId());
+        for(Offer off : offersToReject){
+            if(off.getId() != offerToAccept.getId()){
+                off.setStatus(OfferStatus.REJECTED);
+                of.save(off);
+            }
+        }
     }    
 }
