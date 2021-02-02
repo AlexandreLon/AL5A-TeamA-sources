@@ -1,6 +1,7 @@
 package fr.polytech.task.models;
 
 import java.util.Date;
+import java.util.Objects;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -30,13 +31,16 @@ public class Task {
     protected TaskStatus status;
 
     @Column
-    protected Date desiredDate;
-
-    @Column
     private TaskPriority priority;
 
     @Column(name = "creationDate")
     protected Date creationDate;
+
+    @Column(name = "realizationDate", nullable = true)
+    protected Date realizationDate;
+
+    @Column(nullable = true)
+    private double price;
     
     public Long getId() {
         return this.id;
@@ -66,13 +70,6 @@ public class Task {
         this.status = status;
     }
 
-    public Date getDesiredDate() {
-        return this.desiredDate;
-    }
-    public void setDesiredDate(Date desiredDate) {
-        this.desiredDate = desiredDate;
-    }
-
     public TaskPriority getPriority() {
 		return this.priority;
 	}
@@ -81,10 +78,43 @@ public class Task {
 	}
 
     public Date getCreationDate() {
-		return this.creationDate;
-	}
-	public void setCreationDate(Date creationDate) {
-		this.creationDate = creationDate;
-	}
+        return this.creationDate;
+    }
+
+    public void setCreationDate(Date creationDate) {
+        this.creationDate = creationDate;
+    }
+
+    public Date getRealizationDate() {
+        return this.realizationDate;
+    }
+
+    public void setRealizationDate(Date realizationDate) {
+        this.realizationDate = realizationDate;
+    }
+
+    public double getPrice(){
+        return this.price;
+    }
+
+    public void setPrice(double price){
+        this.price = price;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (o == this)
+            return true;
+        if (!(o instanceof Task)) {
+            return false;
+        }
+        Task task = (Task) o;
+        return Objects.equals(id, task.id) && Objects.equals(name, task.name) && Objects.equals(type, task.type) && Objects.equals(status, task.status) && Objects.equals(priority, task.priority) && Objects.equals(creationDate, task.creationDate);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(id, name, type, status, priority, creationDate);
+    }
 
 }

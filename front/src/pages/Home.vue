@@ -1,18 +1,18 @@
 <template>
 	<center class="container mt-5">
 		<h1 class="mb-3">
-			Front AL
+			Train Management
 		</h1>
 		<img
 			class="m-4"
-			src="https://encrypted-tbn0.gstatic.com/images?q=tbn%3AANd9GcTmrgxnfcba5EoAABGbbhfHhOFKB9TQVCvIZw&usqp=CAU"
+			src="https://www.pkpcargointernational.com//static/2018/08/railway-1.jpg"
 			alt="Train"
 		>
 		<ul>
 			<li>
-				<router-link to="/department">
+				<router-link to="/supplier">
 					<div class="btn btn-primary">
-						Department
+						Supplier
 					</div>
 				</router-link>
 			</li>

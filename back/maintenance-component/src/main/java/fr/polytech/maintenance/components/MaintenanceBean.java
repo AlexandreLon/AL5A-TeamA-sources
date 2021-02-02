@@ -1,10 +1,12 @@
 package fr.polytech.maintenance.components;
 
+import com.google.inject.internal.util.Lists;
 import fr.polytech.bid.components.BidCreator;
-import fr.polytech.maintenance.errors.MaintenanceNotFound;
+import fr.polytech.maintenance.errors.MaintenanceNotFoundException;
 import fr.polytech.maintenance.models.Maintenance;
 import fr.polytech.maintenance.repositories.MaintenanceRepository;
 
+import fr.polytech.supplierregistry.repositories.SupplierRepository;
 import fr.polytech.task.models.TaskPriority;
 import org.springframework.stereotype.Component;
 
@@ -20,13 +22,16 @@ import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 import fr.polytech.task.models.TaskStatus;
 
 @Component
-@ComponentScan({"fr.polytech.maintenance.repositories", "fr.polytech.bid.components"})
+@ComponentScan({"fr.polytech.maintenance.repositories", "fr.polytech.bid.components","fr.polytech.supplierregistry.repositories"})
 @EntityScan("fr.polytech.maintenance.models")
 @EnableJpaRepositories("fr.polytech.maintenance.repositories")
 public class MaintenanceBean implements MaintenanceManager {
 
     @Autowired
     private MaintenanceRepository maintenanceRepository;
+
+    @Autowired
+    private SupplierRepository supplierRepository;
 
     @Autowired
     private BidCreator bidCreator;
@@ -38,10 +43,9 @@ public class MaintenanceBean implements MaintenanceManager {
         maintenance.setType(type);
         maintenance.setStatus(TaskStatus.PENDING);
         maintenance.setCreationDate(new Date());
-        maintenance.setDesiredDate(desiredDate);
         maintenance.setPriority(TaskPriority.NONE);
-        maintenanceRepository.save(maintenance);
-        bidCreator.createBid(maintenance, desiredDate);
+        maintenance = maintenanceRepository.save(maintenance);
+        bidCreator.createBid(maintenance, Lists.newArrayList(supplierRepository.findAll()), desiredDate);
         return maintenance;
     }
 
@@ -51,25 +55,25 @@ public class MaintenanceBean implements MaintenanceManager {
     }
 
     @Override
-    public Maintenance getMaintenanceById(Long id) throws MaintenanceNotFound {
+    public Maintenance getMaintenanceById(Long id) throws MaintenanceNotFoundException {
         Optional<Maintenance> opt = this.maintenanceRepository.findById(id);
         if(!opt.isPresent()) {
-            throw new MaintenanceNotFound();
+            throw new MaintenanceNotFoundException();
         }
         return opt.get();
     }
 
     @Override
-    public Maintenance updateMaintenance(Long id, String name, String type) throws MaintenanceNotFound {
+    public Maintenance updateMaintenance(Long id, String name, String type) throws MaintenanceNotFoundException {
         Optional<Maintenance> opt = this.maintenanceRepository.findById(id);
         if (opt.isPresent()) {
             Maintenance maintenance = opt.get();
             maintenance.setName(name);
             maintenance.setType(type);
-            this.maintenanceRepository.save(maintenance);
+            maintenance = this.maintenanceRepository.save(maintenance);
             return maintenance;
         }
-        throw new MaintenanceNotFound();
+        throw new MaintenanceNotFoundException();
     }
 
     @Override

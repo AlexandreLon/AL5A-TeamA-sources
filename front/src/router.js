@@ -1,6 +1,6 @@
 import { createWebHistory, createRouter } from "vue-router";
 import Home from "./pages/Home.vue";
-import Department from "./pages/Department.vue";
+import Supplier from "./pages/Supplier.vue";
 import MaintenanceManagement from "./pages/MaintenanceManagement.vue";
 import MishapManagement from "./pages/MishapManagement.vue";
 import BidManagement from "./pages/BidManagement.vue";
@@ -12,9 +12,9 @@ const routes = [
 		component: Home,
 	},
 	{
-		path: "/department",
-		name: "Department",
-		component: Department,
+		path: "/supplier",
+		name: "Supplier",
+		component: Supplier,
 	},
 	{
 		path: "/maintenance",

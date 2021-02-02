@@ -1,5 +1,6 @@
 package fr.polytech;
 
+import fr.polytech.api.SupplierManager;
 import fr.polytech.models.MishapPriority;
 import fr.polytech.models.Task;
 import io.cucumber.java.ParameterType;
@@ -16,7 +17,6 @@ import java.util.stream.Collectors;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
-import fr.polytech.api.DepartmentManager;
 import fr.polytech.api.MishapManager;
 import fr.polytech.models.TaskStatus;
 
@@ -40,7 +40,7 @@ public class MishapTest {
     private MishapManager mishapManager;
 
     @Autowired
-    private DepartmentManager departmentManager;
+    private SupplierManager supplierManager;
 
     @Given("A {string} mishap")
     public void aMishapName(String mishapName) {
@@ -54,7 +54,7 @@ public class MishapTest {
 
     @And("I get all tasks")
     public void getAllTasks() {
-        this.tasks = departmentManager.getTasks();
+        this.tasks = supplierManager.getTasks();
     }
 
     @Then("I have a {string} mishap in tasks")
@@ -72,12 +72,12 @@ public class MishapTest {
     @When("I finish the {string} task")
     public void doneTask(String taskName) {
         Long id = this.tasks.stream().filter(element -> element.getName().equals(taskName)).collect(Collectors.toList()).get(0).getId();
-        departmentManager.done(id);
+        supplierManager.done(id);
     }
 
     @And("I get all tasks again")
     public void getAllTasksAgain() {
-        this.tasks = departmentManager.getTasks();
+        this.tasks = supplierManager.getTasks();
     }
 
     @Then("the mishap named {string} is finished")

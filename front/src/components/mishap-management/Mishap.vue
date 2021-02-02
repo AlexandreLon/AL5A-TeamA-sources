@@ -7,7 +7,6 @@
 		<td>{{ mishap.type }}</td>
 		<td>{{ mishap.status }}</td>
 		<td>{{ mishap.priority }}</td>
-		<td>{{ this.formatDate(mishap.desiredDate) }}</td>
 		<td>
 			<UpdateModal
 				:mishap-to-update="mishap"
@@ -55,12 +54,7 @@ export default {
 			});
 		};
 
-		const formatDate = (dateStr) => {
-			console.log(dateStr);
-			return new Date(dateStr).toLocaleString();
-		};
-
-		return { updateMishap, deleteMishap, formatDate };
+		return { updateMishap, deleteMishap };
 	}
 
 };
