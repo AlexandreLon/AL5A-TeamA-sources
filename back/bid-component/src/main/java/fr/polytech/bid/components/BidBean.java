@@ -1,8 +1,11 @@
 package fr.polytech.bid.components;
 
+import fr.polytech.bid.errors.BidNotClosedException;
 import fr.polytech.bid.errors.BidNotFoundException;
+import fr.polytech.bid.errors.OfferNotFoundException;
 import fr.polytech.bid.models.Bid;
 import fr.polytech.bid.models.Offer;
+import fr.polytech.bid.models.OfferStatus;
 import fr.polytech.bid.models.BidStatus;
 import fr.polytech.bid.repositories.BidRepository;
 import fr.polytech.bid.repositories.OfferRepository;
@@ -25,7 +28,7 @@ import java.util.Optional;
 @ComponentScan({"fr.polytech.bid.repositories","fr.polytech.supplierregistry.components"})
 @EntityScan("fr.polytech.bid.models")
 @EnableJpaRepositories("fr.polytech.bid.repositories")
-public class BidBean implements BidViewer, BidCreator, BidProposer {
+public class BidBean implements BidViewer, BidCreator, BidProposer, BidManager {
 
     @Autowired
     private BidRepository bidRepository;
@@ -75,6 +78,7 @@ public class BidBean implements BidViewer, BidCreator, BidProposer {
         offer.setPrice(price);
         offer.setSupplier(supplier);
         offer.setProposedDate(proposedDate);
+        offer.setStatus(OfferStatus.PENDING);
 
         return offerRepository.save(offer);
     }
@@ -86,5 +90,40 @@ public class BidBean implements BidViewer, BidCreator, BidProposer {
             throw new BidNotFoundException();
         Bid bid = opt.get();
         return offerRepository.findByBidId(bid.getId());
+    }
+
+    @Override
+    public Offer acceptOffer(Long id) throws OfferNotFoundException {
+        Optional<Offer> opt = offerRepository.findById(id);
+        if (!opt.isPresent())
+            throw new OfferNotFoundException();
+        Offer offerToAccept = opt.get();
+        Bid associatedBid = offerToAccept.getBid();
+        associatedBid.setStatus(BidStatus.CLOSED);
+        associatedBid.getTask().setRealizationDate(offerToAccept.getProposedDate());
+        associatedBid.getTask().setPrice(offerToAccept.getPrice());
+        offerToAccept.getSupplier().addTask(associatedBid.getTask());
+        offerToAccept.setStatus(OfferStatus.ACCEPTED);
+        offerToAccept = offerRepository.save(offerToAccept);
+        List<Offer> offersToReject = offerRepository.findByBidId(associatedBid.getId());
+        for(Offer off : offersToReject){
+            if(off.getId() != offerToAccept.getId()){
+                off.setStatus(OfferStatus.REJECTED);
+                offerRepository.save(off);
+            }
+        }
+        return offerToAccept;
+    }
+
+    @Override
+    public Offer getAcceptedOffer(Long id) throws BidNotFoundException, BidNotClosedException {
+        Optional<Bid> opt = bidRepository.findById(id);
+        if (!opt.isPresent())
+            throw new BidNotFoundException();
+        Bid bid = opt.get();
+        if(bid.getStatus() != BidStatus.CLOSED)
+            throw new BidNotClosedException();
+        Offer offer = offerRepository.findByBidIdAndStatus(bid.getId(), OfferStatus.ACCEPTED);
+        return offer;
     }
 }

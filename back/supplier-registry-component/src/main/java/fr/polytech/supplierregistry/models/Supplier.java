@@ -1,6 +1,8 @@
 package fr.polytech.supplierregistry.models;
 
 import fr.polytech.task.models.TaskType;
+import fr.polytech.task.models.Task;
+import java.util.List;
 
 import javax.persistence.*;
 
@@ -15,6 +17,9 @@ public class Supplier {
 
     @Column(name = "task_type")
     protected TaskType taskType;
+
+    @OneToMany(fetch = FetchType.EAGER)
+    protected List<Task> associatedTasks;
 
     public Long getId() {
         return id;
@@ -38,5 +43,13 @@ public class Supplier {
 
     public void setTaskType(TaskType taskType) {
         this.taskType = taskType;
+    }
+
+    public void addTask(Task task){
+        this.associatedTasks.add(task);
+    }
+
+    public List<Task> getTasks(){
+        return this.associatedTasks;
     }
 }

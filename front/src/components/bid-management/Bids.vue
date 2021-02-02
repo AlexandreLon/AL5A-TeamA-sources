@@ -26,6 +26,7 @@
 					:key="bid.id"
 					:bid="bid"
 					:suppliers="suppliers"
+					@accepted="acceptedOffer"
 				/>
 			</tbody>
 			<tr
@@ -68,7 +69,18 @@ export default {
 				});
 		});
 
-		return { bids, suppliers };
+		const acceptedOffer = async () => {
+			bidWSAPI
+				.getBids()
+				.then(res => {
+					bids.value = res;
+				})
+				.catch(error => {
+					console.error(error);
+				});
+		};
+
+		return { bids, suppliers, acceptedOffer };
 	}
 };
 </script>

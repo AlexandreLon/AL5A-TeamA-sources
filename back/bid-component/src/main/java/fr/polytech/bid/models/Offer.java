@@ -24,6 +24,9 @@ public class Offer {
     @Column(name = "price", nullable = false)
     private double price;
 
+    @Column(name = "status", length = 30, nullable = false)
+    private OfferStatus status;
+
     @ManyToOne
     @JoinColumn(name = "supplier_id")
     private Supplier supplier;
@@ -71,6 +74,14 @@ public class Offer {
 
     public void setBid(Bid bid) {
         this.bid = bid;
+    }
+
+    public OfferStatus getStatus(){
+        return this.status;
+    }
+
+    public void setStatus(OfferStatus status){
+        this.status = status;
     }
 
 }

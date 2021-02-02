@@ -55,6 +55,7 @@
 									<button
 										type="button"
 										class="btn btn-success"
+										@click="acceptOffer(offer.id)"
 									>
 										Accept offer
 									</button>
@@ -78,6 +79,11 @@
 </template>
 
 <script>
+
+import BidWSAPI from '../../../API/BidWSAPI';
+
+const bidAPI = new BidWSAPI();
+
 export default {
 	props: {
 		bidid: {
@@ -88,6 +94,18 @@ export default {
 			type: Array,
 			default: () => []
 		}
+	},
+	emits: ["accepted"],
+	setup(props, { emit }){
+		const acceptOffer = async (id) => {
+			bidAPI.acceptOffer(id).then(res => {
+				emit('accepted', res);
+			}).catch(err => {
+				console.log(err);
+			});
+		};
+
+		return {acceptOffer};
 	}
 };
 </script>

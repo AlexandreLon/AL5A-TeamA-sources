@@ -11,6 +11,8 @@ import java.util.stream.Collectors;
 import fr.polytech.supplierregistry.models.Supplier;
 import fr.polytech.supplierregistry.repositories.SupplierRepository;
 import fr.polytech.task.models.TaskType;
+
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.domain.EntityScan;
@@ -22,6 +24,9 @@ import org.springframework.test.annotation.DirtiesContext;
 import fr.polytech.bid.errors.BidNotFoundException;
 import fr.polytech.supplierregistry.errors.SupplierNotFoundException;
 import fr.polytech.bid.models.Bid;
+import fr.polytech.bid.models.BidStatus;
+import fr.polytech.bid.models.Offer;
+import fr.polytech.bid.repositories.OfferRepository;
 import fr.polytech.task.models.Task;
 import fr.polytech.task.models.TaskPriority;
 import fr.polytech.task.models.TaskStatus;
@@ -43,15 +48,22 @@ public class BidTest {
     @Autowired
     private BidProposer bidProposer;
 
+    @Autowired
+    private BidManager bidManager;
+
     @Autowired 
     private TaskRepository tr;
 
     @Autowired
     private SupplierRepository sr;
 
-    @Test
-    public void createBid() {
-        Task task = new Task();
+    private Task task;
+    private Supplier supplier;
+    private Bid bid;
+
+    @BeforeEach
+    public void initEach() {
+        this.task = new Task();
         task.setCreationDate(new Date());
         task.setName("foo");
         task.setPriority(TaskPriority.HIGH);
@@ -59,12 +71,16 @@ public class BidTest {
         task.setType("bar");
         task = tr.save(task);
 
-        Supplier s = new Supplier();
-        s.setName("mecalex");
-        s.setTaskType(TaskType.VERIFICATION);
-        sr.save(s);
+        this.supplier = new Supplier();
+        supplier.setName("mecalex");
+        supplier.setTaskType(TaskType.VERIFICATION);
+        sr.save(supplier);
 
-        Bid bid = bidCreator.createBid(task,List.of(s), new Date());
+        this.bid = bidCreator.createBid(task, List.of(supplier), new Date());
+    }
+
+    @Test
+    public void createBid() {
         List<Bid> bids = bidViewer.getBids().stream().filter(e -> e.getName().equals("foo")).collect(Collectors.toList());
         assertEquals(1, bids.size());
         Bid gettingBid = bids.get(0);
@@ -73,20 +89,6 @@ public class BidTest {
 
     @Test
     public void getBidById() {
-        Task task = new Task();
-        task.setCreationDate(new Date());
-        task.setName("foo");
-        task.setPriority(TaskPriority.HIGH);
-        task.setStatus(TaskStatus.PENDING);
-        task.setType("bar");
-        task = tr.save(task);
-
-        Supplier s = new Supplier();
-        s.setName("mecalex");
-        s.setTaskType(TaskType.VERIFICATION);
-        sr.save(s);
-
-        Bid bid = bidCreator.createBid(task,List.of(s), new Date());
         List<Bid> bids = bidViewer.getBids().stream().filter(e -> e.getName().equals("foo")).collect(Collectors.toList());
         assertEquals(1, bids.size());
         Bid gettingBid = bids.get(0);
@@ -95,20 +97,6 @@ public class BidTest {
     
     @Test
     public void getMishapByIdExist() {
-        Task task = new Task();
-        task.setCreationDate(new Date());
-        task.setName("foo");
-        task.setPriority(TaskPriority.HIGH);
-        task.setStatus(TaskStatus.PENDING);
-        task.setType("bar");
-        task = tr.save(task);
-
-        Supplier s = new Supplier();
-        s.setName("mecalex");
-        s.setTaskType(TaskType.VERIFICATION);
-        sr.save(s);
-
-        Bid bid = bidCreator.createBid(task,List.of(s), new Date());
         assertDoesNotThrow(() -> {
             Bid gettingBid = bidViewer.getBidById(bid.getId());
             assertEquals(bid, gettingBid);
@@ -131,20 +119,6 @@ public class BidTest {
 
     @Test
     public void outBidTestNotSupplier() {
-        Task task = new Task();
-        task.setCreationDate(new Date());
-        task.setName("foo");
-        task.setPriority(TaskPriority.HIGH);
-        task.setStatus(TaskStatus.PENDING);
-        task.setType("bar");
-        task = tr.save(task);
-
-        Supplier s = new Supplier();
-        s.setName("mecalex");
-        s.setTaskType(TaskType.VERIFICATION);
-        sr.save(s);
-
-        Bid bid = bidCreator.createBid(task,List.of(s), new Date());
         assertThrows(SupplierNotFoundException.class, () -> {
 			bidProposer.outbid(bid.getId(), 100000l, 10d, new Date());
 		});
@@ -153,20 +127,16 @@ public class BidTest {
     @Test
     public void outBidTest() {
         assertDoesNotThrow(() -> {
-            Task task = new Task();
-            task.setCreationDate(new Date());
-            task.setName("foo");
-            task.setPriority(TaskPriority.HIGH);
-            task.setStatus(TaskStatus.PENDING);
-            task.setType("bar");
-            task = tr.save(task);
-            Supplier s = new Supplier();
-            s.setName("tesungaminserieux");
-            s.setTaskType(TaskType.VERIFICATION);
-            s = sr.save(s);
-
-            Bid bid = bidCreator.createBid(task,List.of(s), new Date());
-			bidProposer.outbid(bid.getId(), s.getId(), 10d, new Date());
+			bidProposer.outbid(bid.getId(), this.supplier.getId(), 10d, new Date());
 		});
+    }
+
+    @Test
+    public void acceptOffer() {
+        assertDoesNotThrow(() -> {
+            Date proposedDate = new Date();
+            Offer offer = bidProposer.outbid(bid.getId(), this.supplier.getId(), 10d, proposedDate);
+            bidManager.acceptOffer(offer.getId());
+        });
     }
 }

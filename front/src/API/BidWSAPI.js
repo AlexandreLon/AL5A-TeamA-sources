@@ -22,6 +22,26 @@ class BidWSAPI extends API {
 			});
 		});
 	}
+
+	acceptOffer(id) {
+		return new Promise((resolve, reject) => {
+			this.axios.put(`/bid/${id}/accept`).then(res => {
+				resolve(res.data);
+			}).catch(error => {
+				reject(error);
+			});
+		});
+	}
+
+	getAcceptedOffer(id){
+		return new Promise((resolve, reject) => {
+			this.axios.get(`/bid/${id}/accepted`).then(res => {
+				resolve(res.data);
+			}).catch(error => {
+				reject(error);
+			});
+		});
+	}
 	
 }
 
