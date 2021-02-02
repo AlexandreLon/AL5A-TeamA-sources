@@ -4,6 +4,22 @@
 >
 > Impact : <Faible, Moyen, Elevé>
 
+## Semaine 05
+
+### Flag : Yellow
+
+La release à mis plus de temps que prévu (livrée le 2 février). Cependant la release est fonctionnelle, un scénario supplémentaire ajoutant les bids est fonctionnel. Nous avons également ajouté des tests fonctionnels et unitaires couvrant les nouvelles US sur les enchères. Une snapshot est prévue pour ce vendredi contenant des ajustements sur le frontend ainsi que le passage à n fournisseurs. Nous allons également débuter la recherche pour mettre en place les notifications.
+
+Risque : Prendre du retard sur la snapshot.
+
+Probabilité Élevée
+Impact Moyen
+
+Risque : Ne pas réussir à faire fonctionner une technologie pour les notification pour la release prochaine.
+
+Probabilité Moyenne
+Impact Fort
+
 ## Semaine 04
 
 ### Flag : Green
