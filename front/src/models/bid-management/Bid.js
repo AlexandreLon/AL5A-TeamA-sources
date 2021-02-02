@@ -9,4 +9,8 @@ export default class Bid {
 		this.desiredDate = desiredDate;
 	}
 
+	setStatus(status){
+		this.status = status;
+	}
+
 }

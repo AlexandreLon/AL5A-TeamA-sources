@@ -35,6 +35,9 @@ public class BidBean implements BidViewer, BidCreator, BidProposer, BidManager {
     private BidRepository bidRepository;
 
     @Autowired
+    private SupplierRepository supplierRepository; // TODO Add a method in SupplierAuthenticator to update the supplier
+
+    @Autowired
     private SupplierAuthenticator supplierAuthenticator;
 
     @Autowired
@@ -101,20 +104,23 @@ public class BidBean implements BidViewer, BidCreator, BidProposer, BidManager {
         Optional<Offer> opt = offerRepository.findById(id);
         if (!opt.isPresent())
             throw new OfferNotFoundException();
-        Offer offer = opt.get();
-        Bid associatedBid = offer.getBid();
+        Offer offerToAccept = opt.get();
+        Bid associatedBid = offerToAccept.getBid();
         associatedBid.setStatus(BidStatus.CLOSED);
-        associatedBid.getTask().setRealizationDate(offer.getProposedDate());
-        associatedBid.getTask().setPrice(offer.getPrice());
-        offer.getSupplier().addTask(associatedBid.getTask());
-        offer.setStatus(OfferStatus.ACCEPTED);
+        associatedBid.getTask().setRealizationDate(offerToAccept.getProposedDate());
+        associatedBid.getTask().setPrice(offerToAccept.getPrice());
+        offerToAccept.getSupplier().addTask(associatedBid.getTask());
+        offerToAccept.setStatus(OfferStatus.ACCEPTED);
+        offerToAccept = offerRepository.save(offerToAccept);
         List<Offer> offersToReject = offerRepository.findByBidId(associatedBid.getId());
         for(Offer off : offersToReject){
-            off.setStatus(OfferStatus.REJECTED);
-            offerRepository.save(off);
+            if(off.getId() != offerToAccept.getId()){
+                off.setStatus(OfferStatus.REJECTED);
+                offerRepository.save(off);
+            }
         }
-        supplierRepository.save(offer.getSupplier());
-        return offerRepository.save(offer);
+        supplierRepository.save(offerToAccept.getSupplier());
+        return offerToAccept;
     }
 
     @Override

@@ -29,7 +29,7 @@ public class BidManagerService {
     @CrossOrigin
     @PutMapping("/{idOffer}/accept")
     public Offer acceptOffer(@PathVariable Long idOffer){
-        log.info("GET : /api/bid/accept/" + idOffer);
+        log.info("PUT : /api/bid/accept/" + idOffer);
         try {
             return bidManager.acceptOffer(idOffer);
         } catch (OfferNotFoundException e){
