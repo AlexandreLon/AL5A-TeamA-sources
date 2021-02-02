@@ -1,9 +1,19 @@
 package fr.polytech.supplierregistry.components;
 
 
+import fr.polytech.supplierregistry.errors.SupplierNotFoundException;
 import fr.polytech.supplierregistry.models.Supplier;
-import org.junit.jupiter.api.Test;
+import fr.polytech.supplierregistry.repositories.SupplierRepository;
+import fr.polytech.task.models.TaskType;
 
+import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertThrows;
+
+import java.util.ArrayList;
+
+import org.junit.jupiter.api.Test;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.domain.EntityScan;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.context.annotation.ComponentScan;
@@ -12,48 +22,38 @@ import org.springframework.test.annotation.DirtiesContext;
 
 @SpringBootTest
 @DirtiesContext(classMode = DirtiesContext.ClassMode.AFTER_EACH_TEST_METHOD)
+@ComponentScan("fr.polytech.supplierregistry.repositories")
+@EntityScan("fr.polytech.supplierregistry.models")
+@EnableJpaRepositories("fr.polytech.supplierregistry.repositories")
 public class SupplierRegistryTest {
 
+    @Autowired
+    SupplierRepository sr;
 
-    @Test
-    public void createSupplierRegistry() {
+    @Autowired
+    SupplierAuthenticator sAuthenticator;
+
+    Supplier createSupplier() {
         Supplier supplier = new Supplier();
-        /*task.setCreationDate(new Date());
-        task.setName("foo");
-        task.setPriority(TaskPriority.HIGH);
-        task.setStatus(TaskStatus.PENDING);
-        task.setType("bar");
-        task = tr.save(task);
-
-        Supplier s = new Supplier();
-        s.setName("mecalex");
-        s.setTaskType(TaskType.VERIFICATION);
-
-        Bid bid = bidCreator.createBid(task,List.of(s), new Date());
-        List<Bid> bids = bidViewer.getBids().stream().filter(e -> e.getName().equals("foo")).collect(Collectors.toList());
-        assertEquals(1, bids.size());
-        Bid gettingBid = bids.get(0);
-        assertEquals(bid, gettingBid);*/
+        supplier.setName("toto");
+        supplier.setTaskType(TaskType.CLEANING);
+        supplier.setTasks(new ArrayList<>());
+        return supplier;
     }
 
     @Test
-    public void getSupplierById() {
-        /*Task task = new Task();
-        task.setCreationDate(new Date());
-        task.setName("foo");
-        task.setPriority(TaskPriority.HIGH);
-        task.setStatus(TaskStatus.PENDING);
-        task.setType("bar");
-        task = tr.save(task);
+    void getSupplierByIdExist() {
+        assertDoesNotThrow(() -> {
+			Supplier s = createSupplier();
+            sr.save(s);
+            assertEquals(s, sAuthenticator.getSupplierById(s.getId()));
+		});
+    }
 
-        Supplier s = new Supplier();
-        s.setName("mecalex");
-        s.setTaskType(TaskType.VERIFICATION);
-
-        Bid bid = bidCreator.createBid(task,List.of(s), new Date());
-        List<Bid> bids = bidViewer.getBids().stream().filter(e -> e.getName().equals("foo")).collect(Collectors.toList());
-        assertEquals(1, bids.size());
-        Bid gettingBid = bids.get(0);
-        assertEquals(bid, gettingBid);*/
+    @Test
+    void getSupplierByIdDoesntExist() {
+        assertThrows(SupplierNotFoundException.class,() -> {
+            sAuthenticator.getSupplierById(10000l);
+		});
     }
 }

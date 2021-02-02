@@ -2,7 +2,10 @@ package fr.polytech.supplierregistry.models;
 
 import fr.polytech.task.models.TaskType;
 import fr.polytech.task.models.Task;
+
+import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 import javax.persistence.*;
 
@@ -52,6 +55,23 @@ public class Supplier {
 
     public void setTasks(List<Task> tasks) {
         this.tasks = tasks;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (o == this)
+            return true;
+        if (!(o instanceof Supplier)) {
+            return false;
+        }
+        Supplier supplier = (Supplier) o;
+
+        return Objects.equals(id, supplier.id) && Objects.equals(name, supplier.name) && Objects.equals(taskType, supplier.taskType) && new ArrayList<>(getTasks()).equals(new ArrayList<>(supplier.getTasks()));
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(id, name, taskType, tasks);
     }
 
 }
