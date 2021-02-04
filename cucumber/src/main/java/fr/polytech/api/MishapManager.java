@@ -1,6 +1,6 @@
 package fr.polytech.api;
 
-import fr.polytech.models.Mishap;
+import fr.polytech.models.mishap.Mishap;
 import fr.polytech.models.MishapPriority;
 
 import org.springframework.beans.factory.annotation.Autowired;

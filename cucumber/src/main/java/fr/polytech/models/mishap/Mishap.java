@@ -1,6 +1,8 @@
-package fr.polytech.models;
+package fr.polytech.models.mishap;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import fr.polytech.models.MishapPriority;
+import fr.polytech.models.Task;
 
 import java.util.Objects;
 

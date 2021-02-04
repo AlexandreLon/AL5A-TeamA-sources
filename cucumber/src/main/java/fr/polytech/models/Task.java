@@ -1,16 +1,18 @@
 package fr.polytech.models;
 
 import java.util.Date;
+
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 @JsonIgnoreProperties(ignoreUnknown = true)
 public class Task {
-    
+
     private Long id;
     private String name;
     private String type;
     private TaskStatus status;
     private Date creationDate;
+    private Date realizationDate;
 
     public Date getCreationDate() {
         return this.creationDate;
@@ -53,4 +55,11 @@ public class Task {
     }
 
 
+    public Date getRealizationDate() {
+        return realizationDate;
+    }
+
+    public void setRealizationDate(Date realizationDate) {
+        this.realizationDate = realizationDate;
+    }
 }
