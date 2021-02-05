@@ -6,6 +6,8 @@ import fr.polytech.bid.errors.BidNotFoundException;
 import fr.polytech.bid.models.Bid;
 import fr.polytech.bid.models.Offer;
 
+import fr.polytech.task.models.TaskType;
+import org.springframework.data.jpa.repository.Query;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.web.bind.annotation.*;
@@ -22,15 +24,14 @@ import org.springframework.beans.factory.annotation.Autowired;
 import java.util.List;
 
 @RestController
-@ComponentScan({ "fr.polytech.bid" })
+@ComponentScan({"fr.polytech.bid"})
 @RequestMapping("/api/bid")
 public class BidViewerService {
 
     private static final Logger log = LoggerFactory.getLogger(Application.class);
 
     @Autowired
-    BidViewer bidViewer;
-
+    private BidViewer bidViewer;
 
     @CrossOrigin
     @GetMapping("")
@@ -41,7 +42,7 @@ public class BidViewerService {
 
     @CrossOrigin
     @GetMapping("/{id}")
-    public Bid getBidById(@PathVariable Long id) {
+    public Bid getBidsById(@PathVariable Long id) {
         log.info("GET : /api/bid/" + id);
         try {
             return bidViewer.getBidById(id);
@@ -63,13 +64,13 @@ public class BidViewerService {
 
     @CrossOrigin
     @GetMapping("/{idBid}/accepted")
-    public Offer getAcceptedOffer(@PathVariable Long idBid){
+    public Offer getAcceptedOffer(@PathVariable Long idBid) {
         log.info("GET : /api/bid/" + idBid + "/accepted");
-        try{
+        try {
             return bidViewer.getAcceptedOffer(idBid);
-        } catch(BidNotFoundException e){
+        } catch (BidNotFoundException e) {
             throw new ResourceNotFoundException();
-        } catch(BidNotClosedException e){
+        } catch (BidNotClosedException e) {
             throw new BadRequestException();
         }
     }

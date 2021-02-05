@@ -1,11 +1,13 @@
 package fr.polytech.webservices.controllers.api.supplier;
 
 import fr.polytech.bid.components.BidProposer;
+import fr.polytech.bid.components.BidViewer;
 import fr.polytech.bid.errors.BidNotFoundException;
+import fr.polytech.bid.models.Bid;
 import fr.polytech.supplierregistry.errors.SupplierNotFoundException;
 import fr.polytech.bid.models.Offer;
 
-import fr.polytech.supplierregistry.components.SupplierAuthenticator;
+import fr.polytech.supplierregistry.components.SupplierProvider;
 import fr.polytech.supplierregistry.models.Supplier;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.context.annotation.ComponentScan;
@@ -33,14 +35,16 @@ public class SupplierService {
     private BidProposer bidProposer;
 
     @Autowired
-    private SupplierAuthenticator supplierAuthenticator;
+    private SupplierProvider supplierProvider;
+
+    @Autowired
+    private BidViewer bidViewer;
 
     @CrossOrigin
     @GetMapping("")
     public List<Supplier> getSuppliers() {
         log.info("GET : /api/supplier");
-        return supplierAuthenticator.getSuppliers();
-
+        return supplierProvider.getSuppliers();
     }
 
     @CrossOrigin
@@ -54,6 +58,13 @@ public class SupplierService {
         } catch (SupplierNotFoundException e) {
             throw new BadRequestException();
         }
+    }
+
+    @CrossOrigin
+    @GetMapping("/{id}/outbid")
+    public List<Bid> getBidsBySupplierId(long supplierId) {
+        log.info("GET : /api/supplier/" + supplierId + "/bids");
+        return bidViewer.getBidsBySupplierId(supplierId);
     }
 
 }

@@ -31,7 +31,7 @@ public class SupplierRegistryTest {
     SupplierRepository sr;
 
     @Autowired
-    SupplierAuthenticator sAuthenticator;
+    SupplierProvider sAuthenticator;
 
     Supplier createSupplier() {
         Supplier supplier = new Supplier();

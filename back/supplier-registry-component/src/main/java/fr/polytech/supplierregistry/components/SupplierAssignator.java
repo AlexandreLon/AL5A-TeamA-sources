@@ -7,6 +7,6 @@ import fr.polytech.task.models.TaskType;
 import java.util.List;
 
 public interface SupplierAssignator {
-    public List<Supplier> getSuppliers(TaskType taskType);
+    List<Supplier> getSuppliers(TaskType taskType);
 
 }

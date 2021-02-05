@@ -17,7 +17,7 @@ import java.util.Optional;
 @ComponentScan("fr.polytech.supplierregistry.repositories")
 @EntityScan("fr.polytech.supplierregistry.models")
 @EnableJpaRepositories("fr.polytech.supplierregistry.repositories")
-public class SupplierRegisterBean implements SupplierAuthenticator, SupplierAssignator {
+public class SupplierRegisterBean implements SupplierProvider, SupplierAssignator {
 
     @Autowired
     private SupplierRepository supplierRepository;
@@ -37,5 +37,10 @@ public class SupplierRegisterBean implements SupplierAuthenticator, SupplierAssi
     @Override
     public List<Supplier> getSuppliers(TaskType taskType) {
         return supplierRepository.findSupplierByTaskType(taskType);
+    }
+
+    @Override
+    public TaskType getSupplierTaskTypeById(long id) throws SupplierNotFoundException {
+        return null; // TODO
     }
 }

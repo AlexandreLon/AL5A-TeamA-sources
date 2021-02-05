@@ -9,23 +9,25 @@ import fr.polytech.bid.models.OfferStatus;
 import fr.polytech.bid.models.BidStatus;
 import fr.polytech.bid.repositories.BidRepository;
 import fr.polytech.bid.repositories.OfferRepository;
-import fr.polytech.supplierregistry.components.SupplierAuthenticator;
+import fr.polytech.supplierregistry.components.SupplierProvider;
 import fr.polytech.supplierregistry.errors.SupplierNotFoundException;
 import fr.polytech.supplierregistry.models.Supplier;
 import fr.polytech.task.models.Task;
 
+import fr.polytech.task.models.TaskType;
 import org.springframework.stereotype.Component;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.domain.EntityScan;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
+
 import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 
 @Component
-@ComponentScan({"fr.polytech.bid.repositories","fr.polytech.supplierregistry.components"})
+@ComponentScan({"fr.polytech.bid.repositories", "fr.polytech.supplierregistry.components"})
 @EntityScan("fr.polytech.bid.models")
 @EnableJpaRepositories("fr.polytech.bid.repositories")
 public class BidBean implements BidViewer, BidCreator, BidProposer, BidManager {
@@ -34,7 +36,7 @@ public class BidBean implements BidViewer, BidCreator, BidProposer, BidManager {
     private BidRepository bidRepository;
 
     @Autowired
-    private SupplierAuthenticator supplierAuthenticator;
+    private SupplierProvider supplierProvider;
 
     @Autowired
     private OfferRepository offerRepository;
@@ -64,7 +66,7 @@ public class BidBean implements BidViewer, BidCreator, BidProposer, BidManager {
 
     @Override
     public Offer outbid(long bidId, long supplierId, double price, Date proposedDate) throws BidNotFoundException,
-            SupplierNotFoundException, SupplierNotFoundException {
+            SupplierNotFoundException {
         Offer offer = new Offer();
 
         Optional<Bid> optBid = bidRepository.findById(bidId);
@@ -72,8 +74,8 @@ public class BidBean implements BidViewer, BidCreator, BidProposer, BidManager {
             throw new BidNotFoundException();
         Bid bid = optBid.get();
 
-        Supplier supplier = supplierAuthenticator.getSupplierById(supplierId);
-        
+        Supplier supplier = supplierProvider.getSupplierById(supplierId);
+
         offer.setBid(bid);
         offer.setPrice(price);
         offer.setSupplier(supplier);
@@ -106,8 +108,8 @@ public class BidBean implements BidViewer, BidCreator, BidProposer, BidManager {
         offerToAccept.setStatus(OfferStatus.ACCEPTED);
         offerToAccept = offerRepository.save(offerToAccept);
         List<Offer> offersToReject = offerRepository.findByBidId(associatedBid.getId());
-        for(Offer off : offersToReject){
-            if(off.getId() != offerToAccept.getId()){
+        for (Offer off : offersToReject) {
+            if (off.getId() != offerToAccept.getId()) {
                 off.setStatus(OfferStatus.REJECTED);
                 offerRepository.save(off);
             }
@@ -118,12 +120,21 @@ public class BidBean implements BidViewer, BidCreator, BidProposer, BidManager {
     @Override
     public Offer getAcceptedOffer(Long id) throws BidNotFoundException, BidNotClosedException {
         Optional<Bid> opt = bidRepository.findById(id);
-        if (!opt.isPresent())
+        if (!opt.isPresent()) {
             throw new BidNotFoundException();
+        }
         Bid bid = opt.get();
-        if(bid.getStatus() != BidStatus.CLOSED)
+        if (bid.getStatus() != BidStatus.CLOSED) {
             throw new BidNotClosedException();
-        Offer offer = offerRepository.findByBidIdAndStatus(bid.getId(), OfferStatus.ACCEPTED);
-        return offer;
+        }
+        return offerRepository.findByBidIdAndStatus(bid.getId(), OfferStatus.ACCEPTED);
+    }
+
+    @Override
+    public List<Bid> getBidsBySupplierId(long supplierId) throws SupplierNotFoundException {
+
+//        return bidRepository.findBySupplierId();
+            TaskType supplierTaskType = supplierProvider.getSupplierTaskTypeById(supplierId);
+        return null; // TODO
     }
 }
