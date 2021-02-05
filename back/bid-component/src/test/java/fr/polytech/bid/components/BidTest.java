@@ -66,8 +66,8 @@ public class BidTest {
         task.setCreationDate(new Date());
         task.setName("foo");
         task.setPriority(TaskPriority.HIGH);
-        task.setStatus(TaskStatus.PENDING);
-        task.setType("bar");
+        task.setStatus(TaskStatus.WAITING_FOR_BID_CLOSURE);
+        task.setType(TaskType.REPLACING);
         task = tr.save(task);
 
         this.supplier = new Supplier();

@@ -1,7 +1,5 @@
 package fr.polytech.models.bid;
 
-import fr.polytech.models.Supplier;
-
 import java.util.Date;
 
 public class Offer {

@@ -8,6 +8,7 @@ import org.springframework.http.MediaType;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 
+import fr.polytech.models.TaskType;
 import fr.polytech.models.maintenance.Maintenance;
 
 import java.util.ArrayList;
@@ -21,7 +22,7 @@ public class MaintenanceManager {
 	@Autowired 
 	private Api api;
 
-	public void createMaintenance(String maintenanceName, String maintenanceType, Date desiredDate) {
+	public void createMaintenance(String maintenanceName, TaskType maintenanceType, Date desiredDate) {
 		MaintenanceCreation maintenance = new MaintenanceCreation();
 		maintenance.setName(maintenanceName);
 		maintenance.setType(maintenanceType);
