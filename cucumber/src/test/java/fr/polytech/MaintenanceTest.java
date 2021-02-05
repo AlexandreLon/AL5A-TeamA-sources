@@ -16,7 +16,7 @@ import java.util.stream.Collectors;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
-import fr.polytech.api.MaintenanceManager;
+import fr.polytech.api.MaintenanceService;
 import fr.polytech.models.Task;
 import fr.polytech.models.TaskType;
 
@@ -27,7 +27,7 @@ public class MaintenanceTest {
     private List<Task> tasks;
 
     @Autowired
-    private MaintenanceManager maintenanceManager;
+    private MaintenanceService maintenanceService;
 
     @Autowired
     private SupplierService supplierService;

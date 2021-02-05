@@ -1,7 +1,7 @@
 package fr.polytech;
 
 import fr.polytech.api.BidService;
-import fr.polytech.api.MaintenanceManager;
+import fr.polytech.api.MaintenanceService;
 import fr.polytech.models.TaskType;
 import fr.polytech.models.bid.Bid;
 import fr.polytech.models.maintenance.Maintenance;
@@ -23,7 +23,7 @@ import static org.junit.Assert.*;
 public class CreateMaintenanceAndBid {
 
     @Autowired
-    private MaintenanceManager manu;
+    private MaintenanceService manu;
 
     @Autowired
     private BidService bidService;

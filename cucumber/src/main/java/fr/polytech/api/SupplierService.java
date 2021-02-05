@@ -45,7 +45,7 @@ public class SupplierService {
     }
 
 
-    public Offer outbid(long id, Offer offerBody) {
+    public Offer outbid(long bidId, Offer offerBody) {
         HttpHeaders headers = new HttpHeaders();
         headers.add("Accept", MediaType.APPLICATION_JSON_VALUE);
         headers.setContentType(MediaType.APPLICATION_JSON);

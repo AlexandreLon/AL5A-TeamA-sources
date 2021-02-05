@@ -17,7 +17,7 @@ import java.util.Date;
 import java.util.List;
 
 @Service
-public class MaintenanceManager {
+public class MaintenanceService {
 
 	@Autowired 
 	private Api api;

@@ -7,4 +7,6 @@ Background:
 
   Scenario: A supplier makes an offer on a bid
     When "Michel 3000" makes an offer of 3000 dollars on the maintenance "Repair" with the date "21-03-2021"
-    Then
+    Then a new offer is created
+    And the offer is linked with "Michel 3000"
+    And the offer is linked with the bid "Repair"
