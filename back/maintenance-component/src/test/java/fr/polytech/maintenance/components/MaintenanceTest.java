@@ -27,7 +27,7 @@ public class MaintenanceTest {
     @Test
     public void createMaintenanceTest() {
         // Mockito.when(maintenanceRepository.save(any(Maintenance.class))).thenAnswer(invocation -> (Maintenance)invocation.getArguments()[0]);
-        Maintenance maintenance = maintenanceManager.createMaintenance("foo", "bar", new Date());
+        Maintenance maintenance = maintenanceManager.createMaintenance("foo", "VERIFICATION", new Date());
         List<Maintenance> maintenances = maintenanceManager.getMaintenances().stream().filter(e -> e.getName().equals("foo")).collect(Collectors.toList());
         assertEquals(1, maintenances.size());
         Maintenance gettingMaintenance = maintenances.get(0);
@@ -36,7 +36,7 @@ public class MaintenanceTest {
 
     @Test
     public void getMaintenanceByIdExist() {
-        Maintenance maintenance = maintenanceManager.createMaintenance("foo", "bar", new Date());
+        Maintenance maintenance = maintenanceManager.createMaintenance("foo", "VERIFICATION", new Date());
         assertDoesNotThrow(() -> {
             Maintenance gettingMaintenance = maintenanceManager.getMaintenanceById(maintenance.getId());
             assertEquals(maintenance, gettingMaintenance);
@@ -52,7 +52,7 @@ public class MaintenanceTest {
 
     @Test
     public void updateMaintenanceExist() {
-        Maintenance maintenance = maintenanceManager.createMaintenance("foo", "bar", new Date());
+        Maintenance maintenance = maintenanceManager.createMaintenance("foo", "VERIFICATION", new Date());
         assertDoesNotThrow(() -> {
             Maintenance gettingMaintenance = maintenanceManager.updateMaintenance(maintenance.getId(), "foo2", "bar2");
             maintenance.setName("foo2");
@@ -64,13 +64,13 @@ public class MaintenanceTest {
     @Test
     public void updateMaintenanceDoentExist() {
         assertThrows(MaintenanceNotFoundException.class, () -> {
-			maintenanceManager.updateMaintenance(100000l, "foo", "bar");
+			maintenanceManager.updateMaintenance(100000l, "foo", "VERIFICATION");
 		});
     }
 
     @Test
     public void deleteMaintenanceTest() {
-        Maintenance maintenance = maintenanceManager.createMaintenance("foo", "bar", new Date());
+        Maintenance maintenance = maintenanceManager.createMaintenance("foo", "VERIFICATION", new Date());
         assertDoesNotThrow(() -> {
             Maintenance gettingMaintenance = maintenanceManager.getMaintenanceById(maintenance.getId());
             assertEquals(maintenance, gettingMaintenance);

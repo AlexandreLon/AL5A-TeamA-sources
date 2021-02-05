@@ -2,6 +2,7 @@ package fr.polytech.supplierregistry.components;
 import fr.polytech.supplierregistry.errors.SupplierNotFoundException;
 import fr.polytech.supplierregistry.models.Supplier;
 import fr.polytech.supplierregistry.repositories.SupplierRepository;
+import fr.polytech.task.models.TaskType;
 import org.springframework.stereotype.Component;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -31,5 +32,10 @@ public class SupplierRegisterBean implements SupplierAuthenticator, SupplierAssi
         if (!opt.isPresent())
             throw new SupplierNotFoundException();
         return opt.get();
+    }
+
+    @Override
+    public List<Supplier> getSuppliers(TaskType taskType) {
+        return supplierRepository.findSupplierByTaskType(taskType);
     }
 }

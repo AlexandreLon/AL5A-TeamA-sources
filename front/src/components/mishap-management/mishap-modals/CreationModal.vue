@@ -62,9 +62,9 @@
 									>
 										Please select a type
 									</option>
-									<option>Accident</option>
-									<option>Meteo</option>
-									<option>Something else</option>
+									<option value="REPLACING">Replacement</option>
+									<option value="CLEANING">Cleaning</option>
+									<option value="VERIFICATION">Verification</option>
 								</select>
 							</div>
 							<div>

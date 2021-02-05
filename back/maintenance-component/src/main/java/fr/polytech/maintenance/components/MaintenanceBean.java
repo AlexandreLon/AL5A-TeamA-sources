@@ -6,8 +6,10 @@ import fr.polytech.maintenance.errors.MaintenanceNotFoundException;
 import fr.polytech.maintenance.models.Maintenance;
 import fr.polytech.maintenance.repositories.MaintenanceRepository;
 
+import fr.polytech.supplierregistry.components.SupplierAssignator;
 import fr.polytech.supplierregistry.repositories.SupplierRepository;
 import fr.polytech.task.models.TaskPriority;
+import fr.polytech.task.models.TaskType;
 import org.springframework.stereotype.Component;
 
 import java.util.Date;
@@ -31,7 +33,7 @@ public class MaintenanceBean implements MaintenanceManager {
     private MaintenanceRepository maintenanceRepository;
 
     @Autowired
-    private SupplierRepository supplierRepository;
+    private SupplierAssignator supplierAssignator;
 
     @Autowired
     private BidCreator bidCreator;
@@ -45,7 +47,12 @@ public class MaintenanceBean implements MaintenanceManager {
         maintenance.setCreationDate(new Date());
         maintenance.setPriority(TaskPriority.NONE);
         maintenance = maintenanceRepository.save(maintenance);
-        bidCreator.createBid(maintenance, Lists.newArrayList(supplierRepository.findAll()), desiredDate);
+        try{
+            bidCreator.createBid(maintenance, Lists.newArrayList(supplierAssignator.getSuppliers(TaskType.valueOf(type))), desiredDate);
+        }
+        catch (IllegalArgumentException e){ //If type enum doesn't fit
+            throw new IllegalArgumentException("Maintenance type hasn't been recognized");
+        }
         return maintenance;
     }
 

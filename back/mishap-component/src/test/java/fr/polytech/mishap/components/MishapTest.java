@@ -28,7 +28,7 @@ public class MishapTest {
     @Test
     public void createMishapTest() {
         // Mockito.when(mishapRepository.save(any(Mishap.class))).thenAnswer(invocation -> (Mishap)invocation.getArguments()[0]);
-        Mishap mishap = mishapManager.createMishap("foo", "bar", new Date(), TaskPriority.HIGH);
+        Mishap mishap = mishapManager.createMishap("foo", "VERIFICATION", new Date(), TaskPriority.HIGH);
         List<Mishap> mishaps = mishapManager.getMishaps().stream().filter(e -> e.getName().equals("foo")).collect(Collectors.toList());
         assertEquals(1, mishaps.size());
         Mishap gettingMishap = mishaps.get(0);
@@ -37,7 +37,7 @@ public class MishapTest {
 
     @Test
     public void getMishapByIdExist() {
-        Mishap mishap = mishapManager.createMishap("foo", "bar", new Date(), TaskPriority.HIGH);
+        Mishap mishap = mishapManager.createMishap("foo", "VERIFICATION", new Date(), TaskPriority.HIGH);
         assertDoesNotThrow(() -> {
             Mishap gettingMishap = mishapManager.getMishapById(mishap.getId());
             assertEquals(mishap, gettingMishap);
@@ -53,7 +53,7 @@ public class MishapTest {
 
     @Test
     public void updateMishapExist() {
-        Mishap mishap = mishapManager.createMishap("foo", "bar", new Date(), TaskPriority.HIGH);
+        Mishap mishap = mishapManager.createMishap("foo", "VERIFICATION", new Date(), TaskPriority.HIGH);
         assertDoesNotThrow(() -> {
             Mishap gettingMishap = mishapManager.updateMishap(mishap.getId(), "foo2", "bar2", TaskPriority.LOW);
             mishap.setName("foo2");
@@ -65,13 +65,13 @@ public class MishapTest {
     @Test
     public void updateMishapDoentExist() {
         assertThrows(MishapNotFoundException.class, () -> {
-			mishapManager.updateMishap(100000l, "foo", "bar", TaskPriority.HIGH);
+			mishapManager.updateMishap(100000l, "foo", "VERIFICATION", TaskPriority.HIGH);
 		});
     }
 
     @Test
     public void deleteMishapTest() {
-        Mishap mishap = mishapManager.createMishap("foo", "bar", new Date(), TaskPriority.HIGH);
+        Mishap mishap = mishapManager.createMishap("foo", "VERIFICATION", new Date(), TaskPriority.HIGH);
         assertDoesNotThrow(() -> {
             Mishap gettingMishap = mishapManager.getMishapById(mishap.getId());
             assertEquals(mishap, gettingMishap);

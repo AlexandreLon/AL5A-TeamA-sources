@@ -6,7 +6,7 @@ import fr.polytech.mishap.errors.MishapNotFoundException;
 import fr.polytech.mishap.models.Mishap;
 import fr.polytech.mishap.repositories.MishapRepository;
 
-import fr.polytech.supplierregistry.repositories.SupplierRepository;
+import fr.polytech.supplierregistry.components.SupplierAssignator;
 import fr.polytech.task.models.TaskPriority;
 import fr.polytech.task.models.TaskStatus;
 
@@ -14,6 +14,7 @@ import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 
+import fr.polytech.task.models.TaskType;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.domain.EntityScan;
 import org.springframework.context.annotation.ComponentScan;
@@ -30,7 +31,7 @@ public class MishapBean implements MishapManager {
     private MishapRepository mishapRepository;
 
     @Autowired
-    private SupplierRepository supplierRepository;
+    private SupplierAssignator supplierAssignator;
 
     @Autowired
     private BidCreator bidCreator;
@@ -44,7 +45,13 @@ public class MishapBean implements MishapManager {
         mishap.setStatus(TaskStatus.PENDING);
         mishap.setCreationDate(new Date());
         mishap = mishapRepository.save(mishap);
-        bidCreator.createBid(mishap, Lists.newArrayList(supplierRepository.findAll()), desiredDate);
+        try{
+            bidCreator.createBid(mishap, Lists.newArrayList(supplierAssignator.getSuppliers(TaskType.valueOf(type))), desiredDate);
+        }
+        catch (IllegalArgumentException e){
+            throw new IllegalArgumentException("Mishap type hasn't been recognized");
+
+        }
         return mishap;
     }
 
