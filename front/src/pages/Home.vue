@@ -10,6 +10,13 @@
 		>
 		<ul>
 			<li>
+				<router-link to="/bid-supplier">
+					<div class="btn btn-danger">
+						Bid (Supplier)
+					</div>
+				</router-link>
+			</li>
+			<li>
 				<router-link to="/supplier">
 					<div class="btn btn-primary">
 						Supplier
