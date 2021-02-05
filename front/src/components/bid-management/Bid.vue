@@ -19,6 +19,7 @@
 					See Proposals
 				</button>
 				<button
+					v-if="enableCreateProposal"
 					type="button"
 					class="btn btn-primary"
 					data-toggle="modal" 
@@ -42,11 +43,12 @@
 		</td>
 		<CreateOffer
 			:bidid="bid.id"
-			:suppliers="suppliers"
+			:supplier="supplier"
 		/>
 		<ViewOffer
 			:offers="offers"
 			:bidid="bid.id"
+			:enable-accept-offer="enableAcceptOffer"
 			@accepted="acceptedOffer"
 		/>
 		<CheckAcceptedOffer
@@ -63,6 +65,7 @@ import CreateOffer from "./offers/CreateOffer2.vue";
 import CheckAcceptedOffer from "./offers/CheckAcceptedOffer.vue";
 import ViewOffer from "./offers/ViewOffer.vue";
 import BidWSAPI from '../../API/BidWSAPI';
+import Supplier from "../../models/supplier/Supplier";
 
 const bidWSAPI = new BidWSAPI();
 
@@ -75,14 +78,13 @@ export default {
 			type: Bid,
 			default: null
 		},
-		suppliers: {
-			type: Array,
-			default: () => []
-		}
+		enableAcceptOffer: Boolean,
+		enableCreateProposal: Boolean,
+		supplier : Supplier
+
 	},
 	emits: ['accepted'],
 	setup(props, { emit }) {
-
 		const offers = ref([]);
 
 		const formatDate = (dateStr) => {
@@ -90,7 +92,7 @@ export default {
 		};
 
 		const getOffers = () => {
-			bidWSAPI.getOffers(props.bid.id).then(res => {offers.value = res; console.log(offers.value.proposedDate);});
+			bidWSAPI.getOffers(props.bid.id).then(res => {offers.value = res;});
 		};
 
 		const acceptedOffer = (offer) => {

@@ -35,7 +35,10 @@
 								<th scope="col">
 									Date
 								</th>
-								<th scope="col">
+								<th
+									scope="col"
+									v-if="enableAcceptOffer"
+								>
 									Actions
 								</th>
 							</tr>
@@ -51,7 +54,7 @@
 								<td>{{ offer.supplier.name }}</td>
 								<td>{{ new Intl.NumberFormat('de-DE', { style: 'currency', currency: 'EUR' }).format(offer.price) }}</td>
 								<td>{{ new Date(offer.proposedDate).toISOString().replace(/T/, ' ').replace(/\..+/, '').split(' ')[0] }}</td>
-								<td>
+								<td v-if="enableAcceptOffer">
 									<button
 										type="button"
 										class="btn btn-success"
@@ -93,7 +96,8 @@ export default {
 		offers: {
 			type: Array,
 			default: () => []
-		}
+		},
+		enableAcceptOffer : Boolean
 	},
 	emits: ["accepted"],
 	setup(props, { emit }){
