@@ -1,6 +1,7 @@
 package fr.polytech;
 
 import fr.polytech.api.SupplierService;
+import io.cucumber.java.ParameterType;
 import io.cucumber.java.en.And;
 import io.cucumber.java.en.Given;
 import io.cucumber.java.en.Then;
@@ -17,6 +18,7 @@ import org.springframework.boot.test.context.SpringBootTest;
 
 import fr.polytech.api.MaintenanceManager;
 import fr.polytech.models.Task;
+import fr.polytech.models.TaskType;
 
 @SpringBootTest
 public class MaintenanceTest {
@@ -30,13 +32,27 @@ public class MaintenanceTest {
     @Autowired
     private SupplierService supplierService;
 
+    @ParameterType("VERIFICATION|REPLACING|CLEANING")
+    public TaskType taskType(String priority) {
+        switch (priority) {
+            case "VERIFICATION":
+                return TaskType.VERIFICATION;
+            case "REPLACING":
+                return TaskType.REPLACING;
+            case "CLEANING":
+                return TaskType.CLEANING;
+            default:
+                return null;
+        }
+    }
+
     @Given("A {string} to do")
     public void aMaintenanceName(String maintenanceName) {
         this.maintenanceName = maintenanceName;
     }
 
-    @When("I create a maintenance with type {string} for it")
-    public void createMaintenance(String maintenanceType) {
+    @When("I create a maintenance with type {taskType} for it")
+    public void createMaintenance(TaskType maintenanceType) {
         maintenanceManager.createMaintenance(maintenanceName, maintenanceType, new Date());
     }
 
