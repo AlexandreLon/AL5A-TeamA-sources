@@ -5,5 +5,4 @@ public enum TaskType {
     CLEANING,
     REPLACING,
     ;
-
 }

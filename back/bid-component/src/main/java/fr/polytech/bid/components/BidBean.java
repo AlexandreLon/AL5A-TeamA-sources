@@ -132,9 +132,7 @@ public class BidBean implements BidViewer, BidCreator, BidProposer, BidManager {
 
     @Override
     public List<Bid> getBidsBySupplierId(long supplierId) throws SupplierNotFoundException {
-
-//        return bidRepository.findBySupplierId();
-            TaskType supplierTaskType = supplierProvider.getSupplierTaskTypeById(supplierId);
-        return null; // TODO
+        TaskType supplierTaskType = supplierProvider.getSupplierTaskTypeById(supplierId);
+        return bidRepository.findByTaskType(supplierTaskType);
     }
 }

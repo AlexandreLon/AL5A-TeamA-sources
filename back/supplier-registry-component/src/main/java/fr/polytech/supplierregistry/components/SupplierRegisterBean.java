@@ -1,4 +1,5 @@
 package fr.polytech.supplierregistry.components;
+
 import fr.polytech.supplierregistry.errors.SupplierNotFoundException;
 import fr.polytech.supplierregistry.models.Supplier;
 import fr.polytech.supplierregistry.repositories.SupplierRepository;
@@ -41,6 +42,10 @@ public class SupplierRegisterBean implements SupplierProvider, SupplierAssignato
 
     @Override
     public TaskType getSupplierTaskTypeById(long id) throws SupplierNotFoundException {
-        return null; // TODO
+        Optional<Supplier> opt = supplierRepository.findById(id);
+        if (!opt.isPresent()) {
+            throw new SupplierNotFoundException();
+        }
+        return opt.get().getTaskType();
     }
 }

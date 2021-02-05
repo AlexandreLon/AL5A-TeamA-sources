@@ -64,7 +64,7 @@ export default {
 		const bids = ref(null);
 
 		watch(() => props.supplier, (supplier) => {
-			supplierWSAPI.getBids(supplier.id)
+			supplierWSAPI.getBidsBySupplierId(supplier.id)
 				.then(res => {
 					bids.value = res;
 				})
@@ -74,7 +74,7 @@ export default {
 		});
 		onMounted(() => {
 			if(props.supplier != null){
-				supplierWSAPI.getBids(props.supplier.id)
+				supplierWSAPI.getBidsBySupplierId(props.supplier.id)
 					.then(res => {
 						bids.value = res;
 					})

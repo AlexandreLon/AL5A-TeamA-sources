@@ -24,8 +24,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 
 import java.util.List;
 
+import static java.lang.System.exit;
+
 @RestController
-@ComponentScan({ "fr.polytech.bid","fr.polytech.supplierregistry" })
+@ComponentScan({"fr.polytech.bid", "fr.polytech.supplierregistry"})
 @RequestMapping("/api/supplier")
 public class SupplierService {
 
@@ -61,11 +63,11 @@ public class SupplierService {
     }
 
     @CrossOrigin
-    @GetMapping("/{id}/outbid")
-    public List<Bid> getBidsBySupplierId(long supplierId) {
-        log.info("GET : /api/supplier/" + supplierId + "/bids");
+    @GetMapping("/{id}/bids")
+    public List<Bid> getBidsBySupplierId(@PathVariable long id) {
+        log.info("GET : /api/supplier/" + id + "/bids");
         try {
-            return bidViewer.getBidsBySupplierId(supplierId);
+            return bidViewer.getBidsBySupplierId(id);
         } catch (SupplierNotFoundException e) {
             throw new ResourceNotFoundException();
         }

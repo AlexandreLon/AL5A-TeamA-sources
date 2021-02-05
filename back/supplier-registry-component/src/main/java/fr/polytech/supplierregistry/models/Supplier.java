@@ -18,7 +18,7 @@ public class Supplier {
     @Column(name = "name", length = 30, nullable = false)
     protected String name;
 
-    @Column(name = "task_type")
+    @Column(name = "task_type", nullable = false)
     protected TaskType taskType;
 
     @OneToMany(fetch = FetchType.EAGER)
