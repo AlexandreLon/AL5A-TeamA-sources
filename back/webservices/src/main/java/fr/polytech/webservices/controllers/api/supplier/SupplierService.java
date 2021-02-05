@@ -64,7 +64,11 @@ public class SupplierService {
     @GetMapping("/{id}/outbid")
     public List<Bid> getBidsBySupplierId(long supplierId) {
         log.info("GET : /api/supplier/" + supplierId + "/bids");
-        return bidViewer.getBidsBySupplierId(supplierId);
+        try {
+            return bidViewer.getBidsBySupplierId(supplierId);
+        } catch (SupplierNotFoundException e) {
+            throw new ResourceNotFoundException();
+        }
     }
 
 }
