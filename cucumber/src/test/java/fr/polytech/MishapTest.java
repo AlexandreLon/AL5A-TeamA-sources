@@ -63,10 +63,10 @@ public class MishapTest {
         assertTrue(taskNameList.contains(taskName));
     }
 
-    @Then("The task {string} is pending")
-    public void taskPending(String taskName) {
+    @Then("The task {string} is waiting for bid closure")
+    public void taskWaitingForBidClosure(String taskName) {
         Task task = this.tasks.stream().filter(element -> element.getName().equals(taskName)).collect(Collectors.toList()).get(0);
-        assertEquals(TaskStatus.PENDING, task.getStatus());
+        assertEquals(TaskStatus.WAITING_FOR_BID_CLOSURE, task.getStatus());
     }
 
     @When("I finish the {string} task")

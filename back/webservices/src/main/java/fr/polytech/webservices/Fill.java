@@ -59,9 +59,11 @@ public class Fill {
 
     private Faker faker = new Faker();
 
+    TaskType[] types = { TaskType.CLEANING, TaskType.REPLACING, TaskType.VERIFICATION };
+
     public TaskPriority generateTaskPriority() {
         int v = faker.random().nextInt(3);
-        switch(v) {
+        switch (v) {
             case 0:
                 return TaskPriority.HIGH;
             case 1:
@@ -70,6 +72,20 @@ public class Fill {
                 return TaskPriority.MEDIUM;
             default:
                 return TaskPriority.NONE;
+        }
+    }
+
+    public TaskStatus generateTaskStatus() {
+        int v = faker.random().nextInt(2);
+        switch (v) {
+            case 0:
+                return TaskStatus.WAITING_FOR_BID_CLOSURE;
+            case 1:
+                return TaskStatus.PENDING;
+            case 2:
+                return TaskStatus.FINISHED;
+            default:
+                throw new IllegalStateException("Invalid random " + v);
         }
     }
 
@@ -92,8 +108,8 @@ public class Fill {
             m.setCreationDate(faker.date().past(3, TimeUnit.DAYS));
             m.setName(faker.lorem().word());
             m.setPriority(TaskPriority.NONE);
-            m.setStatus(faker.random().nextBoolean() ? TaskStatus.PENDING : TaskStatus.FINISHED);
-            m.setType(faker.lorem().word());
+            m.setStatus(generateTaskStatus());
+            m.setType(types[faker.random().nextInt(0, 2)]);
             if(faker.random().nextBoolean()){
                 m.setRealizationDate(faker.date().future(5, TimeUnit.DAYS));
             }
@@ -107,8 +123,8 @@ public class Fill {
             m.setCreationDate(faker.date().past(3, TimeUnit.DAYS));
             m.setName(faker.lorem().word());
             m.setPriority(generateTaskPriority());
-            m.setStatus(faker.random().nextBoolean() ? TaskStatus.PENDING : TaskStatus.FINISHED);
-            m.setType(faker.lorem().word());
+            m.setStatus(generateTaskStatus());
+            m.setType(types[faker.random().nextInt(0, 2)]);
             if(faker.random().nextBoolean()){
                 m.setRealizationDate(faker.date().future(5, TimeUnit.DAYS));
             }
@@ -117,7 +133,6 @@ public class Fill {
     }
 
     private void generateSomeSuppliers() {
-        TaskType[] types = {TaskType.CLEANING, TaskType.REPLACING, TaskType.VERIFICATION};
         for(int i=0; i<20; i++) {
             Supplier s = new Supplier();
             s.setName(faker.name().fullName());

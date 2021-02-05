@@ -7,7 +7,6 @@ import fr.polytech.maintenance.models.Maintenance;
 import fr.polytech.maintenance.repositories.MaintenanceRepository;
 
 import fr.polytech.supplierregistry.components.SupplierAssignator;
-import fr.polytech.supplierregistry.repositories.SupplierRepository;
 import fr.polytech.task.models.TaskPriority;
 import fr.polytech.task.models.TaskType;
 import org.springframework.stereotype.Component;
@@ -39,16 +38,16 @@ public class MaintenanceBean implements MaintenanceManager {
     private BidCreator bidCreator;
 
     @Override
-    public Maintenance createMaintenance(String name, String type, Date desiredDate) {
+    public Maintenance createMaintenance(String name, TaskType type, Date desiredDate) {
         Maintenance maintenance = new Maintenance();
         maintenance.setName(name);
         maintenance.setType(type);
-        maintenance.setStatus(TaskStatus.PENDING);
+        maintenance.setStatus(TaskStatus.WAITING_FOR_BID_CLOSURE);
         maintenance.setCreationDate(new Date());
         maintenance.setPriority(TaskPriority.NONE);
         maintenance = maintenanceRepository.save(maintenance);
         try{
-            bidCreator.createBid(maintenance, Lists.newArrayList(supplierAssignator.getSuppliers(TaskType.valueOf(type))), desiredDate);
+            bidCreator.createBid(maintenance, Lists.newArrayList(supplierAssignator.getSuppliers(type)), desiredDate);
         }
         catch (IllegalArgumentException e){ //If type enum doesn't fit
             throw new IllegalArgumentException("Maintenance type hasn't been recognized");
@@ -71,7 +70,7 @@ public class MaintenanceBean implements MaintenanceManager {
     }
 
     @Override
-    public Maintenance updateMaintenance(Long id, String name, String type) throws MaintenanceNotFoundException {
+    public Maintenance updateMaintenance(Long id, String name, TaskType type) throws MaintenanceNotFoundException {
         Optional<Maintenance> opt = this.maintenanceRepository.findById(id);
         if (opt.isPresent()) {
             Maintenance maintenance = opt.get();

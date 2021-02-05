@@ -37,16 +37,16 @@ public class MishapBean implements MishapManager {
     private BidCreator bidCreator;
 
     @Override
-    public Mishap createMishap(String name, String type, Date desiredDate, TaskPriority priority) {
+    public Mishap createMishap(String name, TaskType type, Date desiredDate, TaskPriority priority) {
         Mishap mishap = new Mishap();
         mishap.setName(name);
         mishap.setType(type);
         mishap.setPriority(priority);
-        mishap.setStatus(TaskStatus.PENDING);
+        mishap.setStatus(TaskStatus.WAITING_FOR_BID_CLOSURE);
         mishap.setCreationDate(new Date());
         mishap = mishapRepository.save(mishap);
         try{
-            bidCreator.createBid(mishap, Lists.newArrayList(supplierAssignator.getSuppliers(TaskType.valueOf(type))), desiredDate);
+            bidCreator.createBid(mishap, Lists.newArrayList(supplierAssignator.getSuppliers(type)), desiredDate);
         }
         catch (IllegalArgumentException e){
             throw new IllegalArgumentException("Mishap type hasn't been recognized");
@@ -68,7 +68,8 @@ public class MishapBean implements MishapManager {
     }
 
     @Override
-    public Mishap updateMishap(Long id, String name, String type, TaskPriority priority) throws MishapNotFoundException {
+    public Mishap updateMishap(Long id, String name, 
+            TaskType type, TaskPriority priority) throws MishapNotFoundException {
         Optional<Mishap> opt = this.mishapRepository.findById(id);
         if (opt.isPresent()) {
             Mishap mishap = opt.get();
