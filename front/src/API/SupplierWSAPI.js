@@ -29,7 +29,7 @@ class SupplierWSAPI extends API {
 	getBidsBySupplierId(id) {
 		return new Promise((resolve, reject ) => {
 			 this.axios.get(`/supplier/${id}/bids`).then(res => {
-				resolve(res.data.map(bid => new Bid(bid.id, bid.name, bid.task, bid.status)));
+				resolve(res.data.map(bid => new Bid(bid.id, bid.name, bid.task, bid.status, bid.desiredDate)));
 			}).catch(error => {
 				reject(error);
 			});
