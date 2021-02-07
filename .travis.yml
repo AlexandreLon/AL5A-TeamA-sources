@@ -11,16 +11,17 @@ matrix:
         script:
           - mvn clean install -Ptravis
         if: branch != ci and branch != master and branch != release
-  
-      - language: node_js
-        node_js: 14
-        before_script:
-          - cd front
-        script:
-          - npm install
-          - npm run lint
-          - npm run build
-        if: branch != ci and branch != master and branch != release
+
+# To save time and credits on travis
+#      - language: node_js
+#        node_js: 14
+#        before_script:
+#          - cd front
+#        script:
+#          - npm install
+#          - npm run lint
+#          - npm run build
+#        if: branch != ci and branch != master and branch != release
       
       - language: java
         java: 11
