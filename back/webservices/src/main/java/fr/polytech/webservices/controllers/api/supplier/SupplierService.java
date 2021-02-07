@@ -9,6 +9,8 @@ import fr.polytech.bid.models.Offer;
 
 import fr.polytech.supplierregistry.components.SupplierProvider;
 import fr.polytech.supplierregistry.models.Supplier;
+import fr.polytech.task.models.Task;
+
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.web.bind.annotation.*;
@@ -47,6 +49,17 @@ public class SupplierService {
     public List<Supplier> getSuppliers() {
         log.info("GET : /api/supplier");
         return supplierProvider.getSuppliers();
+    }
+
+    @CrossOrigin
+    @GetMapping("/{id}/tasks")
+    public List<Task> getSupplierTasks(@PathVariable Long id) {
+        log.info("GET : /api/supplier/" + id + "/tasks");
+        try {
+            return supplierProvider.getTasksBySupplierId(id);
+        } catch (SupplierNotFoundException e) {
+            throw new ResourceNotFoundException();
+        }
     }
 
     @CrossOrigin
