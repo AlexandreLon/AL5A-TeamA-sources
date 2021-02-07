@@ -39,28 +39,31 @@
 </template>
 
 <script>
-import { ref, onMounted } from "vue";
-import TaskWSAPI from "../../API/TaskWSAPI";
+import { ref, onMounted, watch } from "vue";
 import Task from "./Task.vue";
 import SupplierWSAPI from "../../API/SupplierWSAPI";
+import Supplier from '../../models/supplier/Supplier';
 
-const taskWSAPI = new TaskWSAPI();
 const supplierWSAPI = new SupplierWSAPI();
 
 export default {
 	components: { Task },
-	setup() {
+	props: {
+		supplier:Supplier,
+	},
+	setup(props) {
 		const tasks = ref(null);
-		onMounted(() => {
-			supplierWSAPI.getSuppliers().then(res => console.log(res.data));
-			taskWSAPI
-				.getTasks()
+		watch(() => props.supplier, (supplier) => {
+			supplierWSAPI.getTasksBySupplierId(supplier.id)
 				.then(res => {
 					tasks.value = res;
 				})
 				.catch(error => {
 					console.error(error);
 				});
+		});
+
+		onMounted(() => {
 		});
 
 		function update(newTask) {

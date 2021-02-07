@@ -22,7 +22,6 @@ public class Supplier {
     protected TaskType taskType;
 
     @OneToMany(fetch = FetchType.EAGER)
-    @JoinColumn(name = "supplier_id")
     protected List<Task> tasks;
 
     public Long getId() {

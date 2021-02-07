@@ -138,8 +138,7 @@ public class Fill {
             s.setName(faker.name().fullName());
             s.setTasks(new ArrayList<>());
             s.setTaskType(types[faker.random().nextInt(0,2)]);
-            suppliers.add(s);
-            sr.save(s);
+            suppliers.add(sr.save(s));
         }
     }
 
@@ -180,5 +179,6 @@ public class Fill {
                 of.save(off);
             }
         }
+        sr.save(offerToAccept.getSupplier());
     }    
 }
