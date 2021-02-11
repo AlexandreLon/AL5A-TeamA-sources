@@ -19,6 +19,7 @@ import org.springframework.boot.test.context.SpringBootTest;
 
 import fr.polytech.api.MishapManager;
 import fr.polytech.models.TaskStatus;
+import fr.polytech.models.TaskType;
 
 @SpringBootTest
 public class MishapTest {
@@ -47,8 +48,8 @@ public class MishapTest {
         this.mishapName = mishapName;
     }
 
-    @When("I create a mishap of type {string} and priority {mishapPriority}")
-    public void createMishap(String mishapType, MishapPriority mishapPriority) {
+    @When("I create a mishap of type {taskType} and priority {mishapPriority}")
+    public void createMishap(TaskType mishapType, MishapPriority mishapPriority) {
         mishapManager.createMishap(mishapName, mishapType, mishapPriority);
     }
 
@@ -63,10 +64,10 @@ public class MishapTest {
         assertTrue(taskNameList.contains(taskName));
     }
 
-    @Then("The task {string} is pending")
-    public void taskPending(String taskName) {
+    @Then("The task {string} is waiting for bid closure")
+    public void taskWaitingForBidClosure(String taskName) {
         Task task = this.tasks.stream().filter(element -> element.getName().equals(taskName)).collect(Collectors.toList()).get(0);
-        assertEquals(TaskStatus.PENDING, task.getStatus());
+        assertEquals(TaskStatus.WAITING_FOR_BID_CLOSURE, task.getStatus());
     }
 
     @When("I finish the {string} task")

@@ -25,8 +25,10 @@
 					v-for="bid of bids"
 					:key="bid.id"
 					:bid="bid"
-					:suppliers="suppliers"
+					:supplier="supplier"
 					@accepted="acceptedOffer"
+					:enable-accept-offer="enableAcceptOffer"
+					:enable-create-proposal="enableCreateProposal"
 				/>
 			</tbody>
 			<tr
@@ -40,33 +42,57 @@
 </template>
 
 <script>
-import { ref, onMounted } from "vue";
+import { ref, onMounted, watch } from "vue";
 import BidWSAPI from "../../API/BidWSAPI";
 import Bid from "./Bid.vue";
-import SupplierWSAPI from '../../API/SupplierWSAPI';
-
-const supplierAPI = new SupplierWSAPI();
+import Supplier from '../../models/supplier/Supplier';
+import SupplierWSAPI from "../../API/SupplierWSAPI";
 
 const bidWSAPI = new BidWSAPI();
+const supplierWSAPI = new SupplierWSAPI();
+
 
 export default {
 	components: { Bid },
-	setup() {
-		const bids = ref(null);
-		const suppliers = ref([]);
+	props: {
+		enableAcceptOffer: Boolean,
+		enableCreateProposal: Boolean,
+		supplier:Supplier,
 
-		onMounted(() => {
-			supplierAPI.getSuppliers().then(res => {
-				suppliers.value = res;
-			});
-			bidWSAPI
-				.getBids()
+	},
+	setup(props) {
+		const bids = ref(null);
+
+		watch(() => props.supplier, (supplier) => {
+			supplierWSAPI.getBidsBySupplierId(supplier.id)
 				.then(res => {
 					bids.value = res;
 				})
 				.catch(error => {
 					console.error(error);
 				});
+		});
+		onMounted(() => {
+			if(props.supplier != null){
+				supplierWSAPI.getBidsBySupplierId(props.supplier.id)
+					.then(res => {
+						bids.value = res;
+					})
+					.catch(error => {
+						console.error(error);
+					});
+			}
+			else{
+				bidWSAPI
+					.getBids()
+					.then(res => {
+						bids.value = res;
+					})
+					.catch(error => {
+						console.error(error);
+					});
+			}
+			
 		});
 
 		const acceptedOffer = async () => {
@@ -80,7 +106,9 @@ export default {
 				});
 		};
 
-		return { bids, suppliers, acceptedOffer };
+		
+
+		return { bids, acceptedOffer };
 	}
 };
 </script>

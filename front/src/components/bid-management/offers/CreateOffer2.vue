@@ -67,20 +67,7 @@
 								for="inputPassword"
 								class="col-sm-2 col-form-label"
 							>Supplier</label>
-							<div class="col-sm-10">
-								<select
-									class="form-control"
-									v-model="supplier"
-								>
-									<option
-										:value="sup.id"
-										:key="sup.id"
-										v-for="sup in suppliers"
-									>
-										{{ sup.name }}
-									</option>
-								</select>
-							</div>
+							<span class="col-sm-6 mt-2">{{ supplier ? supplier.name : "unrecognized" }}</span>
 						</div>
 					</form>
 				</div>
@@ -108,6 +95,8 @@
 <script>
 import { ref } from 'vue';
 import SupplierWSAPI from '../../../API/SupplierWSAPI';
+import Supplier from '../../../models/supplier/Supplier';
+
 
 const supplierAPI = new SupplierWSAPI();
 
@@ -117,28 +106,23 @@ export default {
 			type: Number,
 			default: 0
 		},
-		suppliers: {
-			type: Array,
-			default: () => []
-		}
+		supplier: Supplier
 	},
 	setup(props) {
 		const price = ref(null);
 		const date = ref(new Date().toISOString().replace(/T/, ' ').replace(/\..+/, '').split(' ')[0]);
-		const supplier = ref(null);
 
 		const response = ref({error: null, success: false});
 
 		const submit = async () => {
 			supplierAPI.outbid({
-				supplierId: supplier.value,
+				supplierId: props.supplier.id,
 				price: parseInt(price.value, 10),
 				proposedDate: new Date(date.value)
 			}, props.bidid).then(() => {
 				response.value.success = true;
 				price.value = "";
 				[date.value] = new Date().toISOString().replace(/T/, ' ').replace(/\..+/, '').split(' ');
-				supplier.value = null;
 				setTimeout(() => {
 					response.value = {error: null, success: false};
 				}, 3000);
@@ -146,14 +130,13 @@ export default {
 				response.value.error = err;
 				price.value = "";
 				[date.value] = new Date().toISOString().replace(/T/, ' ').replace(/\..+/, '').split(' ');
-				supplier.value = null;
 				setTimeout(() => {
 					response.value = {error: null, success: false};
 				}, 3000);
 			});
 		};
 
-		return {price, date, submit, supplier, response};
+		return {price, date, submit, response};
 	}
 };
 </script>

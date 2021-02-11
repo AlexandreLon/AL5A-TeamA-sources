@@ -9,7 +9,7 @@ public class Task {
 
     private Long id;
     private String name;
-    private String type;
+    private TaskType type;
     private TaskStatus status;
     private Date creationDate;
     private Date realizationDate;
@@ -38,11 +38,11 @@ public class Task {
         this.name = name;
     }
 
-    public String getType() {
+    public TaskType getType() {
         return this.type;
     }
 
-    public void setType(String type) {
+    public void setType(TaskType type) {
         this.type = type;
     }
 

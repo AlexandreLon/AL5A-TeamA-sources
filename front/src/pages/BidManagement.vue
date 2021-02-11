@@ -1,7 +1,7 @@
 <template>
 	<div class="container">
 		<h1>Bid management</h1>
-		<Bids />
+		<Bids :enable-accept-offer="true" />
 	</div>
 </template>
 

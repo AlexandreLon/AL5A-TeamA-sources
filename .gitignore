@@ -7,3 +7,8 @@ back/resources/application.properties
 back/bid-component/.project
 *.ignore
 snakeyaml
+
+#VPP
+**.vpp*
+**.working
+**.lock

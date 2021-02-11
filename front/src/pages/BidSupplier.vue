@@ -1,23 +1,26 @@
 <template>
 	<div class="container">
-		<h1>Supplier</h1>
+		<h1>Bid supplier</h1>
 		<SelectSupplier @selected="select($event)" />
-		<Tasks
+		<Bids 
 			v-if="selectedSupplier"
+			:enable-accept-offer="false"
+			:enable-create-proposal="true"
 			:supplier="selectedSupplier"
 		/>
 	</div>
 </template>
 
 <script>
-
-import { ref } from 'vue';
-import Tasks from '../components/supplier/Tasks.vue';
+import {ref} from "vue";
+import Bids from "../components/bid-management/Bids.vue";
 import SelectSupplier from "../components/supplier/SelectSupplier.vue";
 
+
 export default {
+	name: "BidSupplier",
 	components: {
-		Tasks,
+		Bids,
 		SelectSupplier
 	},
 	setup(){
@@ -27,11 +30,10 @@ export default {
 		}
 		return {selectedSupplier,select};
 	}
+
 };
 </script>
 
 <style scoped>
-h1 {
-    text-align: center;
-}
+
 </style>

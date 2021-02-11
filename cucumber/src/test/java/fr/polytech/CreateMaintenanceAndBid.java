@@ -2,6 +2,7 @@ package fr.polytech;
 
 import fr.polytech.api.BidService;
 import fr.polytech.api.MaintenanceManager;
+import fr.polytech.models.TaskType;
 import fr.polytech.models.bid.Bid;
 import fr.polytech.models.maintenance.Maintenance;
 import io.cucumber.java.en.And;
@@ -35,7 +36,7 @@ public class CreateMaintenanceAndBid {
     public void manuCreatesANewMaintenance(String name, String dateText) throws ParseException {
         SimpleDateFormat formatter = new SimpleDateFormat("dd-MM-yyyy");
         Date date = formatter.parse(dateText);
-        manu.createMaintenance(name, "Verification", date);
+        manu.createMaintenance(name, TaskType.VERIFICATION, date);
     }
 
     @Then("a new maintenance is created with the name {string}")
