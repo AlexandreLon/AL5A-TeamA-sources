@@ -53,7 +53,7 @@ public class MaintenanceTest {
 
     @When("I create a maintenance with type {taskType} for it")
     public void createMaintenance(TaskType maintenanceType) {
-        maintenanceManager.createMaintenance(maintenanceName, maintenanceType, new Date());
+        maintenanceService.createMaintenance(maintenanceName, maintenanceType, new Date());
     }
 
     @And("I get all tasks with maintenance")
