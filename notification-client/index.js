@@ -15,7 +15,7 @@ var username = null;
 function connect() {
     username = document.querySelector('#username').innerText.trim();
       
-    var socket = new SockJS(`${host}/ws`);
+    var socket = new SockJS(`${host}/chat`);
     stompClient = Stomp.over(socket);
  
     stompClient.connect({}, onConnected, onError);
@@ -26,10 +26,11 @@ connect();
  
 function onConnected() {
     // Subscribe to the Public Topic
-    stompClient.subscribe(`${host}/topic/publicChatRoom`, onMessageReceived);
- 
+    stompClient.subscribe('/topic/messages', function(messageOutput) {// this one is working fine
+        console.log(messageOutput.body);
+    });
     // Tell your username to the server
-    stompClient.send(`${host}/app/chat.addUser`,
+    stompClient.send(`/app/topic/chat.addUser`,
         {},
         JSON.stringify({sender: username, type: 'JOIN'})
     )
@@ -52,7 +53,8 @@ function sendMessage(event) {
             content: messageInput.value,
             type: 'CHAT'
         };
-        stompClient.send(`${host}/app/chat.sendMessage`, {}, JSON.stringify(chatMessage));
+        stompClient.send("/app/chat", {}, 
+        JSON.stringify(chatMessage));
         messageInput.value = '';
     }
     event.preventDefault();
