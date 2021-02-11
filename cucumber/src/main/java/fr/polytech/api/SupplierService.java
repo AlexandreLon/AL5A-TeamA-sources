@@ -54,8 +54,8 @@ public class SupplierService {
 
         // Send request with POST method.
         return restTemplate.postForObject(
-                String.format("http://%s:%s/api/supplier" + id + "/outbid", api.getHost(),
-                        api.getPort()),
+                String.format("http://%s:%s/api/supplier/%d/outbid", api.getHost(),
+                        api.getPort(), id),
                 requestBody,
                 Offer.class);
     }

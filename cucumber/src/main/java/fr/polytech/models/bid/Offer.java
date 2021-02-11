@@ -7,6 +7,7 @@ public class Offer {
     private Date proposedDate;
     private double price;
     private long supplierId;
+    private int id;
 
     public Date getProposedDate() {
         return proposedDate;
@@ -30,5 +31,13 @@ public class Offer {
 
     public void setSupplierId(long supplierId) {
         this.supplierId = supplierId;
+    }
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
     }
 }
