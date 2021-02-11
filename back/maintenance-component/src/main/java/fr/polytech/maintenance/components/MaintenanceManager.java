@@ -16,5 +16,5 @@ public interface MaintenanceManager {
 
     Maintenance updateMaintenance(Long id, String name, TaskType type) throws MaintenanceNotFoundException;
 
-    void deleteMaintenance(Long id);
+    void abortMaintenance(Long id) throws MaintenanceNotFoundException;
 }

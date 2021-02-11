@@ -17,5 +17,5 @@ public interface MishapManager {
 
     Mishap updateMishap(Long id, String name, TaskType type, TaskPriority priority) throws MishapNotFoundException;
 
-    void deleteMishap(Long id);
+    void abortMishap(Long id) throws MishapNotFoundException;
 }

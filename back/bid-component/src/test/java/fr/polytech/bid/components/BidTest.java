@@ -39,16 +39,13 @@ import fr.polytech.task.repositories.TaskRepository;
 public class BidTest {
 
     @Autowired
-    private BidCreator bidCreator;
+    private BidLifecycle bidLifecycle;
 
     @Autowired
     private BidViewer bidViewer;
 
     @Autowired
-    private BidProposer bidProposer;
-
-    @Autowired
-    private BidManager bidManager;
+    private OfferManager offerManager;
 
     @Autowired 
     private TaskRepository tr;
@@ -75,7 +72,7 @@ public class BidTest {
         supplier.setTaskType(TaskType.VERIFICATION);
         sr.save(supplier);
 
-        this.bid = bidCreator.createBid(task, List.of(supplier), new Date());
+        this.bid = bidLifecycle.createBid(task, List.of(supplier), new Date());
     }
 
     @Test
@@ -112,21 +109,21 @@ public class BidTest {
     @Test
     public void outBidTestNotBid() {
         assertThrows(BidNotFoundException.class, () -> {
-			bidProposer.outbid(10000l, 0l, 10d, new Date());
+			offerManager.outbid(10000l, 0l, 10d, new Date());
 		});
     }
 
     @Test
     public void outBidTestNotSupplier() {
         assertThrows(SupplierNotFoundException.class, () -> {
-			bidProposer.outbid(bid.getId(), 100000l, 10d, new Date());
+			offerManager.outbid(bid.getId(), 100000l, 10d, new Date());
 		});
     }
 
     @Test
     public void outBidTest() {
         assertDoesNotThrow(() -> {
-			bidProposer.outbid(bid.getId(), this.supplier.getId(), 10d, new Date());
+			offerManager.outbid(bid.getId(), this.supplier.getId(), 10d, new Date());
 		});
     }
 
@@ -134,15 +131,15 @@ public class BidTest {
     public void acceptOffer() {
         assertDoesNotThrow(() -> {
             Date proposedDate = new Date();
-            Offer offer = bidProposer.outbid(bid.getId(), this.supplier.getId(), 10d, proposedDate);
-            bidManager.acceptOffer(offer.getId());
+            Offer offer = offerManager.outbid(bid.getId(), this.supplier.getId(), 10d, proposedDate);
+            offerManager.acceptOffer(offer.getId());
         });
     }
 
     @Test
     public void acceptOfferDoesntExist() {
         assertThrows(OfferNotFoundException.class, () -> {
-            bidManager.acceptOffer(10000l);
+            offerManager.acceptOffer(10000l);
         });
     }
 }

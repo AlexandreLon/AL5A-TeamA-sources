@@ -50,9 +50,9 @@ class MishapWSAPI extends API {
 		});
 	}
 
-	deleteMishap(id) {
+	abortMishap(id) {
 		return new Promise((resolve, reject) => {
-			this.axios.delete(`/mishap/${id}`).then(() => {
+			this.axios.put(`/mishap/${id}/abort`).then(() => {
 				resolve(id);
 			}).catch(error => {
 				reject(error);

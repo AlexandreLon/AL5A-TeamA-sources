@@ -33,7 +33,7 @@
 					:key="mishap.id"
 					:mishap="mishap"
 					@updated="update($event)"
-					@deleted="remove"
+					@aborted="remove"
 				/>
 			</tbody>
 			<tr
@@ -80,9 +80,9 @@ export default {
 			);
 		}
 
-		function remove(deleteMishapId) {
+		function remove(abortMishapId) {
 			mishaps.value = mishaps.value.filter(current =>
-				current.id !== deleteMishapId
+				current.id !== abortMishapId
 			);
 		}
 

@@ -15,6 +15,7 @@ import org.springframework.test.annotation.DirtiesContext;
 
 import fr.polytech.maintenance.errors.MaintenanceNotFoundException;
 import fr.polytech.maintenance.models.Maintenance;
+import fr.polytech.task.models.TaskStatus;
 import fr.polytech.task.models.TaskType;
 
 
@@ -70,15 +71,15 @@ public class MaintenanceTest {
     }
 
     @Test
-    public void deleteMaintenanceTest() {
+    public void abortMaintenanceTest() {
         Maintenance maintenance = maintenanceManager.createMaintenance("foo", TaskType.VERIFICATION, new Date());
         assertDoesNotThrow(() -> {
             Maintenance gettingMaintenance = maintenanceManager.getMaintenanceById(maintenance.getId());
             assertEquals(maintenance, gettingMaintenance);
+            maintenanceManager.abortMaintenance(maintenance.getId());
+            gettingMaintenance = maintenanceManager.getMaintenanceById(maintenance.getId());
+            assertEquals(TaskStatus.ABORTED, gettingMaintenance.getStatus());
         });
-        maintenanceManager.deleteMaintenance(maintenance.getId());
-        assertThrows(MaintenanceNotFoundException.class, () -> {
-			maintenanceManager.getMaintenanceById(maintenance.getId());
-		});
+        
     }
 }

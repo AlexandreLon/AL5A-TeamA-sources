@@ -71,10 +71,14 @@ public class MaintenanceService {
     }
 
     @CrossOrigin
-    @DeleteMapping("/{id}")
-    public String deleteMaintenance(@PathVariable Long id) {
-        log.info("DELETE : /api/maintenance/" + id);
-        this.maintenanceManager.deleteMaintenance(id);
+    @PutMapping("/{id}/abort")
+    public String abortMaintenance(@PathVariable Long id) {
+        log.info("PUT : /api/maintenance/" + id + "/abort");
+        try {
+            this.maintenanceManager.abortMaintenance(id);
+        } catch (MaintenanceNotFoundException e) {
+            throw new ResourceNotFoundException();
+        }
         return "OK";
     }
 }
