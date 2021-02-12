@@ -101,20 +101,18 @@ public class BidBean implements BidViewer, BidLifecycle, OfferManager {
             throw new OfferNotFoundException();
         Offer offerToAccept = opt.get();
         Bid associatedBid = offerToAccept.getBid();
+        List<Offer> offers = offerRepository.findByBidId(associatedBid.getId());
+        offers.remove(offerToAccept);
+        for (Offer off : offers) {
+            off.setStatus(OfferStatus.REJECTED);
+        }
         associatedBid.setStatus(BidStatus.CLOSED);
         associatedBid.getTask().setRealizationDate(offerToAccept.getProposedDate());
         associatedBid.getTask().setPrice(offerToAccept.getPrice());
         offerToAccept.getSupplier().getTasks().add(associatedBid.getTask());
         offerToAccept.setStatus(OfferStatus.ACCEPTED);
-        offerToAccept = offerRepository.save(offerToAccept);
-        List<Offer> offersToReject = offerRepository.findByBidId(associatedBid.getId());
-        for (Offer off : offersToReject) {
-            if (off.getId() != offerToAccept.getId()) {
-                off.setStatus(OfferStatus.REJECTED);
-                offerRepository.save(off);
-            }
-        }
-        return offerToAccept;
+        offerRepository.saveAll(offers);
+        return offerRepository.save(offerToAccept);
     }
 
     @Override
