@@ -9,7 +9,6 @@ public class Offer {
     private long supplierId;
     private Date proposedDate;
     private double price;
-    private long supplierId;
     private int id;
     private Bid bid;
     private Supplier supplier;

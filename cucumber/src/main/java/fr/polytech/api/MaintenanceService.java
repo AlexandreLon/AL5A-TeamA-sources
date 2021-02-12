@@ -22,7 +22,7 @@ public class MaintenanceService {
 	@Autowired 
 	private Api api;
 
-	public void createMaintenance(String maintenanceName, TaskType maintenanceType, Date desiredDate) {
+	public Maintenance createMaintenance(String maintenanceName, TaskType maintenanceType, Date desiredDate) {
 		MaintenanceCreation maintenance = new MaintenanceCreation();
 		maintenance.setName(maintenanceName);
 		maintenance.setType(maintenanceType);
@@ -36,7 +36,7 @@ public class MaintenanceService {
 		HttpEntity<Maintenance> requestBody = new HttpEntity<>(maintenance, headers);
  
 		// Send request with POST method.
-		restTemplate.postForObject(String.format("http://%s:%s/api/maintenance", api.getHost(), api.getPort()), requestBody, Maintenance.class);
+		return restTemplate.postForObject(String.format("http://%s:%s/api/maintenance", api.getHost(), api.getPort()), requestBody, Maintenance.class);
 	}
 
 	public List<Maintenance> getMaintenances(){

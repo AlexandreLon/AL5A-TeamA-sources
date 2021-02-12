@@ -52,7 +52,7 @@ public class MishapTest {
 
     @When("I create a mishap of type {taskType} and priority {mishapPriority}")
     public void createMishap(TaskType mishapType, MishapPriority mishapPriority) {
-        mishap = mishapManager.createMishap(mishapName, mishapType, mishapPriority);
+        mishap = mishapService.createMishap(mishapName, mishapType, mishapPriority);
     }
 
     @And("I get all tasks")

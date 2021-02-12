@@ -37,16 +37,16 @@ public class CreateMaintenanceAndBid {
     public void manuCreatesANewMaintenance(String name, String dateText) throws ParseException {
         SimpleDateFormat formatter = new SimpleDateFormat("dd-MM-yyyy");
         Date date = formatter.parse(dateText);
-        manu.createMaintenance(name, TaskType.VERIFICATION, date);
+        this.maintenance = manu.createMaintenance(name, TaskType.VERIFICATION, date);
     }
 
     @Then("a new maintenance is created with the name {string}")
     public void aNewMaintenanceIsCreated(String maintenanceName) {
         List<Maintenance> maintenances = manu.getMaintenances();
-//        List<String> maintenanceNames = maintenances.stream().map(element -> element.getName()).collect(Collectors.toList());
-//        assertTrue(maintenanceNames.contains(maintenanceName));
-        Optional<Maintenance> optMaintenance =  maintenances.stream().filter(maintenance ->
-                this.maintenance.getId().equals(maintenance.getId()) && this.maintenance.getName().equals(maintenance.getName())).findFirst();
+
+        Optional<Maintenance> optMaintenance = maintenances.stream().filter(maintenance ->
+                this.maintenance.getId().equals(maintenance.getId())
+                        && this.maintenance.getName().equals(maintenance.getName())).findFirst();
         assertTrue(optMaintenance.isPresent());
         this.maintenance = optMaintenance.get();
     }

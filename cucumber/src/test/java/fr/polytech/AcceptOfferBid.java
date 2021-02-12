@@ -2,7 +2,7 @@ package fr.polytech;
 
 import fr.polytech.api.BidManagerService;
 import fr.polytech.api.BidService;
-import fr.polytech.api.MishapManager;
+import fr.polytech.api.MishapService;
 import fr.polytech.api.SupplierService;
 import fr.polytech.models.MishapPriority;
 import fr.polytech.models.Supplier;
@@ -29,7 +29,7 @@ import static org.junit.Assert.*;
 public class AcceptOfferBid {
 
     @Autowired
-    private MishapManager mishapManager;
+    private MishapService mishapManager;
 
     @Autowired
     private SupplierService supplierService;
