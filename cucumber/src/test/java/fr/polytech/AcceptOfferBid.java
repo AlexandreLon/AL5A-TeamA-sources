@@ -7,6 +7,7 @@ import fr.polytech.api.SupplierService;
 import fr.polytech.models.MishapPriority;
 import fr.polytech.models.Supplier;
 import fr.polytech.models.Task;
+import fr.polytech.models.TaskType;
 import fr.polytech.models.bid.Bid;
 import fr.polytech.models.bid.Offer;
 import fr.polytech.models.mishap.Mishap;
@@ -43,10 +44,10 @@ public class AcceptOfferBid {
     private Supplier supplier;
     private Offer offer;
 
-    @Given("Patrick create a mishap of type {string} and priority {mishapPriority}")
-    public void createMishap(String mishapType, MishapPriority mishapPriority) {
+    @Given("Patrick create a mishap of type {taskType} and priority {mishapPriority}")
+    public void createMishap(TaskType taskType, MishapPriority mishapPriority) {
         String mishapName = "Mishap Breakdown";
-        Mishap mishap = mishapManager.createMishap(mishapName, mishapType, mishapPriority);
+        Mishap mishap = mishapManager.createMishap(mishapName, taskType, mishapPriority);
         Optional<Bid> optional = bidService.getBids().stream().filter(e -> e.getTask().getId().equals(mishap.getId())).findFirst();
         assertTrue(optional.isPresent());
         bid = optional.get();
