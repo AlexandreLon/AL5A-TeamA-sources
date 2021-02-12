@@ -14,11 +14,11 @@
 			/>
 
 			<div
-				@click="deleteMishap"
+				@click="abortMishap"
 				class="btn btn-danger"
 			>
 				<i class="fas fa-trash-alt" />
-				Delete
+				Abort
 			</div>
 		</td>
 	</tr>
@@ -39,22 +39,22 @@ export default {
 			default: null
 		}
 	},
-	emits: ["updated", "deleted"],
+	emits: ["updated", "aborted"],
 	setup(props, { emit }) {
 		
 		const updateMishap = (newMishap) => {
 			emit("updated", newMishap);
 		};
 
-		const deleteMishap = () => {
-			mishapWSAPI.deleteMishap(props.mishap.id).then(res => {
-				emit("deleted", res);
+		const abortMishap = () => {
+			mishapWSAPI.abortMishap(props.mishap.id).then(res => {
+				emit("aborted", res);
 			}).catch(error => {
 				console.error(error);
 			});
 		};
 
-		return { updateMishap, deleteMishap };
+		return { updateMishap, abortMishap };
 	}
 
 };

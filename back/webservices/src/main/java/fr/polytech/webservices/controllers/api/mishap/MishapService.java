@@ -78,10 +78,14 @@ public class MishapService {
     }
 
     @CrossOrigin
-    @DeleteMapping("/{id}")
-    public String deleteMishap(@PathVariable Long id) {
-        log.info("DELETE : /api/mishap/" + id);
-        mishapManager.deleteMishap(id);
+    @PutMapping("/{id}/abort")
+    public String abortMishap(@PathVariable Long id) {
+        log.info("PUT : /api/mishap/" + id + "/abort");
+        try {
+            mishapManager.abortMishap(id);
+        } catch (MishapNotFoundException e) {
+            throw new ResourceNotFoundException();
+        }
         return "OK";
     }
 

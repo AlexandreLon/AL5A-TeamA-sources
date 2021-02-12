@@ -7,7 +7,8 @@ import fr.polytech.task.models.Task;
 import java.util.Date;
 import java.util.List;
 
-public interface BidCreator {
+public interface BidLifecycle {
 
     Bid createBid(Task task, List<Supplier> suppliers, Date desiredDate);
+    void abortBidFromTask(Task task);
 }

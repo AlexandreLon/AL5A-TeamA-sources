@@ -16,6 +16,7 @@ import org.springframework.test.annotation.DirtiesContext;
 import fr.polytech.mishap.errors.MishapNotFoundException;
 import fr.polytech.mishap.models.Mishap;
 import fr.polytech.task.models.TaskPriority;
+import fr.polytech.task.models.TaskStatus;
 import fr.polytech.task.models.TaskType;
 
 
@@ -77,10 +78,9 @@ public class MishapTest {
         assertDoesNotThrow(() -> {
             Mishap gettingMishap = mishapManager.getMishapById(mishap.getId());
             assertEquals(mishap, gettingMishap);
+            mishapManager.abortMishap(mishap.getId());
+            gettingMishap = mishapManager.getMishapById(mishap.getId());
+            assertEquals(TaskStatus.ABORTED, gettingMishap.getStatus());
         });
-        mishapManager.deleteMishap(mishap.getId());
-        assertThrows(MishapNotFoundException.class, () -> {
-			mishapManager.getMishapById(mishap.getId());
-		});
     }
 }

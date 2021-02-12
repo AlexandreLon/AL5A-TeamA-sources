@@ -1,7 +1,7 @@
 package fr.polytech.maintenance.components;
 
 import com.google.inject.internal.util.Lists;
-import fr.polytech.bid.components.BidCreator;
+import fr.polytech.bid.components.BidLifecycle;
 import fr.polytech.maintenance.errors.MaintenanceNotFoundException;
 import fr.polytech.maintenance.models.Maintenance;
 import fr.polytech.maintenance.repositories.MaintenanceRepository;
@@ -35,7 +35,7 @@ public class MaintenanceBean implements MaintenanceManager {
     private SupplierAssignator supplierAssignator;
 
     @Autowired
-    private BidCreator bidCreator;
+    private BidLifecycle bidLifecycle;
 
     @Override
     public Maintenance createMaintenance(String name, TaskType type, Date desiredDate) {
@@ -47,7 +47,7 @@ public class MaintenanceBean implements MaintenanceManager {
         maintenance.setPriority(TaskPriority.NONE);
         maintenance = maintenanceRepository.save(maintenance);
         try{
-            bidCreator.createBid(maintenance, Lists.newArrayList(supplierAssignator.getSuppliers(type)), desiredDate);
+            bidLifecycle.createBid(maintenance, Lists.newArrayList(supplierAssignator.getSuppliers(type)), desiredDate);
         }
         catch (IllegalArgumentException e){ //If type enum doesn't fit
             throw new IllegalArgumentException("Maintenance type hasn't been recognized");
@@ -83,7 +83,14 @@ public class MaintenanceBean implements MaintenanceManager {
     }
 
     @Override
-    public void deleteMaintenance(Long id) {
-        this.maintenanceRepository.deleteById(id);
+    public void abortMaintenance(Long id) throws MaintenanceNotFoundException {
+        Optional<Maintenance> opt = maintenanceRepository.findById(id);
+        if (!opt.isPresent()) {
+            throw new MaintenanceNotFoundException();
+        }
+        Maintenance maintenance = opt.get();
+        maintenance.setStatus(TaskStatus.ABORTED);
+        this.maintenanceRepository.save(maintenance);
+        bidLifecycle.abortBidFromTask(maintenance);
     }
 }

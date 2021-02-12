@@ -1,6 +1,6 @@
 package fr.polytech.webservices.controllers.api.supplier;
 
-import fr.polytech.bid.components.BidProposer;
+import fr.polytech.bid.components.OfferManager;
 import fr.polytech.bid.components.BidViewer;
 import fr.polytech.bid.errors.BidNotFoundException;
 import fr.polytech.bid.models.Bid;
@@ -36,7 +36,7 @@ public class SupplierService {
     private static final Logger log = LoggerFactory.getLogger(Application.class);
 
     @Autowired
-    private BidProposer bidProposer;
+    private OfferManager offerManager;
 
     @Autowired
     private SupplierProvider supplierProvider;
@@ -67,7 +67,7 @@ public class SupplierService {
     public Offer outbid(@PathVariable Long id, @RequestBody OfferBody offerBody) {
         log.info("GET : /api/supplier/" + id + "/outbid");
         try {
-            return bidProposer.outbid(id, offerBody.supplierId, offerBody.price, offerBody.proposedDate);
+            return offerManager.outbid(id, offerBody.supplierId, offerBody.price, offerBody.proposedDate);
         } catch (BidNotFoundException e) {
             throw new ResourceNotFoundException();
         } catch (SupplierNotFoundException e) {

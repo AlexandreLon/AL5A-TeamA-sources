@@ -50,9 +50,9 @@ class MaintenanceWSAPI extends API {
 		});
 	}
 
-	deleteMaintenance(id) {
+	abortMaintenance(id) {
 		return new Promise((resolve, reject) => {
-			this.axios.delete(`/maintenance/${id}`).then(() => {
+			this.axios.put(`/maintenance/${id}/abort`).then(() => {
 				resolve(id);
 			}).catch(error => {
 				reject(error);

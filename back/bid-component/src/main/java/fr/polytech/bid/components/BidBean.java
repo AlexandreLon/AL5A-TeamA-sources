@@ -30,7 +30,7 @@ import java.util.Optional;
 @ComponentScan({"fr.polytech.bid.repositories", "fr.polytech.supplierregistry.components"})
 @EntityScan("fr.polytech.bid.models")
 @EnableJpaRepositories("fr.polytech.bid.repositories")
-public class BidBean implements BidViewer, BidCreator, BidProposer, BidManager {
+public class BidBean implements BidViewer, BidLifecycle, OfferManager {
 
     @Autowired
     private BidRepository bidRepository;
@@ -134,5 +134,12 @@ public class BidBean implements BidViewer, BidCreator, BidProposer, BidManager {
     public List<Bid> getBidsBySupplierId(long supplierId) throws SupplierNotFoundException {
         TaskType supplierTaskType = supplierProvider.getSupplierTaskTypeById(supplierId);
         return bidRepository.findByTaskType(supplierTaskType);
+    }
+
+    @Override
+    public void abortBidFromTask(Task task){
+        Bid bidToAbort = bidRepository.findByTaskId(task.getId());
+        bidToAbort.setStatus(BidStatus.ABORTED);
+        bidRepository.save(bidToAbort);
     }
 }

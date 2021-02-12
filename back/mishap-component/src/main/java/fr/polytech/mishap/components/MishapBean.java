@@ -1,7 +1,7 @@
 package fr.polytech.mishap.components;
 
 import com.google.inject.internal.util.Lists;
-import fr.polytech.bid.components.BidCreator;
+import fr.polytech.bid.components.BidLifecycle;
 import fr.polytech.mishap.errors.MishapNotFoundException;
 import fr.polytech.mishap.models.Mishap;
 import fr.polytech.mishap.repositories.MishapRepository;
@@ -34,7 +34,7 @@ public class MishapBean implements MishapManager {
     private SupplierAssignator supplierAssignator;
 
     @Autowired
-    private BidCreator bidCreator;
+    private BidLifecycle bidLifecycle;
 
     @Override
     public Mishap createMishap(String name, TaskType type, Date desiredDate, TaskPriority priority) {
@@ -46,7 +46,7 @@ public class MishapBean implements MishapManager {
         mishap.setCreationDate(new Date());
         mishap = mishapRepository.save(mishap);
         try{
-            bidCreator.createBid(mishap, Lists.newArrayList(supplierAssignator.getSuppliers(type)), desiredDate);
+            bidLifecycle.createBid(mishap, Lists.newArrayList(supplierAssignator.getSuppliers(type)), desiredDate);
         }
         catch (IllegalArgumentException e){
             throw new IllegalArgumentException("Mishap type hasn't been recognized");
@@ -83,7 +83,14 @@ public class MishapBean implements MishapManager {
     }
 
     @Override
-    public void deleteMishap(Long id) {
-        this.mishapRepository.deleteById(id);
+    public void abortMishap(Long id) throws MishapNotFoundException {
+        Optional<Mishap> opt = mishapRepository.findById(id);
+        if (!opt.isPresent()) {
+            throw new MishapNotFoundException();
+        }
+        Mishap mishap = opt.get();
+        mishap.setStatus(TaskStatus.ABORTED);
+        this.mishapRepository.save(mishap);
+        bidLifecycle.abortBidFromTask(mishap);
     }
 }

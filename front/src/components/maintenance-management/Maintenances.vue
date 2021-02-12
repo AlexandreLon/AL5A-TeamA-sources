@@ -30,7 +30,7 @@
 					:key="maintenance.id"
 					:maintenance="maintenance"
 					@updated="update($event)"
-					@deleted="remove"
+					@aborted="remove"
 				/>
 			</tbody>
 			<tr
@@ -78,9 +78,9 @@ export default {
 			);
 		}
 
-		function remove(deleteMaintenanceId) {
+		function remove(abortMaintenanceId) {
 			maintenances.value = maintenances.value.filter(current =>
-				current.id !== deleteMaintenanceId
+				current.id !== abortMaintenanceId
 			);
 		}
 
