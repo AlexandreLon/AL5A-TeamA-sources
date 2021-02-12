@@ -61,8 +61,8 @@
 <script>
 import { ref } from 'vue';
 import Bid from "../../models/bid-management/Bid";
-import CreateOffer from "./offers/CreateOffer2.vue";
-import CheckAcceptedOffer from "./offers/CheckAcceptedOffer.vue";
+import CreateOffer from "./offers/CreateOffer.vue";
+import CheckAcceptedOffer from "./offers/AcceptedOffer.vue";
 import ViewOffer from "./offers/ViewOffer.vue";
 import BidWSAPI from '../../API/BidWSAPI';
 import Supplier from "../../models/supplier/Supplier";
