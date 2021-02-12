@@ -39,4 +39,11 @@ public class BidService {
         return bid;
     }
 
+    public List<Offer> getOffers(long id) {
+        RestTemplate restTemplate = new RestTemplate();
+        // Send request with GET method and default Headers.
+        Offer[] array = restTemplate.getForObject(String.format("http://%s:%s/api/bid/%d/offers", api.getHost(), api.getPort(), id), Offer[].class);
+        return new ArrayList<>(Arrays.asList(array));
+    }
+
 }

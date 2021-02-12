@@ -69,7 +69,7 @@ public class AcceptOfferBid {
 
     @Then("The bid has an offer")
     public void hasOffer() {
-        assertTrue(supplierService.getBid(bid.getId()).getOffers().stream().anyMatch(e -> e.getId() == offer.getId() && e.getPrice() == offer.getPrice() && e.getProposedDate().equals(offer.getProposedDate()) && e.getSupplierId() == offer.getSupplierId()));
+        assertTrue(bidService.getOffers(bid.getId()).stream().anyMatch(e -> e.getId() == offer.getId()));
     }
 
     @When("Patrick accepts John's offer")
