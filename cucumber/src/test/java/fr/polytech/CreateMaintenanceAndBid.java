@@ -15,6 +15,7 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 import static org.junit.Assert.*;
@@ -42,10 +43,12 @@ public class CreateMaintenanceAndBid {
     @Then("a new maintenance is created with the name {string}")
     public void aNewMaintenanceIsCreated(String maintenanceName) {
         List<Maintenance> maintenances = manu.getMaintenances();
-        List<String> maintenanceNames = maintenances.stream().map(element -> element.getName()).collect(Collectors.toList());
-        assertTrue(maintenanceNames.contains(maintenanceName));
-        this.maintenance = maintenances.stream().filter(maintenance ->
-                maintenance.getName().equals(maintenanceName)).collect(Collectors.toList()).get(0);
+//        List<String> maintenanceNames = maintenances.stream().map(element -> element.getName()).collect(Collectors.toList());
+//        assertTrue(maintenanceNames.contains(maintenanceName));
+        Optional<Maintenance> optMaintenance =  maintenances.stream().filter(maintenance ->
+                this.maintenance.getId().equals(maintenance.getId()) && this.maintenance.getName().equals(maintenance.getName())).findFirst();
+        assertTrue(optMaintenance.isPresent());
+        this.maintenance = optMaintenance.get();
     }
 
     @And("its realizationDate is not defined")
