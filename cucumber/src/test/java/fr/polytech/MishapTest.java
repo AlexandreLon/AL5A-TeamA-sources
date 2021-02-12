@@ -3,6 +3,7 @@ package fr.polytech;
 import fr.polytech.api.SupplierService;
 import fr.polytech.models.MishapPriority;
 import fr.polytech.models.Task;
+import fr.polytech.models.mishap.Mishap;
 import io.cucumber.java.ParameterType;
 import io.cucumber.java.en.And;
 import io.cucumber.java.en.Given;
@@ -36,6 +37,7 @@ public class MishapTest {
 
     private String mishapName;
     private List<Task> tasks;
+    private Mishap mishap;
 
     @Autowired
     private MishapManager mishapManager;
@@ -50,7 +52,7 @@ public class MishapTest {
 
     @When("I create a mishap of type {taskType} and priority {mishapPriority}")
     public void createMishap(TaskType mishapType, MishapPriority mishapPriority) {
-        mishapManager.createMishap(mishapName, mishapType, mishapPriority);
+        mishap = mishapManager.createMishap(mishapName, mishapType, mishapPriority);
     }
 
     @And("I get all tasks")
@@ -66,7 +68,7 @@ public class MishapTest {
 
     @Then("The task {string} is waiting for bid closure")
     public void taskWaitingForBidClosure(String taskName) {
-        Task task = this.tasks.stream().filter(element -> element.getName().equals(taskName)).collect(Collectors.toList()).get(0);
+        Task task = this.tasks.stream().filter(element -> element.getId().equals(mishap.getId())).collect(Collectors.toList()).get(0);
         assertEquals(TaskStatus.WAITING_FOR_BID_CLOSURE, task.getStatus());
     }
 

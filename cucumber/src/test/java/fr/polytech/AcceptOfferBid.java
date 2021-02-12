@@ -44,7 +44,7 @@ public class AcceptOfferBid {
     private Supplier supplier;
     private Offer offer;
 
-    @Given("Patrick create a mishap of type {taskType} and priority {mishapPriority}")
+    @Given("Patrick creates a mishap of type {taskType} and priority {mishapPriority}")
     public void createMishap(TaskType taskType, MishapPriority mishapPriority) {
         String mishapName = "Mishap Breakdown";
         Mishap mishap = mishapManager.createMishap(mishapName, taskType, mishapPriority);
@@ -58,7 +58,7 @@ public class AcceptOfferBid {
         supplier = supplierService.getSuppliers().get(0);
     }
 
-    @And("John outbid {int} today")
+    @When("John outbids {int} today")
     public void outbid(int value) {
         offer = new Offer();
         offer.setPrice(value);
@@ -67,7 +67,12 @@ public class AcceptOfferBid {
         offer = supplierService.outbid(bid.getId(), offer);
     }
 
-    @When("Patrick accept John's offer")
+    @Then("The bid has an offer")
+    public void hasOffer() {
+        assertTrue(supplierService.getBid(bid.getId()).getOffers().stream().anyMatch(e -> e.getId() == offer.getId() && e.getPrice() == offer.getPrice() && e.getProposedDate().equals(offer.getProposedDate()) && e.getSupplierId() == offer.getSupplierId()));
+    }
+
+    @When("Patrick accepts John's offer")
     public void accept() {
         bidManagerService.accept(offer.getId());
     }

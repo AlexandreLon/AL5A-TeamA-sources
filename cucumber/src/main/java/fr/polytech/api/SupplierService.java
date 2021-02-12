@@ -5,6 +5,7 @@ import java.util.Arrays;
 import java.util.List;
 
 import fr.polytech.models.Supplier;
+import fr.polytech.models.bid.Bid;
 import fr.polytech.models.bid.Offer;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpEntity;
@@ -60,4 +61,9 @@ public class SupplierService {
                 Offer.class);
     }
 
+    public Bid getBid(long id) {
+        RestTemplate restTemplate = new RestTemplate();
+        // Send request with GET method and default Headers.
+        return restTemplate.getForObject(String.format("http://%s:%s/api/bid/%d", api.getHost(), api.getPort(), id), Bid.class);
+    }
 }
