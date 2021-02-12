@@ -6,13 +6,12 @@ import java.util.Date;
 
 public class Offer {
 
-    private long supplierId;
     private Date proposedDate;
     private double price;
     private int id;
     private Bid bid;
     private Supplier supplier;
-    private String status;
+    private OfferStatus status;
 
     public Date getProposedDate() {
         return proposedDate;
@@ -28,14 +27,6 @@ public class Offer {
 
     public void setPrice(double price) {
         this.price = price;
-    }
-
-    public long getSupplierId() {
-        return supplierId;
-    }
-
-    public void setSupplierId(long supplierId) {
-        this.supplierId = supplierId;
     }
 
     public int getId() {
@@ -62,11 +53,15 @@ public class Offer {
         this.supplier = supplier;
     }
 
-    public String getStatus() {
+    public long getSupplierId() {
+        return this.getSupplier().getId();
+    }
+
+    public OfferStatus getStatus() {
         return status;
     }
 
-    public void setStatus(String status) {
+    public void setStatus(OfferStatus status) {
         this.status = status;
     }
 }

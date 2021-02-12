@@ -63,7 +63,7 @@ public class AcceptOfferBid {
         offer = new Offer();
         offer.setPrice(value);
         offer.setProposedDate(new Date());
-        offer.setSupplierId(supplier.getId());
+        offer.setSupplier(supplier);
         offer = supplierService.outbid(bid.getId(), offer);
     }
 
