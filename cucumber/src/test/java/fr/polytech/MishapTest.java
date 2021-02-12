@@ -18,7 +18,7 @@ import java.util.stream.Collectors;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
-import fr.polytech.api.MishapManager;
+import fr.polytech.api.MishapService;
 import fr.polytech.models.TaskStatus;
 import fr.polytech.models.TaskType;
 
@@ -40,7 +40,7 @@ public class MishapTest {
     private Mishap mishap;
 
     @Autowired
-    private MishapManager mishapManager;
+    private MishapService mishapService;
 
     @Autowired
     private SupplierService supplierService;
@@ -52,7 +52,7 @@ public class MishapTest {
 
     @When("I create a mishap of type {taskType} and priority {mishapPriority}")
     public void createMishap(TaskType mishapType, MishapPriority mishapPriority) {
-        mishap = mishapManager.createMishap(mishapName, mishapType, mishapPriority);
+        mishap = mishapService.createMishap(mishapName, mishapType, mishapPriority);
     }
 
     @And("I get all tasks")

@@ -1,7 +1,7 @@
 package fr.polytech;
 
 import fr.polytech.api.BidService;
-import fr.polytech.api.MaintenanceManager;
+import fr.polytech.api.MaintenanceService;
 import fr.polytech.models.TaskType;
 import fr.polytech.models.bid.Bid;
 import fr.polytech.models.maintenance.Maintenance;
@@ -15,6 +15,7 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 import static org.junit.Assert.*;
@@ -23,7 +24,7 @@ import static org.junit.Assert.*;
 public class CreateMaintenanceAndBid {
 
     @Autowired
-    private MaintenanceManager manu;
+    private MaintenanceService manu;
 
     @Autowired
     private BidService bidService;
@@ -36,16 +37,18 @@ public class CreateMaintenanceAndBid {
     public void manuCreatesANewMaintenance(String name, String dateText) throws ParseException {
         SimpleDateFormat formatter = new SimpleDateFormat("dd-MM-yyyy");
         Date date = formatter.parse(dateText);
-        manu.createMaintenance(name, TaskType.VERIFICATION, date);
+        this.maintenance = manu.createMaintenance(name, TaskType.VERIFICATION, date);
     }
 
     @Then("a new maintenance is created with the name {string}")
     public void aNewMaintenanceIsCreated(String maintenanceName) {
         List<Maintenance> maintenances = manu.getMaintenances();
-        List<String> maintenanceNames = maintenances.stream().map(element -> element.getName()).collect(Collectors.toList());
-        assertTrue(maintenanceNames.contains(maintenanceName));
-        this.maintenance = maintenances.stream().filter(maintenance ->
-                maintenance.getName().equals(maintenanceName)).collect(Collectors.toList()).get(0);
+
+        Optional<Maintenance> optMaintenance = maintenances.stream().filter(maintenance ->
+                this.maintenance.getId().equals(maintenance.getId())
+                        && this.maintenance.getName().equals(maintenance.getName())).findFirst();
+        assertTrue(optMaintenance.isPresent());
+        this.maintenance = optMaintenance.get();
     }
 
     @And("its realizationDate is not defined")

@@ -12,7 +12,6 @@ public class Bid {
     private String name;
     private Task task;
     private Date desiredDate;
-    private List<Offer> offers;
 
     public Long getId() {
         return id;
@@ -44,13 +43,5 @@ public class Bid {
 
     public void setDesiredDate(Date desiredDate) {
         this.desiredDate = desiredDate;
-    }
-
-    public List<Offer> getOffers() {
-        return offers;
-    }
-
-    public void setOffers(List<Offer> offers) {
-        this.offers = offers;
     }
 }

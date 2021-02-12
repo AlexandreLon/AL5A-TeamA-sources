@@ -2,7 +2,7 @@ package fr.polytech;
 
 import fr.polytech.api.BidManagerService;
 import fr.polytech.api.BidService;
-import fr.polytech.api.MishapManager;
+import fr.polytech.api.MishapService;
 import fr.polytech.api.SupplierService;
 import fr.polytech.models.MishapPriority;
 import fr.polytech.models.Supplier;
@@ -29,7 +29,7 @@ import static org.junit.Assert.*;
 public class AcceptOfferBid {
 
     @Autowired
-    private MishapManager mishapManager;
+    private MishapService mishapManager;
 
     @Autowired
     private SupplierService supplierService;
@@ -63,13 +63,13 @@ public class AcceptOfferBid {
         offer = new Offer();
         offer.setPrice(value);
         offer.setProposedDate(new Date());
-        offer.setSupplierId(supplier.getId());
+        offer.setSupplier(supplier);
         offer = supplierService.outbid(bid.getId(), offer);
     }
 
     @Then("The bid has an offer")
     public void hasOffer() {
-        assertTrue(supplierService.getBid(bid.getId()).getOffers().stream().anyMatch(e -> e.getId() == offer.getId() && e.getPrice() == offer.getPrice() && e.getProposedDate().equals(offer.getProposedDate()) && e.getSupplierId() == offer.getSupplierId()));
+        assertTrue(bidService.getOffers(bid.getId()).stream().anyMatch(e -> e.getId() == offer.getId()));
     }
 
     @When("Patrick accepts John's offer")

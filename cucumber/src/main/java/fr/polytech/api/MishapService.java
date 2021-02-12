@@ -11,7 +11,7 @@ import org.springframework.web.client.RestTemplate;
 
 
 @Service
-public class MishapManager extends Api{
+public class MishapService extends Api{
 
 	@Autowired 
 	private Api api;
