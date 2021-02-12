@@ -1,13 +1,14 @@
 package fr.polytech.maintenance.components;
 
 import com.google.inject.internal.util.Lists;
-import fr.polytech.bid.components.BidCreator;
+import fr.polytech.bid.components.BidLifecycle;
 import fr.polytech.maintenance.errors.MaintenanceNotFoundException;
 import fr.polytech.maintenance.models.Maintenance;
 import fr.polytech.maintenance.repositories.MaintenanceRepository;
 
-import fr.polytech.supplierregistry.repositories.SupplierRepository;
+import fr.polytech.supplierregistry.components.SupplierAssignator;
 import fr.polytech.task.models.TaskPriority;
+import fr.polytech.task.models.TaskType;
 import org.springframework.stereotype.Component;
 
 import java.util.Date;
@@ -31,21 +32,26 @@ public class MaintenanceBean implements MaintenanceManager {
     private MaintenanceRepository maintenanceRepository;
 
     @Autowired
-    private SupplierRepository supplierRepository;
+    private SupplierAssignator supplierAssignator;
 
     @Autowired
-    private BidCreator bidCreator;
+    private BidLifecycle bidLifecycle;
 
     @Override
-    public Maintenance createMaintenance(String name, String type, Date desiredDate) {
+    public Maintenance createMaintenance(String name, TaskType type, Date desiredDate) {
         Maintenance maintenance = new Maintenance();
         maintenance.setName(name);
         maintenance.setType(type);
-        maintenance.setStatus(TaskStatus.PENDING);
+        maintenance.setStatus(TaskStatus.WAITING_FOR_BID_CLOSURE);
         maintenance.setCreationDate(new Date());
         maintenance.setPriority(TaskPriority.NONE);
         maintenance = maintenanceRepository.save(maintenance);
-        bidCreator.createBid(maintenance, Lists.newArrayList(supplierRepository.findAll()), desiredDate);
+        try{
+            bidLifecycle.createBid(maintenance, Lists.newArrayList(supplierAssignator.getSuppliers(type)), desiredDate);
+        }
+        catch (IllegalArgumentException e){ //If type enum doesn't fit
+            throw new IllegalArgumentException("Maintenance type hasn't been recognized");
+        }
         return maintenance;
     }
 
@@ -64,7 +70,7 @@ public class MaintenanceBean implements MaintenanceManager {
     }
 
     @Override
-    public Maintenance updateMaintenance(Long id, String name, String type) throws MaintenanceNotFoundException {
+    public Maintenance updateMaintenance(Long id, String name, TaskType type) throws MaintenanceNotFoundException {
         Optional<Maintenance> opt = this.maintenanceRepository.findById(id);
         if (opt.isPresent()) {
             Maintenance maintenance = opt.get();
@@ -77,7 +83,14 @@ public class MaintenanceBean implements MaintenanceManager {
     }
 
     @Override
-    public void deleteMaintenance(Long id) {
-        this.maintenanceRepository.deleteById(id);
+    public void abortMaintenance(Long id) throws MaintenanceNotFoundException {
+        Optional<Maintenance> opt = maintenanceRepository.findById(id);
+        if (!opt.isPresent()) {
+            throw new MaintenanceNotFoundException();
+        }
+        Maintenance maintenance = opt.get();
+        maintenance.setStatus(TaskStatus.ABORTED);
+        this.maintenanceRepository.save(maintenance);
+        bidLifecycle.abortBidFromTask(maintenance);
     }
 }

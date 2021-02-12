@@ -1,5 +1,5 @@
 package fr.polytech.bid.models;
 
 public enum BidStatus {
-    ONGOING, CLOSED;
+    ONGOING, CLOSED, ABORTED;
 }

@@ -14,7 +14,7 @@ import javax.persistence.Table;
 
 @Entity
 @Table(name = "Task")
-@Inheritance(strategy = InheritanceType.TABLE_PER_CLASS)
+@Inheritance(strategy = InheritanceType.JOINED)
 public class Task {
     
     @Id
@@ -25,7 +25,7 @@ public class Task {
     protected String name;
 
     @Column(name = "type", length = 30, nullable = false)
-    protected String type;
+    protected TaskType type;
 
     @Column(name = "status", length = 30, nullable = false)
     protected TaskStatus status;
@@ -56,10 +56,10 @@ public class Task {
         this.name = name;
     }
 
-    public String getType() {
+    public TaskType getType() {
         return this.type;
     }
-    public void setType(String type) {
+    public void setType(TaskType type) {
         this.type = type;
     }
 

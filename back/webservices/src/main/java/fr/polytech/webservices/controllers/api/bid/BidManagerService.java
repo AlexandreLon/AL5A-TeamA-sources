@@ -12,7 +12,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import fr.polytech.webservices.Application;
 import fr.polytech.webservices.errors.ResourceNotFoundException;
-import fr.polytech.bid.components.BidManager;
+import fr.polytech.bid.components.OfferManager;
 import fr.polytech.bid.errors.OfferNotFoundException;
 import fr.polytech.bid.models.Offer;
 
@@ -24,14 +24,14 @@ public class BidManagerService {
     private static final Logger log = LoggerFactory.getLogger(Application.class);
 
     @Autowired
-    BidManager bidManager;
+    OfferManager offerManager;
 
     @CrossOrigin
     @PutMapping("/{idOffer}/accept")
     public Offer acceptOffer(@PathVariable Long idOffer){
         log.info("PUT : /api/bid/accept/" + idOffer);
         try {
-            return bidManager.acceptOffer(idOffer);
+            return offerManager.acceptOffer(idOffer);
         } catch (OfferNotFoundException e){
             throw new ResourceNotFoundException();
         }

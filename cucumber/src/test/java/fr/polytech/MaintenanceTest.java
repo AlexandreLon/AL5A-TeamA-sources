@@ -1,6 +1,7 @@
 package fr.polytech;
 
-import fr.polytech.api.SupplierManager;
+import fr.polytech.api.SupplierService;
+import io.cucumber.java.ParameterType;
 import io.cucumber.java.en.And;
 import io.cucumber.java.en.Given;
 import io.cucumber.java.en.Then;
@@ -8,14 +9,16 @@ import io.cucumber.java.en.When;
 
 import static org.junit.Assert.*;
 
+import java.util.Date;
 import java.util.List;
 import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
-import fr.polytech.api.MaintenanceManager;
+import fr.polytech.api.MaintenanceService;
 import fr.polytech.models.Task;
+import fr.polytech.models.TaskType;
 
 @SpringBootTest
 public class MaintenanceTest {
@@ -24,24 +27,38 @@ public class MaintenanceTest {
     private List<Task> tasks;
 
     @Autowired
-    private MaintenanceManager maintenanceManager;
+    private MaintenanceService maintenanceService;
 
     @Autowired
-    private SupplierManager supplierManager;
+    private SupplierService supplierService;
+
+    @ParameterType("VERIFICATION|REPLACING|CLEANING")
+    public TaskType taskType(String priority) {
+        switch (priority) {
+            case "VERIFICATION":
+                return TaskType.VERIFICATION;
+            case "REPLACING":
+                return TaskType.REPLACING;
+            case "CLEANING":
+                return TaskType.CLEANING;
+            default:
+                return null;
+        }
+    }
 
     @Given("A {string} to do")
     public void aMaintenanceName(String maintenanceName) {
         this.maintenanceName = maintenanceName;
     }
 
-    @When("I create a maintenance with type {string} for it")
-    public void createMaintenance(String maintenanceType) {
-        maintenanceManager.createMaintenance(maintenanceName, maintenanceType);
+    @When("I create a maintenance with type {taskType} for it")
+    public void createMaintenance(TaskType maintenanceType) {
+        maintenanceService.createMaintenance(maintenanceName, maintenanceType, new Date());
     }
 
     @And("I get all tasks with maintenance")
     public void getAllTasksWithMaintenance() {
-        this.tasks = supplierManager.getTasks();
+        this.tasks = supplierService.getTasks();
     }
 
     @Then("I have a {string} maintenance in tasks")

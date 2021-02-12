@@ -1,7 +1,8 @@
 package fr.polytech.api;
 
-import fr.polytech.models.Mishap;
+import fr.polytech.models.mishap.Mishap;
 import fr.polytech.models.MishapPriority;
+import fr.polytech.models.TaskType;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.*;
@@ -10,14 +11,14 @@ import org.springframework.web.client.RestTemplate;
 
 
 @Service
-public class MishapManager extends Api{
+public class MishapService extends Api{
 
 	@Autowired 
 	private Api api;
 
 	private final RestTemplate restTemplate = new RestTemplate();
 
-	public Mishap createMishap(String mishapName, String mishapType, MishapPriority priority) {
+	public Mishap createMishap(String mishapName, TaskType mishapType, MishapPriority priority) {
 		Mishap mishap = new Mishap();
 		mishap.setName(mishapName);
 		mishap.setType(mishapType);

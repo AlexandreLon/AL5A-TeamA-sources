@@ -1,12 +1,12 @@
 package fr.polytech.mishap.components;
 
 import com.google.inject.internal.util.Lists;
-import fr.polytech.bid.components.BidCreator;
+import fr.polytech.bid.components.BidLifecycle;
 import fr.polytech.mishap.errors.MishapNotFoundException;
 import fr.polytech.mishap.models.Mishap;
 import fr.polytech.mishap.repositories.MishapRepository;
 
-import fr.polytech.supplierregistry.repositories.SupplierRepository;
+import fr.polytech.supplierregistry.components.SupplierAssignator;
 import fr.polytech.task.models.TaskPriority;
 import fr.polytech.task.models.TaskStatus;
 
@@ -14,6 +14,7 @@ import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 
+import fr.polytech.task.models.TaskType;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.domain.EntityScan;
 import org.springframework.context.annotation.ComponentScan;
@@ -30,21 +31,27 @@ public class MishapBean implements MishapManager {
     private MishapRepository mishapRepository;
 
     @Autowired
-    private SupplierRepository supplierRepository;
+    private SupplierAssignator supplierAssignator;
 
     @Autowired
-    private BidCreator bidCreator;
+    private BidLifecycle bidLifecycle;
 
     @Override
-    public Mishap createMishap(String name, String type, Date desiredDate, TaskPriority priority) {
+    public Mishap createMishap(String name, TaskType type, Date desiredDate, TaskPriority priority) {
         Mishap mishap = new Mishap();
         mishap.setName(name);
         mishap.setType(type);
         mishap.setPriority(priority);
-        mishap.setStatus(TaskStatus.PENDING);
+        mishap.setStatus(TaskStatus.WAITING_FOR_BID_CLOSURE);
         mishap.setCreationDate(new Date());
         mishap = mishapRepository.save(mishap);
-        bidCreator.createBid(mishap, Lists.newArrayList(supplierRepository.findAll()), desiredDate);
+        try{
+            bidLifecycle.createBid(mishap, Lists.newArrayList(supplierAssignator.getSuppliers(type)), desiredDate);
+        }
+        catch (IllegalArgumentException e){
+            throw new IllegalArgumentException("Mishap type hasn't been recognized");
+
+        }
         return mishap;
     }
 
@@ -61,7 +68,8 @@ public class MishapBean implements MishapManager {
     }
 
     @Override
-    public Mishap updateMishap(Long id, String name, String type, TaskPriority priority) throws MishapNotFoundException {
+    public Mishap updateMishap(Long id, String name, 
+            TaskType type, TaskPriority priority) throws MishapNotFoundException {
         Optional<Mishap> opt = this.mishapRepository.findById(id);
         if (opt.isPresent()) {
             Mishap mishap = opt.get();
@@ -75,7 +83,14 @@ public class MishapBean implements MishapManager {
     }
 
     @Override
-    public void deleteMishap(Long id) {
-        this.mishapRepository.deleteById(id);
+    public void abortMishap(Long id) throws MishapNotFoundException {
+        Optional<Mishap> opt = mishapRepository.findById(id);
+        if (!opt.isPresent()) {
+            throw new MishapNotFoundException();
+        }
+        Mishap mishap = opt.get();
+        mishap.setStatus(TaskStatus.ABORTED);
+        this.mishapRepository.save(mishap);
+        bidLifecycle.abortBidFromTask(mishap);
     }
 }

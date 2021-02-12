@@ -4,6 +4,29 @@
 >
 > Impact : <Faible, Moyen, Elevé>
 
+## Semaine 06
+
+### Flag : Yellow
+
+Nous n'avons pas encore mis en place les notifications, la technologie n'a pas été encore trouvée. Les premiers tests ne sont pas concluants. 
+Cette semaine nous prévoyons de trouver la bonne technologie notification et de la mettre en place dans le système.
+De plus, nous comptons ajouter des tests de charge afin de générer plein d'offres d'enchères et voir comment notre système réagit si pendant ces envois, une offre a été accepté.
+
+Risque : Prendre du retard sur la snapshot.
+
+Probabilité Élevée
+Impact Moyen
+
+Risque : Le test de charge démontre quelques maladresses de notre système à corriger
+
+Probabilité Élevée
+Impact Faible
+
+Risque : Le test de charge remet en question notre architecture et notre application ne supporte pas la charge
+
+Probabilité Faible
+Impact Très Fort
+
 ## Semaine 05
 
 ### Flag : Yellow

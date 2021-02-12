@@ -18,6 +18,7 @@ import fr.polytech.task.errors.TaskNotFoundException;
 import fr.polytech.task.models.Task;
 import fr.polytech.task.models.TaskPriority;
 import fr.polytech.task.models.TaskStatus;
+import fr.polytech.task.models.TaskType;
 import fr.polytech.task.repositories.TaskRepository;
 
 @SpringBootTest
@@ -40,7 +41,7 @@ public class TaskTest {
         task.setName("foo");
         task.setPriority(TaskPriority.HIGH);
         task.setStatus(TaskStatus.PENDING);
-        task.setType("bar");
+        task.setType(TaskType.CLEANING);
         tr.save(task);
         assertDoesNotThrow(() -> {
             Task doneTask = taskManager.endTask(task.getId());
@@ -63,8 +64,8 @@ public class TaskTest {
         task.setCreationDate(new Date());
         task.setName("foo");
         task.setPriority(TaskPriority.HIGH);
-        task.setStatus(TaskStatus.PENDING);
-        task.setType("bar");
+        task.setStatus(TaskStatus.WAITING_FOR_BID_CLOSURE);
+        task.setType(TaskType.CLEANING);
         assertEquals(0, taskManager.getTasks().size());
         task = tr.save(task);
         assertEquals(1, taskManager.getTasks().size());

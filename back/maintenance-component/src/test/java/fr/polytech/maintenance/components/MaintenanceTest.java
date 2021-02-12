@@ -15,6 +15,8 @@ import org.springframework.test.annotation.DirtiesContext;
 
 import fr.polytech.maintenance.errors.MaintenanceNotFoundException;
 import fr.polytech.maintenance.models.Maintenance;
+import fr.polytech.task.models.TaskStatus;
+import fr.polytech.task.models.TaskType;
 
 
 @SpringBootTest
@@ -27,7 +29,7 @@ public class MaintenanceTest {
     @Test
     public void createMaintenanceTest() {
         // Mockito.when(maintenanceRepository.save(any(Maintenance.class))).thenAnswer(invocation -> (Maintenance)invocation.getArguments()[0]);
-        Maintenance maintenance = maintenanceManager.createMaintenance("foo", "bar", new Date());
+        Maintenance maintenance = maintenanceManager.createMaintenance("foo", TaskType.VERIFICATION, new Date());
         List<Maintenance> maintenances = maintenanceManager.getMaintenances().stream().filter(e -> e.getName().equals("foo")).collect(Collectors.toList());
         assertEquals(1, maintenances.size());
         Maintenance gettingMaintenance = maintenances.get(0);
@@ -36,7 +38,7 @@ public class MaintenanceTest {
 
     @Test
     public void getMaintenanceByIdExist() {
-        Maintenance maintenance = maintenanceManager.createMaintenance("foo", "bar", new Date());
+        Maintenance maintenance = maintenanceManager.createMaintenance("foo", TaskType.VERIFICATION, new Date());
         assertDoesNotThrow(() -> {
             Maintenance gettingMaintenance = maintenanceManager.getMaintenanceById(maintenance.getId());
             assertEquals(maintenance, gettingMaintenance);
@@ -52,11 +54,11 @@ public class MaintenanceTest {
 
     @Test
     public void updateMaintenanceExist() {
-        Maintenance maintenance = maintenanceManager.createMaintenance("foo", "bar", new Date());
+        Maintenance maintenance = maintenanceManager.createMaintenance("foo", TaskType.VERIFICATION, new Date());
         assertDoesNotThrow(() -> {
-            Maintenance gettingMaintenance = maintenanceManager.updateMaintenance(maintenance.getId(), "foo2", "bar2");
+            Maintenance gettingMaintenance = maintenanceManager.updateMaintenance(maintenance.getId(), "foo2", TaskType.REPLACING);
             maintenance.setName("foo2");
-            maintenance.setType("bar2");
+            maintenance.setType(TaskType.REPLACING);
             assertEquals(maintenance, gettingMaintenance);
 		});
     }
@@ -64,20 +66,20 @@ public class MaintenanceTest {
     @Test
     public void updateMaintenanceDoentExist() {
         assertThrows(MaintenanceNotFoundException.class, () -> {
-			maintenanceManager.updateMaintenance(100000l, "foo", "bar");
+			maintenanceManager.updateMaintenance(100000l, "foo", TaskType.VERIFICATION);
 		});
     }
 
     @Test
-    public void deleteMaintenanceTest() {
-        Maintenance maintenance = maintenanceManager.createMaintenance("foo", "bar", new Date());
+    public void abortMaintenanceTest() {
+        Maintenance maintenance = maintenanceManager.createMaintenance("foo", TaskType.VERIFICATION, new Date());
         assertDoesNotThrow(() -> {
             Maintenance gettingMaintenance = maintenanceManager.getMaintenanceById(maintenance.getId());
             assertEquals(maintenance, gettingMaintenance);
+            maintenanceManager.abortMaintenance(maintenance.getId());
+            gettingMaintenance = maintenanceManager.getMaintenanceById(maintenance.getId());
+            assertEquals(TaskStatus.ABORTED, gettingMaintenance.getStatus());
         });
-        maintenanceManager.deleteMaintenance(maintenance.getId());
-        assertThrows(MaintenanceNotFoundException.class, () -> {
-			maintenanceManager.getMaintenanceById(maintenance.getId());
-		});
+        
     }
 }

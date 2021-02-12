@@ -1,5 +1,6 @@
 package fr.polytech.webservices.controllers.api.mishap;
 
+import fr.polytech.webservices.errors.BadRequestException;
 import fr.polytech.webservices.models.MishapCreationBody;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.web.bind.annotation.CrossOrigin;
@@ -39,7 +40,12 @@ public class MishapService {
     @PostMapping("")
     public Mishap createMishap(@RequestBody MishapCreationBody mishapCreation) {
         log.info("POST : /api/mishap/");
-        return mishapManager.createMishap(mishapCreation.name, mishapCreation.type, mishapCreation.desiredDate, mishapCreation.priority);
+        try{
+            return mishapManager.createMishap(mishapCreation.name, mishapCreation.type, mishapCreation.desiredDate, mishapCreation.priority);
+        }
+        catch (IllegalArgumentException e){
+            throw new BadRequestException(e.getMessage());
+        }
     }
 
     @CrossOrigin
@@ -72,10 +78,14 @@ public class MishapService {
     }
 
     @CrossOrigin
-    @DeleteMapping("/{id}")
-    public String deleteMishap(@PathVariable Long id) {
-        log.info("DELETE : /api/mishap/" + id);
-        mishapManager.deleteMishap(id);
+    @PutMapping("/{id}/abort")
+    public String abortMishap(@PathVariable Long id) {
+        log.info("PUT : /api/mishap/" + id + "/abort");
+        try {
+            mishapManager.abortMishap(id);
+        } catch (MishapNotFoundException e) {
+            throw new ResourceNotFoundException();
+        }
         return "OK";
     }
 

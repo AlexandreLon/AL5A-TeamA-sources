@@ -1,7 +1,9 @@
 package fr.polytech.webservices;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.concurrent.TimeUnit;
 
 import com.github.javafaker.Faker;
@@ -9,6 +11,7 @@ import com.github.javafaker.Faker;
 import fr.polytech.supplierregistry.models.Supplier;
 import fr.polytech.supplierregistry.repositories.SupplierRepository;
 import fr.polytech.task.models.TaskType;
+import fr.polytech.task.repositories.TaskRepository;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -44,6 +47,9 @@ public class Fill {
     private MaintenanceRepository mar;
 
     @Autowired
+    private TaskRepository tr;
+
+    @Autowired
     private MishapRepository mir;
 
     @Autowired
@@ -53,15 +59,17 @@ public class Fill {
     private SupplierRepository sr;
 
     @Autowired
-    private OfferRepository of;
+    private OfferRepository or;
 
-    private List<Supplier> suppliers = new ArrayList<>();
+    private Map<TaskType, List<Supplier>> suppliers = new HashMap<>();
 
     private Faker faker = new Faker();
 
+    TaskType[] types = { TaskType.CLEANING, TaskType.REPLACING, TaskType.VERIFICATION };
+
     public TaskPriority generateTaskPriority() {
         int v = faker.random().nextInt(3);
-        switch(v) {
+        switch (v) {
             case 0:
                 return TaskPriority.HIGH;
             case 1:
@@ -70,6 +78,20 @@ public class Fill {
                 return TaskPriority.MEDIUM;
             default:
                 return TaskPriority.NONE;
+        }
+    }
+
+    public TaskStatus generateTaskStatus() {
+        int v = faker.random().nextInt(2);
+        switch (v) {
+            case 0:
+                return TaskStatus.WAITING_FOR_BID_CLOSURE;
+            case 1:
+                return TaskStatus.PENDING;
+            case 2:
+                return TaskStatus.FINISHED;
+            default:
+                throw new IllegalStateException("Invalid random " + v);
         }
     }
 
@@ -92,8 +114,8 @@ public class Fill {
             m.setCreationDate(faker.date().past(3, TimeUnit.DAYS));
             m.setName(faker.lorem().word());
             m.setPriority(TaskPriority.NONE);
-            m.setStatus(faker.random().nextBoolean() ? TaskStatus.PENDING : TaskStatus.FINISHED);
-            m.setType(faker.lorem().word());
+            m.setStatus(generateTaskStatus());
+            m.setType(types[faker.random().nextInt(0, 2)]);
             if(faker.random().nextBoolean()){
                 m.setRealizationDate(faker.date().future(5, TimeUnit.DAYS));
             }
@@ -107,8 +129,8 @@ public class Fill {
             m.setCreationDate(faker.date().past(3, TimeUnit.DAYS));
             m.setName(faker.lorem().word());
             m.setPriority(generateTaskPriority());
-            m.setStatus(faker.random().nextBoolean() ? TaskStatus.PENDING : TaskStatus.FINISHED);
-            m.setType(faker.lorem().word());
+            m.setStatus(generateTaskStatus());
+            m.setType(types[faker.random().nextInt(0, 2)]);
             if(faker.random().nextBoolean()){
                 m.setRealizationDate(faker.date().future(5, TimeUnit.DAYS));
             }
@@ -117,14 +139,15 @@ public class Fill {
     }
 
     private void generateSomeSuppliers() {
-        TaskType[] types = {TaskType.CLEANING, TaskType.REPLACING, TaskType.VERIFICATION};
         for(int i=0; i<20; i++) {
             Supplier s = new Supplier();
             s.setName(faker.name().fullName());
             s.setTasks(new ArrayList<>());
             s.setTaskType(types[faker.random().nextInt(0,2)]);
-            suppliers.add(s);
-            sr.save(s);
+            if(suppliers.get(s.getTaskType()) == null){
+                suppliers.put(s.getTaskType(), new ArrayList<>());
+            }
+            suppliers.get(s.getTaskType()).add(sr.save(s));
         }
     }
 
@@ -133,37 +156,44 @@ public class Fill {
         bid.setDesiredDate(faker.date().future(5, TimeUnit.DAYS));
         bid.setName(task.getName());
         bid.setTask(task);
-        bid.setStatus((task.getRealizationDate() == null ? BidStatus.ONGOING : BidStatus.CLOSED));
+        boolean isBidClosed = task.getRealizationDate() != null;
+        bid.setStatus((isBidClosed ? BidStatus.CLOSED : BidStatus.ONGOING));
         bid = br.save(bid);
-        generateSomeOfferFromBid(bid);
+        generateSomeOfferFromBid(bid, isBidClosed);
         return br.save(bid);
     }
 
-    private void generateSomeOfferFromBid(Bid bid) {
+    private void generateSomeOfferFromBid(Bid bid, boolean isBidClosed) {
         List<Offer> offers = new ArrayList<>();
         for(int i=0; i<10; i++) {
             Offer offer = new Offer();
             offer.setBid(bid);
-            offer.setSupplier(suppliers.get(faker.random().nextInt(0, suppliers.size()-1)));
+            List<Supplier> typeAssignedSuppliers = suppliers.get(bid.getTask().getType());
+            offer.setSupplier(typeAssignedSuppliers.get(faker.random().nextInt(0, typeAssignedSuppliers.size()-1)));
             offer.setProposedDate(faker.date().future(5, TimeUnit.DAYS));
             offer.setPrice(faker.random().nextDouble()*10000);
             offer.setStatus(OfferStatus.PENDING);
-            offer = of.save(offer);
+            offer = or.save(offer);
             offers.add(offer);
         }
-        Offer offerToAccept = offers.get(faker.random().nextInt(0,9));
-        bid.setStatus(BidStatus.CLOSED);
-        bid.getTask().setRealizationDate(offerToAccept.getProposedDate());
-        bid.getTask().setPrice(offerToAccept.getPrice());
-        offerToAccept.getSupplier().getTasks().add(bid.getTask());
-        offerToAccept.setStatus(OfferStatus.ACCEPTED);
-        offerToAccept = of.save(offerToAccept);
-        List<Offer> offersToReject = of.findByBidId(bid.getId());
-        for(Offer off : offersToReject){
-            if(off.getId() != offerToAccept.getId()){
-                off.setStatus(OfferStatus.REJECTED);
-                of.save(off);
-            }
+        if(isBidClosed){
+            List<Offer> savedOffers = or.findByBidId(bid.getId());
+            acceptOffer(savedOffers, bid);
         }
-    }    
+    }
+
+    private void acceptOffer(List<Offer> offers, Bid bid){
+        Offer offerToAccept = offers.get(faker.random().nextInt(0, 9));
+        offers.remove(offerToAccept);
+        for (Offer off : offers) {
+            off.setStatus(OfferStatus.REJECTED);
+        }
+        Task task = bid.getTask();
+        task.setRealizationDate(offerToAccept.getProposedDate());
+        task.setPrice(offerToAccept.getPrice());
+        offerToAccept.getSupplier().getTasks().add(task);
+        offerToAccept.setStatus(OfferStatus.ACCEPTED);
+        tr.save(task);
+        br.save(bid);
+    }
 }

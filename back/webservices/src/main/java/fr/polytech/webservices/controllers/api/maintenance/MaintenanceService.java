@@ -1,5 +1,6 @@
 package fr.polytech.webservices.controllers.api.maintenance;
 
+import fr.polytech.webservices.errors.BadRequestException;
 import fr.polytech.webservices.models.MaintenanceCreationBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.context.annotation.ComponentScan;
@@ -32,7 +33,12 @@ public class MaintenanceService {
     @PostMapping("")
     public Maintenance createMaintenance(@RequestBody MaintenanceCreationBody maintenanceCreation) {
         log.info("POST : /api/maintenance");
-        return maintenanceManager.createMaintenance(maintenanceCreation.name, maintenanceCreation.type, maintenanceCreation.desiredDate);
+        try{
+            return maintenanceManager.createMaintenance(maintenanceCreation.name, maintenanceCreation.type, maintenanceCreation.desiredDate);
+        }
+        catch (IllegalArgumentException e){
+            throw new BadRequestException(e.getMessage());
+        }
     }
 
     @CrossOrigin
@@ -65,10 +71,14 @@ public class MaintenanceService {
     }
 
     @CrossOrigin
-    @DeleteMapping("/{id}")
-    public String deleteMaintenance(@PathVariable Long id) {
-        log.info("DELETE : /api/maintenance/" + id);
-        this.maintenanceManager.deleteMaintenance(id);
+    @PutMapping("/{id}/abort")
+    public String abortMaintenance(@PathVariable Long id) {
+        log.info("PUT : /api/maintenance/" + id + "/abort");
+        try {
+            this.maintenanceManager.abortMaintenance(id);
+        } catch (MaintenanceNotFoundException e) {
+            throw new ResourceNotFoundException();
+        }
         return "OK";
     }
 }

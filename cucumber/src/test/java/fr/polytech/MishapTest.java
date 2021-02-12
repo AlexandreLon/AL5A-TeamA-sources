@@ -1,8 +1,9 @@
 package fr.polytech;
 
-import fr.polytech.api.SupplierManager;
+import fr.polytech.api.SupplierService;
 import fr.polytech.models.MishapPriority;
 import fr.polytech.models.Task;
+import fr.polytech.models.mishap.Mishap;
 import io.cucumber.java.ParameterType;
 import io.cucumber.java.en.And;
 import io.cucumber.java.en.Given;
@@ -17,8 +18,9 @@ import java.util.stream.Collectors;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
-import fr.polytech.api.MishapManager;
+import fr.polytech.api.MishapService;
 import fr.polytech.models.TaskStatus;
+import fr.polytech.models.TaskType;
 
 @SpringBootTest
 public class MishapTest {
@@ -35,26 +37,27 @@ public class MishapTest {
 
     private String mishapName;
     private List<Task> tasks;
+    private Mishap mishap;
 
     @Autowired
-    private MishapManager mishapManager;
+    private MishapService mishapService;
 
     @Autowired
-    private SupplierManager supplierManager;
+    private SupplierService supplierService;
 
     @Given("A {string} mishap")
     public void aMishapName(String mishapName) {
         this.mishapName = mishapName;
     }
 
-    @When("I create a mishap of type {string} and priority {mishapPriority}")
-    public void createMishap(String mishapType, MishapPriority mishapPriority) {
-        mishapManager.createMishap(mishapName, mishapType, mishapPriority);
+    @When("I create a mishap of type {taskType} and priority {mishapPriority}")
+    public void createMishap(TaskType mishapType, MishapPriority mishapPriority) {
+        mishap = mishapService.createMishap(mishapName, mishapType, mishapPriority);
     }
 
     @And("I get all tasks")
     public void getAllTasks() {
-        this.tasks = supplierManager.getTasks();
+        this.tasks = supplierService.getTasks();
     }
 
     @Then("I have a {string} mishap in tasks")
@@ -63,21 +66,21 @@ public class MishapTest {
         assertTrue(taskNameList.contains(taskName));
     }
 
-    @Then("The task {string} is pending")
-    public void taskPending(String taskName) {
-        Task task = this.tasks.stream().filter(element -> element.getName().equals(taskName)).collect(Collectors.toList()).get(0);
-        assertEquals(TaskStatus.PENDING, task.getStatus());
+    @Then("The task {string} is waiting for bid closure")
+    public void taskWaitingForBidClosure(String taskName) {
+        Task task = this.tasks.stream().filter(element -> element.getId().equals(mishap.getId())).collect(Collectors.toList()).get(0);
+        assertEquals(TaskStatus.WAITING_FOR_BID_CLOSURE, task.getStatus());
     }
 
     @When("I finish the {string} task")
     public void doneTask(String taskName) {
         Long id = this.tasks.stream().filter(element -> element.getName().equals(taskName)).collect(Collectors.toList()).get(0).getId();
-        supplierManager.done(id);
+        supplierService.done(id);
     }
 
     @And("I get all tasks again")
     public void getAllTasksAgain() {
-        this.tasks = supplierManager.getTasks();
+        this.tasks = supplierService.getTasks();
     }
 
     @Then("the mishap named {string} is finished")

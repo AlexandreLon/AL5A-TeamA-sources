@@ -13,11 +13,11 @@
 			/>
 
 			<div
-				@click="deleteMaintenance"
+				@click="abortMaintenance"
 				class="btn btn-danger"
 			>
 				<i class="fas fa-trash-alt" />
-				Delete
+				Abort
 			</div>
 		</td>
 	</tr>
@@ -38,22 +38,22 @@ export default {
 			default: null
 		}
 	},
-	emits: ["updated", "deleted"],
+	emits: ["updated", "aborted"],
 	setup(props, { emit }) {
 		
 		const updateMaintenance = (newMaintenance) => {
 			emit("updated", newMaintenance);
 		};
 
-		const deleteMaintenance = () => {
-			maintenanceWSAPI.deleteMaintenance(props.maintenance.id).then(res => {
-				emit("deleted", res);
+		const abortMaintenance = () => {
+			maintenanceWSAPI.abortMaintenance(props.maintenance.id).then(res => {
+				emit("aborted", res);
 			}).catch(error => {
 				console.error(error);
 			});
 		};
 
-		return { updateMaintenance, deleteMaintenance };
+		return { updateMaintenance, abortMaintenance };
 	}
 
 };
