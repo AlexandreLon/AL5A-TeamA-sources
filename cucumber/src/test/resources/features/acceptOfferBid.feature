@@ -5,6 +5,7 @@ Feature: Accept bid offer
   Scenario: Patrick accept John's offer
     Given Patrick creates a mishap of type REPLACING and priority MEDIUM
     And John as supplier
-    And John outbids 3000 today
+    When John outbids 3000 today
+    Then The bid has an offer
     When Patrick accepts John's offer
     Then Offer is accepted
