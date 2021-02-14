@@ -9,6 +9,8 @@ import fr.polytech.bid.models.Offer;
 
 import fr.polytech.supplierregistry.components.SupplierProvider;
 import fr.polytech.supplierregistry.models.Supplier;
+import fr.polytech.task.components.TaskManager;
+import fr.polytech.task.errors.TaskNotFoundException;
 import fr.polytech.task.models.Task;
 
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -26,8 +28,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 
 import java.util.List;
 
-import static java.lang.System.exit;
-
 @RestController
 @ComponentScan({"fr.polytech.bid", "fr.polytech.supplierregistry"})
 @RequestMapping("/api/supplier")
@@ -42,6 +42,9 @@ public class SupplierService {
     private SupplierProvider supplierProvider;
 
     @Autowired
+    private TaskManager taskManager;
+
+    @Autowired
     private BidViewer bidViewer;
 
     @CrossOrigin
@@ -49,6 +52,17 @@ public class SupplierService {
     public List<Supplier> getSuppliers() {
         log.info("GET : /api/supplier");
         return supplierProvider.getSuppliers();
+    }
+
+    @CrossOrigin
+    @PutMapping("/{id}/endTask")
+    public Task endTask(@PathVariable(value = "id") Long id) {
+        log.info("PUT : /api/supplier/" + id + "/endTask");
+        try {
+            return taskManager.endTask(id);
+        } catch (TaskNotFoundException e) {
+            throw new ResourceNotFoundException();
+        }
     }
 
     @CrossOrigin
@@ -65,7 +79,7 @@ public class SupplierService {
     @CrossOrigin
     @PostMapping("/{id}/outbid")
     public Offer outbid(@PathVariable Long id, @RequestBody OfferBody offerBody) {
-        log.info("GET : /api/supplier/" + id + "/outbid");
+        log.info("POST : /api/supplier/" + id + "/outbid");
         try {
             return offerManager.outbid(id, offerBody.supplierId, offerBody.price, offerBody.proposedDate);
         } catch (BidNotFoundException e) {
