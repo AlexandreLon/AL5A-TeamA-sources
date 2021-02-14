@@ -194,6 +194,6 @@ public class Fill {
         offerToAccept.getSupplier().getTasks().add(task);
         offerToAccept.setStatus(OfferStatus.ACCEPTED);
         tr.save(task);
-        br.save(bid);
+        sr.save(offerToAccept.getSupplier());
     }
 }
