@@ -29,8 +29,8 @@ import fr.polytech.bid.repositories.OfferRepository;
 
 import fr.polytech.maintenance.models.Maintenance;
 import fr.polytech.maintenance.repositories.MaintenanceRepository;
-import fr.polytech.mishap.models.Mishap;
-import fr.polytech.mishap.repositories.MishapRepository;
+import fr.polytech.maintenance.models.Mishap;
+import fr.polytech.maintenance.repositories.MishapRepository;
 import fr.polytech.task.models.Task;
 import fr.polytech.task.models.TaskPriority;
 import fr.polytech.task.models.TaskStatus;

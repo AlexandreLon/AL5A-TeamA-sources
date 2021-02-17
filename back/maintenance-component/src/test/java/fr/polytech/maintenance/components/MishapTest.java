@@ -1,4 +1,4 @@
-package fr.polytech.mishap.components;
+package fr.polytech.maintenance.components;
 
 import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
 import static org.junit.jupiter.api.Assertions.assertEquals;
@@ -13,8 +13,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.annotation.DirtiesContext;
 
-import fr.polytech.mishap.errors.MishapNotFoundException;
-import fr.polytech.mishap.models.Mishap;
+import fr.polytech.maintenance.errors.MishapNotFoundException;
+import fr.polytech.maintenance.models.Mishap;
 import fr.polytech.task.models.TaskPriority;
 import fr.polytech.task.models.TaskStatus;
 import fr.polytech.task.models.TaskType;

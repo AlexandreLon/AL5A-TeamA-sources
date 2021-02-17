@@ -1,10 +1,10 @@
-package fr.polytech.mishap.components;
+package fr.polytech.maintenance.components;
 
 import java.util.Date;
 import java.util.List;
 
-import fr.polytech.mishap.errors.MishapNotFoundException;
-import fr.polytech.mishap.models.Mishap;
+import fr.polytech.maintenance.errors.MishapNotFoundException;
+import fr.polytech.maintenance.models.Mishap;
 import fr.polytech.task.models.TaskPriority;
 import fr.polytech.task.models.TaskType;
 

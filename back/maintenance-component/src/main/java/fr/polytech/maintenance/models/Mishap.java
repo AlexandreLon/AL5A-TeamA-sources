@@ -1,4 +1,4 @@
-package fr.polytech.mishap.models;
+package fr.polytech.maintenance.models;
 
 import javax.persistence.Entity;
 import java.util.Objects;

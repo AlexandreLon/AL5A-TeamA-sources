@@ -9,7 +9,7 @@ import java.util.List;
 
 public interface MaintenanceManager {
     Maintenance createMaintenance(String name, TaskType type, Date desiredDate);
-
+    
     List<Maintenance> getMaintenances();
 
     Maintenance getMaintenanceById(Long id) throws MaintenanceNotFoundException;

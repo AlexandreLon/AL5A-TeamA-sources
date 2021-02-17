@@ -1,19 +1,13 @@
 package fr.polytech.api;
 
 import fr.polytech.models.bid.Bid;
-import fr.polytech.models.Supplier;
-import fr.polytech.models.Task;
 import fr.polytech.models.bid.Offer;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpEntity;
-import org.springframework.http.HttpHeaders;
-import org.springframework.http.MediaType;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.Date;
 import java.util.List;
 
 @Service
