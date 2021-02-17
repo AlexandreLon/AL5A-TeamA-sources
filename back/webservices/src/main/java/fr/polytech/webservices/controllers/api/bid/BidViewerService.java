@@ -6,8 +6,6 @@ import fr.polytech.bid.errors.BidNotFoundException;
 import fr.polytech.bid.models.Bid;
 import fr.polytech.bid.models.Offer;
 
-import fr.polytech.task.models.TaskType;
-import org.springframework.data.jpa.repository.Query;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.web.bind.annotation.*;

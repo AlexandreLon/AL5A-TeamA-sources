@@ -1,4 +1,4 @@
-package fr.polytech.mishap.errors;
+package fr.polytech.maintenance.errors;
 
 public class MishapNotFoundException extends Exception {
 

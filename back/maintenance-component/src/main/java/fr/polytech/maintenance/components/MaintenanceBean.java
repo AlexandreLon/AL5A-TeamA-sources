@@ -5,7 +5,9 @@ import fr.polytech.bid.components.BidLifecycle;
 import fr.polytech.maintenance.errors.MaintenanceNotFoundException;
 import fr.polytech.maintenance.models.Maintenance;
 import fr.polytech.maintenance.repositories.MaintenanceRepository;
-
+import fr.polytech.maintenance.errors.MishapNotFoundException;
+import fr.polytech.maintenance.models.Mishap;
+import fr.polytech.maintenance.repositories.MishapRepository;
 import fr.polytech.supplierregistry.components.SupplierAssignator;
 import fr.polytech.task.models.TaskPriority;
 import fr.polytech.task.models.TaskType;
@@ -26,10 +28,13 @@ import fr.polytech.task.models.TaskStatus;
 @ComponentScan({"fr.polytech.maintenance.repositories", "fr.polytech.bid.components","fr.polytech.supplierregistry.repositories"})
 @EntityScan("fr.polytech.maintenance.models")
 @EnableJpaRepositories("fr.polytech.maintenance.repositories")
-public class MaintenanceBean implements MaintenanceManager {
+public class MaintenanceBean implements MaintenanceManager, MishapManager {
 
     @Autowired
     private MaintenanceRepository maintenanceRepository;
+
+    @Autowired
+    private MishapRepository mishapRepository;
 
     @Autowired
     private SupplierAssignator supplierAssignator;
@@ -56,8 +61,32 @@ public class MaintenanceBean implements MaintenanceManager {
     }
 
     @Override
+    public Mishap createMishap(String name, TaskType type, Date desiredDate, TaskPriority priority) {
+        Mishap mishap = new Mishap();
+        mishap.setName(name);
+        mishap.setType(type);
+        mishap.setPriority(priority);
+        mishap.setStatus(TaskStatus.WAITING_FOR_BID_CLOSURE);
+        mishap.setCreationDate(new Date());
+        mishap = mishapRepository.save(mishap);
+        try{
+            bidLifecycle.createBid(mishap, Lists.newArrayList(supplierAssignator.getSuppliers(type)), desiredDate);
+        }
+        catch (IllegalArgumentException e){
+            throw new IllegalArgumentException("Mishap type hasn't been recognized");
+
+        }
+        return mishap;
+    }
+
+    @Override
     public List<Maintenance> getMaintenances() {
         return (List<Maintenance>) this.maintenanceRepository.findAll();
+    }
+
+    @Override
+    public List<Mishap> getMishaps() {
+        return (List<Mishap>) this.mishapRepository.findAll();
     }
 
     @Override
@@ -67,6 +96,13 @@ public class MaintenanceBean implements MaintenanceManager {
             throw new MaintenanceNotFoundException();
         }
         return opt.get();
+    }
+
+    @Override
+    public Mishap getMishapById(Long id) throws MishapNotFoundException {
+        Optional<Mishap> mishap = this.mishapRepository.findById(id);
+        if(!mishap.isPresent()) throw new MishapNotFoundException();
+        return mishap.get();
     }
 
     @Override
@@ -83,6 +119,21 @@ public class MaintenanceBean implements MaintenanceManager {
     }
 
     @Override
+    public Mishap updateMishap(Long id, String name, 
+            TaskType type, TaskPriority priority) throws MishapNotFoundException {
+        Optional<Mishap> opt = this.mishapRepository.findById(id);
+        if (opt.isPresent()) {
+            Mishap mishap = opt.get();
+            mishap.setName(name);
+            mishap.setType(type);
+            mishap.setPriority(priority);
+            mishap = this.mishapRepository.save(mishap);
+            return mishap;
+        }
+        throw new MishapNotFoundException();
+    }
+
+    @Override
     public void abortMaintenance(Long id) throws MaintenanceNotFoundException {
         Optional<Maintenance> opt = maintenanceRepository.findById(id);
         if (!opt.isPresent()) {
@@ -92,5 +143,17 @@ public class MaintenanceBean implements MaintenanceManager {
         maintenance.setStatus(TaskStatus.ABORTED);
         this.maintenanceRepository.save(maintenance);
         bidLifecycle.abortBidFromTask(maintenance);
+    }
+
+    @Override
+    public void abortMishap(Long id) throws MishapNotFoundException {
+        Optional<Mishap> opt = mishapRepository.findById(id);
+        if (!opt.isPresent()) {
+            throw new MishapNotFoundException();
+        }
+        Mishap mishap = opt.get();
+        mishap.setStatus(TaskStatus.ABORTED);
+        this.mishapRepository.save(mishap);
+        bidLifecycle.abortBidFromTask(mishap);
     }
 }

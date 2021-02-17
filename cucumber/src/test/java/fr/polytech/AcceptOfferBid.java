@@ -6,12 +6,10 @@ import fr.polytech.api.MishapService;
 import fr.polytech.api.SupplierService;
 import fr.polytech.models.MishapPriority;
 import fr.polytech.models.Supplier;
-import fr.polytech.models.Task;
 import fr.polytech.models.TaskType;
 import fr.polytech.models.bid.Bid;
 import fr.polytech.models.bid.Offer;
 import fr.polytech.models.mishap.Mishap;
-import io.cucumber.java.ParameterType;
 import io.cucumber.java.en.And;
 import io.cucumber.java.en.Given;
 import io.cucumber.java.en.Then;
@@ -20,7 +18,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
 import java.util.Date;
-import java.util.List;
 import java.util.Optional;
 
 import static org.junit.Assert.*;
