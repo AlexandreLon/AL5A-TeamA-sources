@@ -33,7 +33,7 @@ public class SupplierService {
 
     public void done(long id) {
         RestTemplate restTemplate = new RestTemplate();
-        restTemplate.put(String.format("http://%s:%s/api/task/%d", api.getHost(), api.getPort(), id), new Object[]{});
+        restTemplate.put(String.format("http://%s:%s/api/supplier/%d/endTask", api.getHost(), api.getPort(), id), new Object[]{});
     }
 
     public List<Supplier> getSuppliers() {
