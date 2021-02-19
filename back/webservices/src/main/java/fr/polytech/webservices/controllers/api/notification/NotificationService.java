@@ -1,35 +1,50 @@
 package fr.polytech.webservices.controllers.api.notification;
 
+import fr.polytech.notification.components.NotificationConsumer;
+import fr.polytech.notification.components.NotificationInitializer;
+import fr.polytech.webservices.models.Message;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.ComponentScan;
 import org.springframework.messaging.core.MessageSendingOperations;
 import org.springframework.messaging.handler.annotation.MessageMapping;
 import org.springframework.messaging.handler.annotation.Payload;
 import org.springframework.messaging.handler.annotation.SendTo;
-import org.springframework.messaging.simp.SimpMessageHeaderAccessor;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Controller;
 
 import fr.polytech.notification.models.Notification;
 import fr.polytech.webservices.websockets.WebSocketEventListener;
 
+import java.text.SimpleDateFormat;
 import java.time.LocalTime;
+import java.util.Date;
 
 @Controller
+@ComponentScan({ "fr.polytech.notification" })
 public class NotificationService {
 
     private static final Logger logger = LoggerFactory.getLogger(WebSocketEventListener.class);
 
     private final MessageSendingOperations<String> messageSendingOperations;
 
-    public NotificationService(MessageSendingOperations<String> messageSendingOperations) {
+    @Autowired
+    NotificationConsumer notificationConsumer;
+
+
+    @Autowired
+    public NotificationService(MessageSendingOperations<String> messageSendingOperations,  NotificationInitializer notificationInitializer ) {
         this.messageSendingOperations = messageSendingOperations;
+        notificationInitializer.init(this::sendMessageToTopic);
     }
-    @MessageMapping("/chat")
+
+    @MessageMapping("/register")
     @SendTo("/topic/messages")
-    public Notification sendMessage(@Payload Notification chatMessage) {
-        logger.info("Received a new web message : " + chatMessage.getContent());
-        return chatMessage;
+    public String registerUser(Message message) throws Exception{
+        logger.info("Received a new web message : " + message);
+        notificationConsumer.subscribe(message.getFrom());
+        return "subscribed : "+message.getFrom();
     }
 
     @Scheduled(fixedDelay = 5000)
@@ -39,13 +54,9 @@ public class NotificationService {
         this.messageSendingOperations.convertAndSend("/topic/messages", broadcast);
     }
 
- 
-    @MessageMapping("/chat.addUser")
-    @SendTo("/topic/publicChatRoom")
-    public Notification addUser(@Payload Notification chatMessage, SimpMessageHeaderAccessor headerAccessor) {
-        // Add username in web socket session
-        headerAccessor.getSessionAttributes().put("username", chatMessage.getSender());
-        return chatMessage;
+    public void sendMessageToTopic(String topic, String message) {
+        logger.info("send to topic : "+topic+" message: "+message);
+        this.messageSendingOperations.convertAndSend(topic, message);
     }
  
 }

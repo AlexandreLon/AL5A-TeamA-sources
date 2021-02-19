@@ -1,5 +1,6 @@
 package fr.polytech.webservices.websockets;
 
+import fr.polytech.notification.components.NotificationInitializer;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,6 +20,7 @@ public class WebSocketEventListener {
 
     @Autowired
     private SimpMessageSendingOperations messagingTemplate;
+
 
     @EventListener
     public void handleWebSocketConnectListener(SessionConnectedEvent event) {

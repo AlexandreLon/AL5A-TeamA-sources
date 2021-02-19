@@ -26,13 +26,13 @@ connect();
  
 function onConnected() {
     // Subscribe to the Public Topic
-    stompClient.subscribe('/topic/messages', function(messageOutput) {// this one is working fine
+   /* stompClient.subscribe('/topic/messages', function(messageOutput) {// this one is working fine
         console.log(messageOutput.body);
-    });
+    });*/
     // Tell your username to the server
-    stompClient.send(`/app/topic/chat.addUser`,
+    stompClient.send(`/app/chat`,
         {},
-        JSON.stringify({sender: username, type: 'JOIN'})
+        JSON.stringify({'from': 'coucou', 'text': 'JOIN'})
     )
  
     connectingElement.classList.add('hidden');
