@@ -8,6 +8,7 @@ import fr.polytech.supplierregistry.errors.SupplierNotFoundException;
 import fr.polytech.bid.models.Offer;
 
 import fr.polytech.supplierregistry.components.SupplierProvider;
+import fr.polytech.supplierregistry.components.SupplierRegistrator;
 import fr.polytech.supplierregistry.models.Supplier;
 import fr.polytech.task.components.TaskManager;
 import fr.polytech.task.errors.TaskNotFoundException;
@@ -21,6 +22,7 @@ import fr.polytech.webservices.Application;
 import fr.polytech.webservices.errors.BadRequestException;
 import fr.polytech.webservices.errors.ResourceNotFoundException;
 import fr.polytech.webservices.models.OfferBody;
+import fr.polytech.webservices.models.SupplierBody;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -47,11 +49,21 @@ public class SupplierService {
     @Autowired
     private BidViewer bidViewer;
 
+    @Autowired
+    private SupplierRegistrator supplierRegistrator;
+
     @CrossOrigin
     @GetMapping("")
     public List<Supplier> getSuppliers() {
         log.info("GET : /api/supplier");
         return supplierProvider.getSuppliers();
+    }
+
+    @CrossOrigin
+    @PostMapping("")
+    public Supplier createSupplier(@RequestBody SupplierBody supplierBody) {
+        log.info("POST : /api/supplier");
+        return supplierRegistrator.create(supplierBody.name, supplierBody.taskType);
     }
 
     @CrossOrigin

@@ -40,11 +40,13 @@ public class AcceptOfferBid {
     private Bid bid;
     private Supplier supplier;
     private Offer offer;
+    private TaskType taskType;
 
     @Given("Patrick creates a mishap of type {taskType} and priority {mishapPriority}")
     public void createMishap(TaskType taskType, MishapPriority mishapPriority) {
         String mishapName = "Mishap Breakdown";
-        Mishap mishap = mishapManager.createMishap(mishapName, taskType, mishapPriority);
+        this.taskType = taskType;
+        Mishap mishap = mishapManager.createMishap(mishapName, this.taskType, mishapPriority);
         Optional<Bid> optional = bidService.getBids().stream().filter(e -> e.getTask().getId().equals(mishap.getId())).findFirst();
         assertTrue(optional.isPresent());
         bid = optional.get();
@@ -52,7 +54,7 @@ public class AcceptOfferBid {
 
     @And("John as supplier")
     public void supplier() {
-        supplier = supplierService.getSuppliers().get(0);
+        supplier = supplierService.createSupplier("John", this.taskType);
     }
 
     @When("John outbids {int} today")
