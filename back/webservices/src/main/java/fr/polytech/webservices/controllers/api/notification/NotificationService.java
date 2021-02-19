@@ -47,15 +47,23 @@ public class NotificationService {
         return "subscribed : "+message.getFrom();
     }
 
-    @Scheduled(fixedDelay = 5000)
+    @MessageMapping("/unsubscribe")
+    @SendTo("/topic/messages")
+    public String unsubscribeUser(Message message) throws Exception{
+        logger.info("Received a new web message : " + message);
+        notificationConsumer.unsubscribe(message.getFrom());
+        return "subscribed : "+message.getFrom();
+    }
+
+   /* @Scheduled(fixedDelay = 5000)
     public void sendPeriodicMessages() {
         logger.info("send...");
         String broadcast = String.format("server periodic message %s via the broker", LocalTime.now());
         this.messageSendingOperations.convertAndSend("/topic/messages", broadcast);
-    }
+    }*/
 
     public void sendMessageToTopic(String topic, String message) {
-        logger.info("send to topic : "+topic+" message: "+message);
+        logger.error("send to topic : "+topic+" message: "+message);
         this.messageSendingOperations.convertAndSend(topic, message);
     }
  

@@ -6,7 +6,7 @@
 	/>
 </template>
 <script>
-import {onMounted,ref} from "vue";
+import {onMounted,ref, onUnmounted, watch} from "vue";
 import SockJS from "sockjs-client";
 import Stomp from "webstomp-client";
 import Notification from "./Notification.vue";
@@ -23,17 +23,27 @@ export default {
 		const stompClient = ref();
 		// const username = ref();
 		const notifications = ref([]);
+
+		watch(() => props.supplierId, (first, second) => {
+			console.log(
+				"Watch props.selected function called with args:",
+				first,
+				second
+			);
+		});
+
+
 		
 		const onConnected = () =>{
 			// Subscribe to the Public Topic
-			stompClient.value.subscribe('/topic/messages', (messageOutput) => {// this one is working fine
+			stompClient.value.subscribe('/topic/supplier', (messageOutput) => {// this one is working fine
 				console.log(messageOutput.body);
 				notifications.value.push(messageOutput.body);
 			});
 			// Tell your username to the server - not used, maybe later
 			console.log(JSON.stringify({'from':'alexis', 'text':'coucou'}));
 			stompClient.value.send("/app/register",
-				 JSON.stringify({"from":props.supplierId, text:"coucou"}),{});
+				 JSON.stringify({"from":props.supplierId, text:"sub"}),{});
 		};
 
 		const onError = (error) => {
@@ -47,6 +57,11 @@ export default {
 			stompClient.value = Stomp.over(socket);
 
 			stompClient.value.connect({}, onConnected, onError);
+		});
+
+		onUnmounted(()=> {
+			stompClient.value.send("/app/unsubscribe",
+				JSON.stringify({"from":props.supplierId, text:"unsub"}),{});
 		});
 
 		return { onConnected, onError, stompClient, notifications };
