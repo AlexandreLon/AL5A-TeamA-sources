@@ -21,7 +21,7 @@
 				<button
 					v-if="enableCreateProposal"
 					type="button"
-					class="btn btn-primary"
+					class="btn btn-primary ml-2"
 					data-toggle="modal" 
 					:data-target="'#createOfferModal' + bid.id"
 				>
