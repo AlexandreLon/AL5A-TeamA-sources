@@ -12,35 +12,35 @@
 			<li>
 				<router-link to="/bid-supplier">
 					<div class="btn btn-danger">
-						Bid (Supplier)
+						Ongoing bids
 					</div>
 				</router-link>
 			</li>
 			<li>
 				<router-link to="/supplier">
-					<div class="btn btn-primary">
-						Supplier
+					<div class="btn btn-danger">
+						My tasks
 					</div>
 				</router-link>
 			</li>
 			<li>
 				<router-link to="/maintenance">
 					<div class="btn btn-primary">
-						Maintenance
+						Maintenances
 					</div>
 				</router-link>
 			</li>
 			<li>
 				<router-link to="/mishap">
 					<div class="btn btn-primary">
-						Mishap
+						Mishaps
 					</div>
 				</router-link>
 			</li>
 			<li>
 				<router-link to="/bid">
 					<div class="btn btn-primary">
-						Bid
+						Bids
 					</div>
 				</router-link>
 			</li>
