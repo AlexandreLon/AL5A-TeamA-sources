@@ -4,6 +4,22 @@
 >
 > Impact : <Faible, Moyen, Elevé>
 
+## Semaine 08
+
+### Flag : Yellow
+Nous allons finir la mise en place des notifications pour Vendredi prochain ainsi que la mise en place des tests Gatling, puis la livraison d'une nouvelle release.
+Nous avons repoussé plusieurs fois la date de cette release en partie à cause de la charge de travail dans les autres matières, d'où le flag Yellow.
+
+Risque : Le test de charge démontre quelques maladresses de notre système à corriger
+
+Probabilité Élevée
+Impact Faible
+
+Risque : Le système de notification ne fonctionne pas
+
+Probabilité Assez Faible
+Impact Fort
+
 ## Semaine 07
 
 ### Flag : Green
