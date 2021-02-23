@@ -15,35 +15,47 @@ export default {
 	components: {Notification},
 	props: {
 		supplierId: {
-			type: String,
+			type: Number,
 			default: null
 		}
 	},
 	setup(props){
 		const stompClient = ref();
-		// const username = ref();
 		const notifications = ref([]);
 
-		watch(() => props.supplierId, (first, second) => {
-			console.log(
-				"Watch props.selected function called with args:",
-				first,
-				second
-			);
+		const unsubscribe = (supplierId) =>{
+			console.log(`unsubscribe : ${supplierId}`);
+			stompClient.value.send("/app/unsubscribe",
+				JSON.stringify({"from":supplierId, text:"unsub"}),{});
+
+			// Unsubscribe to topic
+			stompClient.value.unsubscribe(`/topic/supplier/${supplierId}`, (messageOutput) => {// this one is working fine
+				console.log(messageOutput.body);
+				notifications.value = [];
+			});
+
+		};
+		const subscribe = (supplierId) =>{
+			console.log(`subscribe : ${supplierId}`);
+			// Send register to back
+			stompClient.value.send("/app/register",
+				JSON.stringify({"from":supplierId, text:"sub"}),{});
+			// Subscribe to topic
+			stompClient.value.subscribe(`/topic/supplier/${supplierId}`, (messageOutput) => {// this one is working fine
+				console.log(messageOutput.body);
+				notifications.value.push(messageOutput.body);
+			});
+		};
+
+		watch( () =>props.supplierId, (newSupplierId, oldSupplierId) => {
+			unsubscribe(oldSupplierId);
+			subscribe(newSupplierId);
 		});
 
 
 		
 		const onConnected = () =>{
-			// Subscribe to the Public Topic
-			stompClient.value.subscribe('/topic/supplier', (messageOutput) => {// this one is working fine
-				console.log(messageOutput.body);
-				notifications.value.push(messageOutput.body);
-			});
-			// Tell your username to the server - not used, maybe later
-			console.log(JSON.stringify({'from':'alexis', 'text':'coucou'}));
-			stompClient.value.send("/app/register",
-				 JSON.stringify({"from":props.supplierId, text:"sub"}),{});
+			subscribe(props.supplierId);
 		};
 
 		const onError = (error) => {
@@ -51,6 +63,7 @@ export default {
 		};
         
 		onMounted(()=>{
+			console.log("lancé");
 			const host = process.env.VUE_APP_HOST_BACK;
 			const port = process.env.VUE_APP_PORT_BACK;
 			const socket = new SockJS(`http://${host}:${port}/chat`);
@@ -60,9 +73,10 @@ export default {
 		});
 
 		onUnmounted(()=> {
-			stompClient.value.send("/app/unsubscribe",
-				JSON.stringify({"from":props.supplierId, text:"unsub"}),{});
+			unsubscribe(props.supplierId);
 		});
+
+		
 
 		return { onConnected, onError, stompClient, notifications };
 
