@@ -32,9 +32,12 @@ class BasicSimulation extends Simulation {
       .body(RawFileBody("json/supplierCreation.json")).asJson)
     .exec(
       http("make_offer")
-        .post("supplier/" + 34 + "/outbid")
-        .body(StringBody(session =>"""{ "supplierId": """ + session("supplierId").as[String] + """, "price": 1000, "proposedDate": "2021-02-11T00:00:00.000Z" }"""))
-
+        .post("supplier/" + 70 + "/outbid")
+        .check(jsonPath("$.id").saveAs("offerId"))
+        .body(StringBody("""{ "supplierId": ${supplierId}, "price": 1000, "proposedDate": "2021-02-11T00:00:00.000Z" }""")).asJson)
+    .exec(
+      http("accept_offer")
+        .put("bid/${offerId}/accept"))
 
 
   //      .post("supplier/" + 34 + "/outbid")
@@ -73,5 +76,5 @@ class BasicSimulation extends Simulation {
   //        .formParam("""discontinued""", """""")
   //        .formParam("""company""", """37"""))
 
-  setUp(scn.inject(atOnceUsers(10)).protocols(httpProtocol))
+  setUp(scn.inject(atOnceUsers(50)).protocols(httpProtocol))
 }
