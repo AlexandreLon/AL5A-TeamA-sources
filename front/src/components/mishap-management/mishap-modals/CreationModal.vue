@@ -62,9 +62,15 @@
 									>
 										Please select a type
 									</option>
-									<option value="REPLACING">Replacement</option>
-									<option value="CLEANING">Cleaning</option>
-									<option value="VERIFICATION">Verification</option>
+									<option value="REPLACING">
+										Replacement
+									</option>
+									<option value="CLEANING">
+										Cleaning
+									</option>
+									<option value="VERIFICATION">
+										Verification
+									</option>
 								</select>
 							</div>
 							<div>
