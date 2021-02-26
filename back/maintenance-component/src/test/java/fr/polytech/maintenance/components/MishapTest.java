@@ -8,9 +8,11 @@ import java.util.Date;
 import java.util.List;
 import java.util.stream.Collectors;
 
+import fr.polytech.notification.components.NotificationProducer;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.test.annotation.DirtiesContext;
 
 import fr.polytech.maintenance.errors.MishapNotFoundException;
@@ -26,6 +28,9 @@ public class MishapTest {
 
     @Autowired
     private MishapManager mishapManager;
+
+    @MockBean
+    private NotificationProducer notificationProducer;
 
     @Test
     public void createMishapTest() {

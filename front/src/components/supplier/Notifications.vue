@@ -50,6 +50,7 @@ export default {
 		watch( () =>props.supplierId, (newSupplierId, oldSupplierId) => {
 			unsubscribe(oldSupplierId);
 			subscribe(newSupplierId);
+			notifications.value = [];
 		});
 
 

@@ -51,12 +51,10 @@ public class NotificationBean implements NotificationConsumer, NotificationProdu
     public void notify(List<Supplier> suppliersToNotify, String message) {
         // Call to notifyCallBack
         if(notifyCallBack == null){
-            throw new RuntimeException("Callback hasn't been initialized yet.");
+            throw new RuntimeException("Notify callback hasn't been initialized yet.");
         }
         for (Supplier supplier : suppliersToNotify) {
             if(supplierSubscribed.contains(supplier)){
-                System.out.println("on init call back -  - - - - - - -   - - - - - - -");
-                System.out.println(notifyCallBack);
                 notifyCallBack.execute("/topic/supplier/"+supplier.getId().toString(),message);
             }
         }
@@ -65,7 +63,5 @@ public class NotificationBean implements NotificationConsumer, NotificationProdu
     @Override
     public void init(NotifyCallBack callBack) {
         notifyCallBack = callBack;
-        System.out.println("on init call back -  - - - - - - -   - - - - - - -");
-        System.out.println(callBack);
     }
 }
