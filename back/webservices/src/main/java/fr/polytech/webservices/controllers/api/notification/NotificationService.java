@@ -2,6 +2,7 @@ package fr.polytech.webservices.controllers.api.notification;
 
 import fr.polytech.notification.components.NotificationConsumer;
 import fr.polytech.notification.components.NotificationInitializer;
+import fr.polytech.webservices.errors.BadRequestException;
 import fr.polytech.webservices.models.Message;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -35,8 +36,13 @@ public class NotificationService {
     @SendTo("/topic/messages")
     public String registerUser(Message message){
         logger.info("Received a new web message : " + message);
-        notificationConsumer.subscribe(message.getFrom());
-        return "subscribed : "+message.getFrom();
+        try {
+            notificationConsumer.subscribe(message.getFrom());
+            return "subscribed : "+message.getFrom();
+        }
+        catch (IllegalArgumentException e){
+            throw new BadRequestException(e.getMessage());
+        }
     }
 
     @MessageMapping("/unsubscribe")

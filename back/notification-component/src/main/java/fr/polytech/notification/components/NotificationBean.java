@@ -35,8 +35,7 @@ public class NotificationBean implements NotificationConsumer, NotificationProdu
             Supplier supplier = supplierProvider.getSupplierById(Long.parseLong(supplierId));
               supplierSubscribed.add(supplier);
         } catch (SupplierNotFoundException e) {
-            // Todo custom exception
-            e.printStackTrace();
+            throw new IllegalArgumentException("Supplier id hasn't been recognized");
         }
 
 
