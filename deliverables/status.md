@@ -3,7 +3,15 @@
 > Probabilité : <Basse, Moyenne, Haute>
 >
 > Impact : <Faible, Moyen, Elevé>
+## Semaine 09
+### Flag : Green
+Nous avons terminé les tâches que nous avions prévu. Gatling fonctionne ainsi que le système de notifications. 
+Nous sommes en train de faire des tests de charge pour voir les points faibles de notre architecture.
+Nous allons sortir la dernière release dans les prochains jours après avoir testé le scénario complet.
+Il nous reste à tester le scénario complet et à préparer la soutenance et la vidéo.
 
+Risque : Le scénario complet ne marche pas
+Probabilité Moyenne, impact élevé.
 ## Semaine 08
 
 ### Flag : Yellow
