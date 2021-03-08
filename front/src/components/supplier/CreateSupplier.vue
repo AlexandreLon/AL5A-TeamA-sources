@@ -33,6 +33,13 @@
 						</button>
 					</div>
 					<div class="modal-body">
+						<div
+							v-if="success"
+							class="alert alert-success"
+							role="alert"
+						>
+							Supplier created
+						</div>
 						<div class="form-group">
 							<label for="supplierName">Name</label>
 							<input
@@ -90,7 +97,8 @@ import SupplierWSAPI from '../../API/SupplierWSAPI';
 const supplierAPI = new SupplierWSAPI();
 
 export default {
-	setup() {
+	emits: ["create"],
+	setup(_, {emit}) {
 		const name = ref(null);
 		const type = ref("VERIFICATION");
 		const success = ref(false);
@@ -103,10 +111,11 @@ export default {
 			name.value = null;
 			type.value = "VERIFICATION";
 			success.value = true;
+			emit('create');
 			setTimeout(() => {success.value = false;}, 2000);
 		};
 
-		return {name, type, submit};
+		return {name, type, submit, success};
 	}
 };
 </script>
