@@ -12,6 +12,7 @@ import org.springframework.boot.autoconfigure.domain.EntityScan;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -19,7 +20,7 @@ import java.util.Optional;
 @ComponentScan("fr.polytech.supplierregistry.repositories")
 @EntityScan("fr.polytech.supplierregistry.models")
 @EnableJpaRepositories("fr.polytech.supplierregistry.repositories")
-public class SupplierRegisterBean implements SupplierProvider, SupplierAssignator {
+public class SupplierRegisterBean implements SupplierProvider, SupplierAssignator, SupplierRegistrator {
 
     @Autowired
     private SupplierRepository supplierRepository;
@@ -57,5 +58,13 @@ public class SupplierRegisterBean implements SupplierProvider, SupplierAssignato
             throw new SupplierNotFoundException();
         }
         return opt.get().getTaskType();
+    }
+
+    public Supplier create(String name, TaskType taskType) {
+        Supplier supplier = new Supplier();
+        supplier.setTasks(new ArrayList<>());
+        supplier.setName(name);
+        supplier.setTaskType(taskType);
+        return supplierRepository.save(supplier);
     }
 }

@@ -66,7 +66,7 @@ export default {
 		watch(() => props.supplier, (supplier) => {
 			supplierWSAPI.getBidsBySupplierId(supplier.id)
 				.then(res => {
-					bids.value = res;
+					bids.value = res.reverse();
 				})
 				.catch(error => {
 					console.error(error);
@@ -76,7 +76,7 @@ export default {
 			if(props.supplier != null){
 				supplierWSAPI.getBidsBySupplierId(props.supplier.id)
 					.then(res => {
-						bids.value = res;
+						bids.value = res.reverse();
 					})
 					.catch(error => {
 						console.error(error);
@@ -86,7 +86,7 @@ export default {
 				bidWSAPI
 					.getBids()
 					.then(res => {
-						bids.value = res;
+						bids.value = res.reverse();
 					})
 					.catch(error => {
 						console.error(error);
@@ -99,7 +99,7 @@ export default {
 			bidWSAPI
 				.getBids()
 				.then(res => {
-					bids.value = res;
+					bids.value = res.reverse();
 				})
 				.catch(error => {
 					console.error(error);

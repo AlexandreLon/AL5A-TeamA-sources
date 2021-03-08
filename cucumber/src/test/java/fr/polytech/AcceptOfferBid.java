@@ -6,12 +6,10 @@ import fr.polytech.api.MishapService;
 import fr.polytech.api.SupplierService;
 import fr.polytech.models.MishapPriority;
 import fr.polytech.models.Supplier;
-import fr.polytech.models.Task;
 import fr.polytech.models.TaskType;
 import fr.polytech.models.bid.Bid;
 import fr.polytech.models.bid.Offer;
 import fr.polytech.models.mishap.Mishap;
-import io.cucumber.java.ParameterType;
 import io.cucumber.java.en.And;
 import io.cucumber.java.en.Given;
 import io.cucumber.java.en.Then;
@@ -20,7 +18,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
 import java.util.Date;
-import java.util.List;
 import java.util.Optional;
 
 import static org.junit.Assert.*;
@@ -43,11 +40,13 @@ public class AcceptOfferBid {
     private Bid bid;
     private Supplier supplier;
     private Offer offer;
+    private TaskType taskType;
 
     @Given("Patrick creates a mishap of type {taskType} and priority {mishapPriority}")
     public void createMishap(TaskType taskType, MishapPriority mishapPriority) {
         String mishapName = "Mishap Breakdown";
-        Mishap mishap = mishapManager.createMishap(mishapName, taskType, mishapPriority);
+        this.taskType = taskType;
+        Mishap mishap = mishapManager.createMishap(mishapName, this.taskType, mishapPriority);
         Optional<Bid> optional = bidService.getBids().stream().filter(e -> e.getTask().getId().equals(mishap.getId())).findFirst();
         assertTrue(optional.isPresent());
         bid = optional.get();
@@ -55,7 +54,7 @@ public class AcceptOfferBid {
 
     @And("John as supplier")
     public void supplier() {
-        supplier = supplierService.getSuppliers().get(0);
+        supplier = supplierService.createSupplier("John", this.taskType);
     }
 
     @When("John outbids {int} today")

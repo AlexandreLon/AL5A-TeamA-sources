@@ -3,13 +3,53 @@
 > Probabilité : <Basse, Moyenne, Haute>
 >
 > Impact : <Faible, Moyen, Elevé>
+## Semaine 09
+### Flag : Green
+Nous avons terminé les tâches que nous avions prévu. Gatling fonctionne ainsi que le système de notifications. 
+Nous sommes en train de faire des tests de charge pour voir les points faibles de notre architecture.
+Nous allons sortir la dernière release dans les prochains jours après avoir testé le scénario complet.
+Il nous reste à tester le scénario complet et à préparer la soutenance et la vidéo.
+
+Risque : Le scénario complet ne marche pas
+Probabilité Moyenne, impact élevé.
+## Semaine 08
+
+### Flag : Yellow
+Nous allons finir la mise en place des notifications pour Vendredi prochain ainsi que la mise en place des tests Gatling, puis la livraison d'une nouvelle release.
+Nous avons repoussé plusieurs fois la date de cette release en partie à cause de la charge de travail dans les autres matières, d'où le flag Yellow.
+
+Risque : Le test de charge démontre quelques maladresses de notre système à corriger
+
+Probabilité Élevée
+Impact Faible
+
+Risque : Le système de notification ne fonctionne pas
+
+Probabilité Assez Faible
+Impact Fort
+
+## Semaine 07
+
+### Flag : Green
+
+Nous avons pu livrer la snapshot la semaine dernière dans les temps.
+Ce vendredi, nous prévoyons de livrer une version 3.0 stable du système. Les enchères sont fonctionnelles et la fonctionnalité des notifications pour les fournisseurs est en cours de développement pour cette semaine.
+Un test de charge très basique a été mis en place la semaine dernière, et un test de charge plus complet est prévu afin de tester un cas concret où de nombreuses enchères sont faites en même temps. Nous avons remarqué que le backend ne supportait pas toujours une charge importante de requêtes (environ une centaine en même temps). Un scénario plus réaliste, sur une période plus étalée, nous donnera une meilleure idée de la solidité de notre architecture.
+
+Risque 1 : Se rendre compte que le backend ne supporte pas le test de charge
+
+Probabilité Moyenne, impact élevé.
+
+Risque 2 : Ne pas parvenir à livrer la fonctionnalité de notifications cette semaine
+
+Probabilité Faible, impact élevé
 
 ## Semaine 06
 
 ### Flag : Yellow
 
 Nous n'avons pas encore mis en place les notifications, la technologie n'a pas été encore trouvée. Les premiers tests ne sont pas concluants. 
-Cette semaine nous prévoyons de trouver la bonne technologie notification et de la mettre en place dans le système.
+Cette semaine nous prévoyons de trouver la bonne technologie de notifications et de la mettre en place dans le système.
 De plus, nous comptons ajouter des tests de charge afin de générer plein d'offres d'enchères et voir comment notre système réagit si pendant ces envois, une offre a été accepté.
 
 Risque : Prendre du retard sur la snapshot.

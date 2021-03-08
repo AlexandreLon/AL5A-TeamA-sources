@@ -20,10 +20,10 @@
 </template>
 
 <script>
-import TaskWSAPI from '../../API/TaskWSAPI';
+import SupplierWSAPI from '../../API/SupplierWSAPI';
 import Task from '../../models/supplier/Task';
 
-const taskWSAPI = new TaskWSAPI();
+const supplierWSAPI = new SupplierWSAPI();
 
 export default {
 	props:{
@@ -36,7 +36,7 @@ export default {
 	setup(props,{emit}) {
 		
 		const taskDone = () => {
-			taskWSAPI.putTask(props.task.id).then(res => {
+			supplierWSAPI.endTask(props.task.id).then(res => {
 				emit('updated',res);
 			}).catch(error => {
 				console.error(error);

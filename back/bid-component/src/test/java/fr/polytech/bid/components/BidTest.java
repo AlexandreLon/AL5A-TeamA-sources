@@ -8,15 +8,19 @@ import java.util.Date;
 import java.util.List;
 import java.util.stream.Collectors;
 
+import fr.polytech.notification.components.NotificationProducer;
 import fr.polytech.supplierregistry.models.Supplier;
 import fr.polytech.supplierregistry.repositories.SupplierRepository;
 import fr.polytech.task.models.TaskType;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
+import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.domain.EntityScan;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 import org.springframework.test.annotation.DirtiesContext;
@@ -33,9 +37,10 @@ import fr.polytech.task.repositories.TaskRepository;
 
 @SpringBootTest
 @DirtiesContext(classMode = DirtiesContext.ClassMode.AFTER_EACH_TEST_METHOD)
-@ComponentScan({"fr.polytech.task.repositories","fr.polytech.supplierregistry.repositories", "fr.polytech.bid.components"})
+@ComponentScan({"fr.polytech.task.repositories","fr.polytech.supplierregistry.repositories", "fr.polytech.bid.components","fr.polytech.notification"})
 @EntityScan("fr.polytech.task.models")
 @EnableJpaRepositories("fr.polytech.task.repositories")
+@ExtendWith(MockitoExtension.class)
 public class BidTest {
 
     @Autowired
@@ -52,6 +57,9 @@ public class BidTest {
 
     @Autowired
     private SupplierRepository sr;
+
+    @MockBean
+    private NotificationProducer notificationProducer;
 
     private Task task;
     private Supplier supplier;

@@ -62,10 +62,18 @@
 									>
 										Please select a type
 									</option>
-									<option value="VERIFICATION">Check a train</option>
-									<option value="VERIFICATION">Check rails</option>
-									<option value="CLEANING">Clean rails</option>
-									<option value="REPLACING">Replace something</option>
+									<option value="VERIFICATION">
+										Check a train
+									</option>
+									<option value="VERIFICATION">
+										Check rails
+									</option>
+									<option value="CLEANING">
+										Clean rails
+									</option>
+									<option value="REPLACING">
+										Replace something
+									</option>
 								</select>
 							</div>
 							<div>Desired date of resolution <span>(the date will appear in the bid for suppliers)</span> :</div>

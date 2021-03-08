@@ -15,13 +15,13 @@
 					:data-target="'#viewOfferModal' + bid.id"
 					@click="getOffers"
 				>
-					<i class="fas fa-pencil-alt" />
+					<i class="fa fa-eye" />
 					See Proposals
 				</button>
 				<button
 					v-if="enableCreateProposal"
 					type="button"
-					class="btn btn-primary"
+					class="btn btn-primary ml-2"
 					data-toggle="modal" 
 					:data-target="'#createOfferModal' + bid.id"
 				>
@@ -35,6 +35,7 @@
 					class="btn btn-success"
 					data-toggle="modal" 
 					:data-target="'#checkAcceptedOfferModal' + bid.id"
+					@click="toggleOffer"
 				>
 					<i class="fas fa-search" />
 					Check accepted offer
@@ -53,7 +54,7 @@
 		/>
 		<CheckAcceptedOffer
 			:bidid="bid.id"
-			v-if="bid.status == 'CLOSED'"
+			v-if="currentOffer && bid.status == 'CLOSED'"
 		/>
 	</tr>
 </template>
@@ -87,6 +88,8 @@ export default {
 	setup(props, { emit }) {
 		const offers = ref([]);
 
+		const currentOffer = ref(false);
+
 		const formatDate = (dateStr) => {
 			return new Date(dateStr).toLocaleString();
 		};
@@ -95,11 +98,15 @@ export default {
 			bidWSAPI.getOffers(props.bid.id).then(res => {offers.value = res;});
 		};
 
+		const toggleOffer = () => {
+			currentOffer.value = true;
+		};
+
 		const acceptedOffer = (offer) => {
 			emit('accepted', offer);
 		};
 
-		return { formatDate, getOffers, offers, acceptedOffer };
+		return { formatDate, getOffers, offers, acceptedOffer, currentOffer, toggleOffer };
 	}
 };
 </script>

@@ -4,11 +4,11 @@
 	<parent>
 		<groupId>fr.polytech</groupId>
 		<artifactId>al-trainmanagement</artifactId>
-		<version>2.2.0</version>
+		<version>3.0.0</version>
 	</parent>
 	<artifactId>webservices</artifactId>
 	<packaging>war</packaging>
-	<version>2.2.0</version>
+	<version>3.0.0</version>
 
 
 	<properties>
@@ -19,27 +19,27 @@
 		<dependency>
 			<groupId>fr.polytech</groupId>
 			<artifactId>task-component</artifactId>
-			<version>2.2.0</version>
+			<version>3.0.0</version>
 		</dependency>
 		<dependency>
 			<groupId>fr.polytech</groupId>
 			<artifactId>maintenance-component</artifactId>
-			<version>2.2.0</version>
-		</dependency>
-		<dependency>
-			<groupId>fr.polytech</groupId>
-			<artifactId>mishap-component</artifactId>
-			<version>2.2.0</version>
+			<version>3.0.0</version>
 		</dependency>
 		<dependency>
 			<groupId>fr.polytech</groupId>
 			<artifactId>bid-component</artifactId>
-			<version>2.2.0</version>
+			<version>3.0.0</version>
 		</dependency>
 		<dependency>
 			<groupId>fr.polytech</groupId>
 			<artifactId>supplier-registry-component</artifactId>
-			<version>2.2.0</version>
+			<version>3.0.0</version>
+		</dependency>
+		<dependency>
+			<groupId>fr.polytech</groupId>
+			<artifactId>notification-component</artifactId>
+			<version>3.0.0</version>
 		</dependency>
 		<dependency>
             <groupId>org.apache.maven.plugins</groupId>
@@ -54,6 +54,20 @@
 		 <dependency>
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-thymeleaf</artifactId>
+		</dependency>
+		<dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-websocket</artifactId>
+        </dependency>
+		<dependency>
+			<groupId>com.fasterxml.jackson.core</groupId>
+			<artifactId>jackson-core</artifactId>
+		</dependency>
+
+		<dependency>
+			<groupId>com.fasterxml.jackson.core</groupId>
+			<artifactId>jackson-databind</artifactId>
+			<version>2.10.2</version>
 		</dependency>
 	</dependencies>
 	<build>

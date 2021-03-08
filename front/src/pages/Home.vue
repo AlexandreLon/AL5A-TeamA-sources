@@ -8,43 +8,56 @@
 			src="https://www.pkpcargointernational.com//static/2018/08/railway-1.jpg"
 			alt="Train"
 		>
-		<ul>
-			<li>
-				<router-link to="/bid-supplier">
-					<div class="btn btn-danger">
-						Bid (Supplier)
-					</div>
-				</router-link>
-			</li>
-			<li>
-				<router-link to="/supplier">
-					<div class="btn btn-primary">
-						Supplier
-					</div>
-				</router-link>
-			</li>
-			<li>
-				<router-link to="/maintenance">
-					<div class="btn btn-primary">
-						Maintenance
-					</div>
-				</router-link>
-			</li>
-			<li>
-				<router-link to="/mishap">
-					<div class="btn btn-primary">
-						Mishap
-					</div>
-				</router-link>
-			</li>
-			<li>
-				<router-link to="/bid">
-					<div class="btn btn-primary">
-						Bid
-					</div>
-				</router-link>
-			</li>
-		</ul>
+		<div>
+			<div class="button-panel">
+				<h2>Supplier</h2>
+				<ul>
+					<li>
+						<router-link to="/bid-supplier">
+							<div class="btn btn-danger">
+								Ongoing bids
+							</div>
+						</router-link>
+					</li>
+					<li>
+						<router-link to="/supplier">
+							<div class="btn btn-danger">
+								My tasks
+							</div>
+						</router-link>
+					</li>
+				</ul>
+			</div>
+
+			<div class="button-panel">
+				<h2>Manager</h2>
+				<ul>
+					<li>
+						<router-link to="/maintenance">
+							<div class="btn btn-primary">
+								Maintenances
+							</div>
+						</router-link>
+					</li>
+					<li>
+						<router-link to="/mishap">
+							<div class="btn btn-primary">
+								Mishaps
+							</div>
+						</router-link>
+					</li>
+					<li>
+						<router-link to="/bid">
+							<div class="btn btn-primary">
+								Bids
+							</div>
+						</router-link>
+					</li>
+				</ul>
+			</div>
+
+		</div>
+
 	</center>
 </template>
 
@@ -61,5 +74,13 @@ export default {
 		display: inline;
 		list-style-type: none;
 		padding-right: 20px;
+	}
+
+	.button-panel{
+		display: inline-block;
+		padding: 20px;
+		margin: 20px;
+		border: 2px solid #ddd;
+		border-radius: 10px;
 	}
 </style>

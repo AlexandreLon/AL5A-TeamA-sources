@@ -15,6 +15,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 
 import fr.polytech.models.Task;
+import fr.polytech.models.TaskType;
 
 @Service
 public class SupplierService {
@@ -33,7 +34,7 @@ public class SupplierService {
 
     public void done(long id) {
         RestTemplate restTemplate = new RestTemplate();
-        restTemplate.put(String.format("http://%s:%s/api/task/%d", api.getHost(), api.getPort(), id), new Object[]{});
+        restTemplate.put(String.format("http://%s:%s/api/supplier/%d/endTask", api.getHost(), api.getPort(), id), new Object[]{});
     }
 
     public List<Supplier> getSuppliers() {
@@ -59,6 +60,26 @@ public class SupplierService {
                         api.getPort(), bidId),
                 requestBody,
                 Offer.class);
+    }
+
+    public Supplier createSupplier(String name, TaskType taskType) {
+        HttpHeaders headers = new HttpHeaders();
+        headers.add("Accept", MediaType.APPLICATION_JSON_VALUE);
+        headers.setContentType(MediaType.APPLICATION_JSON);
+
+        RestTemplate restTemplate = new RestTemplate();
+
+        Supplier supplier = new Supplier();
+        supplier.setName(name);
+        supplier.setTaskType(taskType);
+
+        HttpEntity<Supplier> requestBody = new HttpEntity<>(supplier, headers);
+
+        // Send request with POST method.
+        return restTemplate.postForObject(
+                String.format("http://%s:%s/api/supplier/", api.getHost(), api.getPort()),
+                requestBody,
+                Supplier.class);
     }
 
     public Bid getBid(long id) {

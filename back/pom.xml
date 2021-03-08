@@ -11,12 +11,12 @@
 	<groupId>fr.polytech</groupId>
 	<artifactId>al-trainmanagement</artifactId>
 	<packaging>pom</packaging>
-	<version>2.2.0</version>
+	<version>3.0.0</version>
 
 	<modules>
 		<module>task-component</module>
+		<module>notification-component</module>
 		<module>maintenance-component</module>
-		<module>mishap-component</module>
 		<module>bid-component</module>
 		<module>supplier-registry-component</module>
 		<module>webservices</module>

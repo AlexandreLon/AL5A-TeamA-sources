@@ -29,8 +29,8 @@ import fr.polytech.bid.repositories.OfferRepository;
 
 import fr.polytech.maintenance.models.Maintenance;
 import fr.polytech.maintenance.repositories.MaintenanceRepository;
-import fr.polytech.mishap.models.Mishap;
-import fr.polytech.mishap.repositories.MishapRepository;
+import fr.polytech.maintenance.models.Mishap;
+import fr.polytech.maintenance.repositories.MishapRepository;
 import fr.polytech.task.models.Task;
 import fr.polytech.task.models.TaskPriority;
 import fr.polytech.task.models.TaskStatus;
@@ -66,6 +66,11 @@ public class Fill {
     private Faker faker = new Faker();
 
     TaskType[] types = { TaskType.CLEANING, TaskType.REPLACING, TaskType.VERIFICATION };
+
+    final int NB_MAINTENANCE = 20;
+    final int NB_MISHAP = 20;
+    final int NB_SUPPLIER = 5;
+    final int NB_OFFER_PER_BID = 10;
 
     public TaskPriority generateTaskPriority() {
         int v = faker.random().nextInt(3);
@@ -109,7 +114,7 @@ public class Fill {
 	}
 
     private void generateSomeMaintenances() {
-        for(int i=0; i<20; i++) {
+        for(int i=0; i < NB_MAINTENANCE; i++) {
             Maintenance m = new Maintenance();
             m.setCreationDate(faker.date().past(3, TimeUnit.DAYS));
             m.setName(faker.lorem().word());
@@ -124,7 +129,7 @@ public class Fill {
     }
 
     private void generateSomeMishaps() {
-        for(int i=0; i<20; i++) {
+        for(int i=0; i < NB_MISHAP; i++) {
             Mishap m = new Mishap();
             m.setCreationDate(faker.date().past(3, TimeUnit.DAYS));
             m.setName(faker.lorem().word());
@@ -139,7 +144,7 @@ public class Fill {
     }
 
     private void generateSomeSuppliers() {
-        for(int i=0; i<20; i++) {
+        for(int i=0; i < NB_SUPPLIER; i++) {
             Supplier s = new Supplier();
             s.setName(faker.name().fullName());
             s.setTasks(new ArrayList<>());
@@ -165,7 +170,7 @@ public class Fill {
 
     private void generateSomeOfferFromBid(Bid bid, boolean isBidClosed) {
         List<Offer> offers = new ArrayList<>();
-        for(int i=0; i<10; i++) {
+        for(int i=0; i < NB_OFFER_PER_BID; i++) {
             Offer offer = new Offer();
             offer.setBid(bid);
             List<Supplier> typeAssignedSuppliers = suppliers.get(bid.getTask().getType());
@@ -183,7 +188,7 @@ public class Fill {
     }
 
     private void acceptOffer(List<Offer> offers, Bid bid){
-        Offer offerToAccept = offers.get(faker.random().nextInt(0, 9));
+        Offer offerToAccept = offers.get(faker.random().nextInt(0, NB_OFFER_PER_BID-1));
         offers.remove(offerToAccept);
         for (Offer off : offers) {
             off.setStatus(OfferStatus.REJECTED);
@@ -194,6 +199,8 @@ public class Fill {
         offerToAccept.getSupplier().getTasks().add(task);
         offerToAccept.setStatus(OfferStatus.ACCEPTED);
         tr.save(task);
-        br.save(bid);
+        sr.save(offerToAccept.getSupplier());
+        or.saveAll(offers);
+        or.save(offerToAccept);
     }
 }

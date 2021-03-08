@@ -39,7 +39,7 @@
 </template>
 
 <script>
-import { ref } from 'vue';
+import { onMounted, ref } from 'vue';
 import BidWSAPI from '../../../API/BidWSAPI';
 
 const bidAPI = new BidWSAPI();
@@ -55,12 +55,16 @@ export default {
 		const price = ref(null);
 		const date = ref(null);
 		const taskPriority = ref(null);
-		bidAPI.getAcceptedOffer(props.bidid).then(res => {
-			price.value = res.price;
-			date.value = res.proposedDate;
-			taskPriority.value = res.bid.task.priority;
-		}).catch(err => {
-			console.log(err);
+
+		onMounted(() => {
+			console.log("coucou");
+			bidAPI.getAcceptedOffer(props.bidid).then(res => {
+				price.value = res.price;
+				date.value = res.proposedDate;
+				taskPriority.value = res.bid.task.priority;
+			}).catch(err => {
+				console.err(err);
+			});
 		});
 
 		return {price, date, taskPriority};
