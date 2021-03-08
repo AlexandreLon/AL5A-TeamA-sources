@@ -67,10 +67,10 @@ public class Fill {
 
     TaskType[] types = { TaskType.CLEANING, TaskType.REPLACING, TaskType.VERIFICATION };
 
-    final int NB_MAINTENANCE = 50;
-    final int NB_MISHAP = 50;
-    final int NB_SUPPLIER = 20;
-    final int NB_OFFER_PER_BID = 15;
+    final int NB_MAINTENANCE = 20;
+    final int NB_MISHAP = 20;
+    final int NB_SUPPLIER = 5;
+    final int NB_OFFER_PER_BID = 10;
 
     public TaskPriority generateTaskPriority() {
         int v = faker.random().nextInt(3);

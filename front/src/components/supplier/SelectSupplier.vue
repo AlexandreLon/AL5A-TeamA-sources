@@ -34,7 +34,7 @@ export default {
 		const supplierId = ref(1);
 
 		function onChange(supplierSelected) {
-			emit('selected', props.suppliers.value[supplierSelected.target.value-1]);
+			emit('selected', props.suppliers[supplierSelected.target.value-1]);
 		}
         
 		return {supplierId,onChange};
