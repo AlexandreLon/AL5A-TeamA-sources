@@ -10,7 +10,7 @@
 			:value="supplier.id"
 			:key="supplier.id"
 		>
-			{{ supplier.name }}
+			{{ supplier.name }} - Type : {{ supplier.taskType }}
 		</option>
 	</select>
 </template>

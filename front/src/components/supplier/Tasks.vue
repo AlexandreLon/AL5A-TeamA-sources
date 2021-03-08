@@ -64,6 +64,13 @@ export default {
 		});
 
 		onMounted(() => {
+			supplierWSAPI.getTasksBySupplierId(props.supplier.id)
+				.then(res => {
+					tasks.value = res;
+				})
+				.catch(error => {
+					console.error(error);
+				});
 		});
 
 		function update(newTask) {

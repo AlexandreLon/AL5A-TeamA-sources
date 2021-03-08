@@ -105,7 +105,7 @@ export default {
 			bidAPI.acceptOffer(id).then(res => {
 				emit('accepted', res);
 			}).catch(err => {
-				console.log(err);
+				console.err(err);
 			});
 		};
 

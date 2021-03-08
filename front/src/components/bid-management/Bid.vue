@@ -15,7 +15,7 @@
 					:data-target="'#viewOfferModal' + bid.id"
 					@click="getOffers"
 				>
-					<i class="fas fa-pencil-alt" />
+					<i class="fa fa-eye" />
 					See Proposals
 				</button>
 				<button
