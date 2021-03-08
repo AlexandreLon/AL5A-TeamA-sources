@@ -116,8 +116,9 @@ class BasicSimulation extends Simulation {
 
   setUp(scn.inject(
 //    atOnceUsers(1000),
-//    rampUsers(10000).during(60.seconds),
-    constantUsersPerSec(1000).during(30.seconds).randomized,
+//    rampUsers(600).during(60.seconds),
+    rampUsersPerSec(10).to(50).during(40.seconds).randomized,
+    constantUsersPerSec(150).during(30.seconds).randomized,
   ).protocols(httpProtocol))
 
   //  setUp(scn.inject(
