@@ -15,6 +15,16 @@ class SupplierWSAPI extends API {
 		});
 	}
 
+	createSupplier(supplier) {
+		return new Promise((resolve, reject) => {
+			this.axios.post(`/supplier`, supplier).then(res => {
+				resolve(res);
+			}).catch(error => {
+				reject(error);   
+			});
+		});
+	}
+
 	endTask(id) {
 		return new Promise((resolve, reject) => {
 			this.axios.put(`/supplier/${id}/endTask`).then(res => {
