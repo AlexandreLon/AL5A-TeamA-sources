@@ -9,6 +9,7 @@ import fr.polytech.bid.models.OfferStatus;
 import fr.polytech.bid.models.BidStatus;
 import fr.polytech.bid.repositories.BidRepository;
 import fr.polytech.bid.repositories.OfferRepository;
+import fr.polytech.notification.components.NotificationProducer;
 import fr.polytech.supplierregistry.components.SupplierProvider;
 import fr.polytech.supplierregistry.errors.SupplierNotFoundException;
 import fr.polytech.supplierregistry.models.Supplier;
@@ -27,7 +28,7 @@ import java.util.List;
 import java.util.Optional;
 
 @Component
-@ComponentScan({"fr.polytech.bid.repositories", "fr.polytech.supplierregistry.components"})
+@ComponentScan({"fr.polytech.bid.repositories", "fr.polytech.supplierregistry.components","fr.polytech.notification"})
 @EntityScan("fr.polytech.bid.models")
 @EnableJpaRepositories("fr.polytech.bid.repositories")
 public class BidBean implements BidViewer, BidLifecycle, OfferManager {
@@ -40,6 +41,9 @@ public class BidBean implements BidViewer, BidLifecycle, OfferManager {
 
     @Autowired
     private OfferRepository offerRepository;
+
+    @Autowired
+    private NotificationProducer notificationProducer;
 
     @Override
     public List<Bid> getBids() {
@@ -61,6 +65,7 @@ public class BidBean implements BidViewer, BidLifecycle, OfferManager {
         bid.setTask(task);
         bid.setDesiredDate(desiredDate);
         bid.setStatus(BidStatus.ONGOING);
+        notificationProducer.notify(suppliers,"Une nouvelle enchère est disponible : "+bid.getName()+" : "+bid.getDesiredDate());
         return bidRepository.save(bid);
     }
 

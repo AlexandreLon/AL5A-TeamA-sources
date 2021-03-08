@@ -15,6 +15,7 @@
 
 	<modules>
 		<module>task-component</module>
+		<module>notification-component</module>
 		<module>maintenance-component</module>
 		<module>bid-component</module>
 		<module>supplier-registry-component</module>

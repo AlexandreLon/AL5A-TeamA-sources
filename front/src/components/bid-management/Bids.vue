@@ -22,7 +22,7 @@
 			</thead>
 			<tbody v-if="bids && bids.length > 0">
 				<Bid
-					v-for="bid of bids"
+					v-for="bid of bids.reverse()"
 					:key="bid.id"
 					:bid="bid"
 					:supplier="supplier"
