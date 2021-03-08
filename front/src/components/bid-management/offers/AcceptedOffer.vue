@@ -60,7 +60,7 @@ export default {
 			date.value = res.proposedDate;
 			taskPriority.value = res.bid.task.priority;
 		}).catch(err => {
-			console.log(err);
+			console.err(err);
 		});
 
 		return {price, date, taskPriority};

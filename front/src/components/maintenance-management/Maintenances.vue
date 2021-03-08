@@ -72,7 +72,6 @@ export default {
 		}
 
 		function update(newMaintenance) {
-			console.log(newMaintenance);
 			maintenances.value = maintenances.value.map(current =>
 				current.id === newMaintenance.id ? newMaintenance : current
 			);
